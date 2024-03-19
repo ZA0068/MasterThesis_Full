@@ -1,4 +1,0 @@
-[0.068s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
-[0.072s] gmake: /usr/bin/cmake: No such file or directory
-[0.072s] gmake: *** [Makefile:443: cmake_check_build_system] Error 127
-[0.073s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16

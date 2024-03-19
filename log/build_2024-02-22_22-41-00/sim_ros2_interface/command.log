@@ -1,4 +1,0 @@
-Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
-Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
-Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
-Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
