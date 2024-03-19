@@ -1,0 +1,6 @@
+source;share/drone_controller_vrep/hook/pythonpath.ps1
+source;share/drone_controller_vrep/hook/pythonpath.dsv
+source;share/drone_controller_vrep/hook/pythonpath.sh
+source;share/drone_controller_vrep/hook/ament_prefix_path.ps1
+source;share/drone_controller_vrep/hook/ament_prefix_path.dsv
+source;share/drone_controller_vrep/hook/ament_prefix_path.sh

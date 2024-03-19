@@ -1,0 +1,24 @@
+[0.744s] Invoking command in '/home/zain/Projects/MasterThesis/src/drone_controller_vrep': CONDA_PROMPT_MODIFIER=(MasterThesis) PYTHONPATH=/home/zain/Projects/MasterThesis/build/drone_controller_vrep/prefix_override:/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages:${PYTHONPATH} VSCODE_ENV_PREPEND=PATH=/home/zain/.modular/pkg/packages.modular.com_mojo/bin\x3a/opt/anaconda3/envs/MasterThesis/bin\x3a/opt/anaconda3/condabin\x3a/home/zain/bin\x3a/usr/local/bin\x3a/opt/gcc-arm-none-eabi-9-2020-q2-update/bin\x3a/home/zain/.cargo/bin\x3a/home/zain/.local/bin\x3a/usr/local/sbin\x3a/usr/local/bin\x3a/usr/sbin\x3a/usr/bin\x3a/sbin\x3a/bin\x3a/usr/games\x3a/usr/local/games\x3a/snap/bin\x3a:PS1=(MasterThesis) /usr/bin/python3 setup.py egg_info --egg-base ../../build/drone_controller_vrep build --build-base /home/zain/Projects/MasterThesis/build/drone_controller_vrep/build install --record /home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log --single-version-externally-managed
+[0.963s] running egg_info
+[0.964s] writing ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/PKG-INFO
+[0.964s] writing dependency_links to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/dependency_links.txt
+[0.964s] writing entry points to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/entry_points.txt
+[0.965s] writing requirements to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/requires.txt
+[0.965s] writing top-level names to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/top_level.txt
+[0.968s] reading manifest file '../../build/drone_controller_vrep/drone_controller_vrep.egg-info/SOURCES.txt'
+[0.968s] adding license file 'LICENSE'
+[0.968s] writing manifest file '../../build/drone_controller_vrep/drone_controller_vrep.egg-info/SOURCES.txt'
+[0.968s] running build
+[0.969s] running build_py
+[0.969s] running install
+[0.969s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.969s]   warnings.warn(
+[0.969s] running install_lib
+[0.970s] running install_data
+[0.971s] running install_egg_info
+[0.972s] removing '/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages/drone_controller_vrep-0.1.0-py3.10.egg-info' (and everything under it)
+[0.972s] Copying ../../build/drone_controller_vrep/drone_controller_vrep.egg-info to /home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages/drone_controller_vrep-0.1.0-py3.10.egg-info
+[0.973s] running install_scripts
+[0.991s] Installing drone_feedback_controller script to /home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/drone_controller_vrep
+[0.991s] writing list of installed files to '/home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log'
+[1.020s] Invoked command in '/home/zain/Projects/MasterThesis/src/drone_controller_vrep' returned '0': CONDA_PROMPT_MODIFIER=(MasterThesis) PYTHONPATH=/home/zain/Projects/MasterThesis/build/drone_controller_vrep/prefix_override:/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages:${PYTHONPATH} VSCODE_ENV_PREPEND=PATH=/home/zain/.modular/pkg/packages.modular.com_mojo/bin\x3a/opt/anaconda3/envs/MasterThesis/bin\x3a/opt/anaconda3/condabin\x3a/home/zain/bin\x3a/usr/local/bin\x3a/opt/gcc-arm-none-eabi-9-2020-q2-update/bin\x3a/home/zain/.cargo/bin\x3a/home/zain/.local/bin\x3a/usr/local/sbin\x3a/usr/local/bin\x3a/usr/sbin\x3a/usr/bin\x3a/sbin\x3a/bin\x3a/usr/games\x3a/usr/local/games\x3a/snap/bin\x3a:PS1=(MasterThesis) /usr/bin/python3 setup.py egg_info --egg-base ../../build/drone_controller_vrep build --build-base /home/zain/Projects/MasterThesis/build/drone_controller_vrep/build install --record /home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log --single-version-externally-managed

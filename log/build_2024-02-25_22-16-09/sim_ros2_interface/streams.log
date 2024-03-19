@@ -1,0 +1,62 @@
+[0.051s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[0.122s] [  7%] [34m[1mGenerating generated/actcli_new.cpp[0m
+[0.122s] [  7%] [34m[1mGenerating generated/actcli_cancelLastGoal.cpp[0m
+[0.122s] [ 15%] [34m[1mGenerating generated/actsrv_action_abort.cpp[0m
+[0.122s] [ 15%] [34m[1mGenerating generated/actsrv_action_execute.cpp[0m
+[0.123s] [ 17%] [34m[1mGenerating generated/actsrv_action_is_active.cpp[0m
+[0.123s] [ 20%] [34m[1mGenerating generated/actsrv_action_is_executing.cpp[0m
+[0.123s] [ 22%] [34m[1mGenerating generated/actsrv_action_is_canceling.cpp[0m
+[0.123s] [ 25%] [34m[1mGenerating generated/actcli_sendGoal.cpp[0m
+[0.123s] [ 25%] [34m[1mGenerating generated/actcli_del.cpp[0m
+[0.123s] [ 25%] [34m[1mGenerating generated/actsrv_action_canceled.cpp[0m
+[0.123s] [ 27%] [34m[1mGenerating generated/actsrv_action_publish_feedback.cpp[0m
+[0.123s] [ 30%] [34m[1mGenerating generated/actsrv_action_succeed.cpp[0m
+[0.124s] [ 32%] [34m[1mGenerating generated/callbacks.h[0m
+[0.124s] [ 35%] [34m[1mGenerating generated/callbacks.cpp[0m
+[0.124s] [ 37%] [34m[1mGenerating generated/actsrv_new.cpp[0m
+[0.126s] [ 40%] [34m[1mGenerating generated/actsrv_del.cpp[0m
+[0.603s] [ 42%] [34m[1mGenerating generated/cli_del.cpp[0m
+[0.603s] [ 45%] [34m[1mGenerating generated/cli_wait.cpp[0m
+[0.604s] [ 47%] [34m[1mGenerating generated/if_const.cpp[0m
+[0.604s] [ 52%] [34m[1mGenerating generated/cli_new.cpp[0m
+[0.606s] [ 52%] [34m[1mGenerating generated/cli_call.cpp[0m
+[0.612s] [ 55%] [34m[1mGenerating generated/if_list.cpp[0m
+[0.615s] [ 57%] [34m[1mGenerating generated/if_new.cpp[0m
+[0.623s] [ 60%] [34m[1mGenerating generated/pub_del.cpp[0m
+[0.623s] [ 67%] [34m[1mGenerating generated/srv_del.cpp[0m
+[0.623s] [ 67%] [34m[1mGenerating generated/pub_new.cpp[0m
+[0.623s] [ 67%] [34m[1mGenerating generated/pub_publish.cpp[0m
+[0.624s] [ 70%] [34m[1mGenerating generated/srv_new.cpp[0m
+[0.624s] [ 72%] [34m[1mGenerating generated/sub_del.cpp[0m
+[0.632s] [ 75%] [34m[1mGenerating generated/sub_new.cpp[0m
+[1.052s] [ 75%] Built target generate_ros_code
+[1.125s] [ 77%] [32mBuilding CXX object CMakeFiles/simROS2.dir/src/sim_ros2_interface.cpp.o[0m
+[1.125s] [ 80%] [32mBuilding CXX object CMakeFiles/simROS2.dir/generated/callbacks.cpp.o[0m
+[152.335s] [ 82%] [32m[1mLinking CXX shared library libsimROS2.so[0m
+[153.530s] [100%] Built target simROS2
+[153.538s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[153.565s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[153.570s] -- Install configuration: "Release"
+[153.570s] -- Execute custom install script
+[153.570s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-typecheck.lua
+[153.570s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2.lua
+[153.571s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/en/simROS2.htm
+[153.571s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/index/simROS2.json
+[153.571s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-ce.lua
+[153.571s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/libsimROS2.so
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/package_run_dependencies/sim_ros2_interface
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/parent_prefix_path/sim_ros2_interface
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.sh
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.dsv
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.sh
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.dsv
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.bash
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.sh
+[153.572s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.zsh
+[153.573s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.dsv
+[153.573s] -- Symlinking: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.dsv
+[153.578s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/packages/sim_ros2_interface
+[153.579s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig.cmake
+[153.579s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig-version.cmake
+[153.579s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.xml
+[153.580s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface

@@ -1,0 +1,22 @@
+[0.644s] Invoking command in '/home/zain/Projects/MasterThesis/src/drone_controller_vrep': CONDA_PROMPT_MODIFIER=(MasterThesis) PYTHONPATH=/home/zain/Projects/MasterThesis/build/drone_controller_vrep/prefix_override:/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/drone_controller_vrep build --build-base /home/zain/Projects/MasterThesis/build/drone_controller_vrep/build install --record /home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log --single-version-externally-managed
+[0.844s] running egg_info
+[0.844s] writing ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/PKG-INFO
+[0.844s] writing dependency_links to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/dependency_links.txt
+[0.844s] writing entry points to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/entry_points.txt
+[0.844s] writing requirements to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/requires.txt
+[0.844s] writing top-level names to ../../build/drone_controller_vrep/drone_controller_vrep.egg-info/top_level.txt
+[0.845s] reading manifest file '../../build/drone_controller_vrep/drone_controller_vrep.egg-info/SOURCES.txt'
+[0.846s] adding license file 'LICENSE'
+[0.846s] writing manifest file '../../build/drone_controller_vrep/drone_controller_vrep.egg-info/SOURCES.txt'
+[0.847s] running build
+[0.847s] running install
+[0.847s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.847s]   warnings.warn(
+[0.847s] running install_data
+[0.847s] running install_egg_info
+[0.849s] removing '/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages/drone_controller_vrep-0.0.0-py3.10.egg-info' (and everything under it)
+[0.849s] Copying ../../build/drone_controller_vrep/drone_controller_vrep.egg-info to /home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages/drone_controller_vrep-0.0.0-py3.10.egg-info
+[0.850s] running install_scripts
+[0.864s] Installing drone_feedback_controller script to /home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/drone_controller_vrep
+[0.864s] writing list of installed files to '/home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log'
+[0.879s] Invoked command in '/home/zain/Projects/MasterThesis/src/drone_controller_vrep' returned '0': CONDA_PROMPT_MODIFIER=(MasterThesis) PYTHONPATH=/home/zain/Projects/MasterThesis/build/drone_controller_vrep/prefix_override:/home/zain/Projects/MasterThesis/install/drone_controller_vrep/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/drone_controller_vrep build --build-base /home/zain/Projects/MasterThesis/build/drone_controller_vrep/build install --record /home/zain/Projects/MasterThesis/build/drone_controller_vrep/install.log --single-version-externally-managed

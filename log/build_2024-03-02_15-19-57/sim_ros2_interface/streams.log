@@ -1,0 +1,144 @@
+[0.069s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake /home/zain/Projects/MasterThesis/src/sim_ros2_interface -DCMAKE_INSTALL_PREFIX=/home/zain/Projects/MasterThesis/install/sim_ros2_interface
+[0.101s] -- The C compiler identification is GNU 11.4.0
+[0.139s] -- The CXX compiler identification is GNU 11.4.0
+[0.146s] -- Detecting C compiler ABI info
+[0.186s] -- Detecting C compiler ABI info - done
+[0.199s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.199s] -- Detecting C compile features
+[0.200s] -- Detecting C compile features - done
+[0.202s] -- Detecting CXX compiler ABI info
+[0.250s] -- Detecting CXX compiler ABI info - done
+[0.263s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.263s] -- Detecting CXX compile features
+[0.264s] -- Detecting CXX compile features - done
+[0.264s] -- Found ament_cmake: 1.3.8 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.356s] -- Found Python3: /opt/anaconda3/envs/MasterThesis/bin/python3 (found version "3.11.7") found components: Interpreter
+[0.405s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.412s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[0.414s] -- Found diagnostic_msgs: 4.2.3 (/opt/ros/humble/share/diagnostic_msgs/cmake)
+[0.437s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.440s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.445s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.455s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.470s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.574s] -- Found geometry_msgs: 4.2.3 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.613s] -- Found lifecycle_msgs: 1.2.1 (/opt/ros/humble/share/lifecycle_msgs/cmake)
+[0.628s] -- Found map_msgs: 2.1.0 (/opt/ros/humble/share/map_msgs/cmake)
+[0.916s] -- Found pendulum_msgs: 0.20.3 (/opt/ros/humble/share/pendulum_msgs/cmake)
+[0.943s] -- Found rosgraph_msgs: 1.2.1 (/opt/ros/humble/share/rosgraph_msgs/cmake)
+[0.973s] -- Found shape_msgs: 4.2.3 (/opt/ros/humble/share/shape_msgs/cmake)
+[1.021s] -- Found stereo_msgs: 4.2.3 (/opt/ros/humble/share/stereo_msgs/cmake)
+[1.095s] -- Found tf2_geometry_msgs: 0.25.6 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[1.100s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[1.101s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[1.210s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.211s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.319s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.680s] -- Found trajectory_msgs: 4.2.3 (/opt/ros/humble/share/trajectory_msgs/cmake)
+[1.752s] -- Found visualization_msgs: 4.2.3 (/opt/ros/humble/share/visualization_msgs/cmake)
+[1.856s] -- Found std_srvs: 4.2.3 (/opt/ros/humble/share/std_srvs/cmake)
+[1.871s] -- Found example_interfaces: 0.9.3 (/opt/ros/humble/share/example_interfaces/cmake)
+[1.921s] -- Found image_transport: 3.1.8 (/opt/ros/humble/share/image_transport/cmake)
+[1.962s] -- CoppeliaSim: COPPELIASIM_INCLUDE_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include
+[1.962s] -- CoppeliaSim: COPPELIASIM_ROOT_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04
+[1.962s] -- Checking CoppeliaSim header version...
+[2.251s] -- CoppeliaSim headers version 4.6.0 rev18
+[2.251s] -- CoppeliaSim: COPPELIASIM_RESOURCES_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04
+[2.251s] -- CoppeliaSim: COPPELIASIM_PLUGINS_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04
+[2.251s] -- CoppeliaSim: COPPELIASIM_EXECUTABLES_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04
+[2.251s] -- CoppeliaSim: COPPELIASIM_LIBRARIES_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04
+[2.251s] -- CoppeliaSim: COPPELIASIM_ADDONS_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/addOns
+[2.251s] -- CoppeliaSim: COPPELIASIM_HELPFILES_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles
+[2.252s] -- CoppeliaSim: COPPELIASIM_MODELS_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/models
+[2.252s] -- CoppeliaSim: COPPELIASIM_SCENES_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/scenes
+[2.252s] -- CoppeliaSim: COPPELIASIM_LUA_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua
+[2.252s] -- CoppeliaSim: COPPELIASIM_PYTHON_DIR: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/python
+[2.252s] -- CoppeliaSim: COPPELIASIM_EXECUTABLE: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/coppeliaSim
+[2.255s] -- Found Boost: /opt/anaconda3/envs/MasterThesis/lib/cmake/Boost-1.84.0/BoostConfig.cmake (found version "1.84.0") found components: regex
+[2.367s] -- Found Boost: /opt/anaconda3/envs/MasterThesis/lib/cmake/Boost-1.84.0/BoostConfig.cmake (found version "1.84.0")
+[2.375s] -- Adding simStubsGen command...
+[2.465s] -- Reading plugin metadata...
+[3.145s] -- Plugin: simROS2
+[3.224s] -- Configuring done (3.2s)
+[3.248s] -- Generating done (0.0s)
+[3.250s] -- Build files have been written to: /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[3.259s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake /home/zain/Projects/MasterThesis/src/sim_ros2_interface -DCMAKE_INSTALL_PREFIX=/home/zain/Projects/MasterThesis/install/sim_ros2_interface
+[3.260s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[3.282s] [ 17%] [34m[1mGenerating generated/actcli_del.cpp[0m
+[3.282s] [ 17%] [34m[1mGenerating generated/actcli_sendGoal.cpp[0m
+[3.282s] [ 17%] [34m[1mGenerating generated/actcli_new.cpp[0m
+[3.282s] [ 17%] [34m[1mGenerating generated/actsrv_action_execute.cpp[0m
+[3.282s] [ 20%] [34m[1mGenerating generated/actsrv_action_is_active.cpp[0m
+[3.282s] [ 17%] [34m[1mGenerating generated/actsrv_action_canceled.cpp[0m
+[3.283s] [ 17%] [34m[1mGenerating generated/actcli_cancelLastGoal.cpp[0m
+[3.283s] [ 22%] [34m[1mGenerating generated/actsrv_action_is_executing.cpp[0m
+[3.283s] [ 25%] [34m[1mGenerating generated/actsrv_action_is_canceling.cpp[0m
+[3.283s] [ 27%] [34m[1mGenerating generated/actsrv_action_publish_feedback.cpp[0m
+[3.283s] [ 32%] [34m[1mGenerating generated/actsrv_new.cpp[0m
+[3.283s] [ 35%] [34m[1mGenerating generated/actsrv_del.cpp[0m
+[3.283s] [ 35%] [34m[1mGenerating generated/actsrv_action_succeed.cpp[0m
+[3.283s] [ 17%] [34m[1mGenerating generated/actsrv_action_abort.cpp[0m
+[3.283s] [ 37%] [34m[1mGenerating generated/callbacks.cpp[0m
+[3.286s] [ 40%] [34m[1mGenerating generated/callbacks.h[0m
+[3.755s] [ 42%] [34m[1mGenerating generated/cli_del.cpp[0m
+[3.756s] [ 45%] [34m[1mGenerating generated/cli_call.cpp[0m
+[3.756s] [ 50%] [34m[1mGenerating generated/if_const.cpp[0m
+[3.757s] [ 50%] [34m[1mGenerating generated/cli_wait.cpp[0m
+[3.757s] [ 52%] [34m[1mGenerating generated/if_list.cpp[0m
+[3.757s] [ 55%] [34m[1mGenerating generated/if_new.cpp[0m
+[3.757s] [ 57%] [34m[1mGenerating generated/cli_new.cpp[0m
+[3.758s] [ 60%] [34m[1mGenerating generated/pub_del.cpp[0m
+[3.760s] [ 65%] [34m[1mGenerating generated/pub_publish.cpp[0m
+[3.760s] [ 65%] [34m[1mGenerating generated/pub_new.cpp[0m
+[3.760s] [ 67%] [34m[1mGenerating generated/srv_del.cpp[0m
+[3.761s] [ 70%] [34m[1mGenerating generated/srv_new.cpp[0m
+[3.769s] [ 75%] [34m[1mGenerating generated/sub_new.cpp[0m
+[3.770s] [ 75%] [34m[1mGenerating generated/sub_del.cpp[0m
+[4.161s] [ 75%] Built target generate_ros_code
+[4.171s] [ 77%] [34m[1mGenerating generated/stubs.cpp, generated/stubs.h, generated/plugin.h, generated/stubsPlusPlus.cpp, generated/index.json, generated/reference.html, generated/typecheck.lua[0m
+[4.205s] /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/generate.py --verbose --xml-file /home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml --gen-all /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated --lua-file /home/zain/Projects/MasterThesis/src/sim_ros2_interface/lua/simROS2.lua
+[4.494s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/generate_lua_xml.py /home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml /home/zain/Projects/MasterThesis/src/sim_ros2_interface/lua/simROS2.lua /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/lua.xml
+[4.826s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/merge_xml.py /home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/lua.xml /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/reference.xml
+[4.852s] xsltproc -o /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/reference.html /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/xsl/reference.xsl /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/reference.xml
+[4.869s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/generate_lua_typechecker.py /home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml /home/zain/Projects/MasterThesis/src/sim_ros2_interface/lua/simROS2.lua /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/lua.xml /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/typecheck.lua
+[5.196s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/generate_api_index.py /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/reference.xml /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/index.json
+[5.498s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/generate_ce.py /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/reference.xml /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/ce.lua
+[5.800s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/external/pycpp/pycpp.py -p xml_file=/home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml -P /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen -i /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/cpp/stubs.cpp -o /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/stubs.cpp
+[6.116s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/external/pycpp/pycpp.py -p xml_file=/home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml -P /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen -i /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/cpp/stubs.h -o /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/stubs.h
+[6.425s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/external/pycpp/pycpp.py -p xml_file=/home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml -P /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen -i /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/cpp/plugin.h -o /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/plugin.h
+[6.773s] /opt/anaconda3/envs/MasterThesis/bin/python3 /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/external/pycpp/pycpp.py -p xml_file=/home/zain/Projects/MasterThesis/src/sim_ros2_interface/meta/callbacks.xml -P /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen -i /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simStubsGen/cpp/stubsPlusPlus.cpp -o /home/zain/Projects/MasterThesis/build/sim_ros2_interface/generated/stubsPlusPlus.cpp
+[7.159s] [ 80%] [32mBuilding CXX object CMakeFiles/simROS2.dir/opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simLib/simLib.cpp.o[0m
+[7.177s] [ 82%] [32mBuilding CXX object CMakeFiles/simROS2.dir/generated/stubs.cpp.o[0m
+[7.177s] [ 85%] [32mBuilding CXX object CMakeFiles/simROS2.dir/opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simPlusPlus/Lib.cpp.o[0m
+[7.178s] [ 87%] [32mBuilding CXX object CMakeFiles/simROS2.dir/opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/programming/include/simPlusPlus/Plugin.cpp.o[0m
+[7.184s] [ 90%] [32mBuilding CXX object CMakeFiles/simROS2.dir/src/sim_ros2_interface.cpp.o[0m
+[7.184s] [ 92%] [32mBuilding CXX object CMakeFiles/simROS2.dir/src/ros_msg_builtin_io.cpp.o[0m
+[7.187s] [ 95%] [32mBuilding CXX object CMakeFiles/simROS2.dir/generated/callbacks.cpp.o[0m
+[147.791s] [ 97%] [32m[1mLinking CXX shared library libsimROS2.so[0m
+[150.160s] [100%] Built target simROS2
+[150.168s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[150.188s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[150.191s] -- Install configuration: "Release"
+[150.192s] -- Execute custom install script
+[150.192s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-typecheck.lua
+[150.192s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2.lua
+[150.193s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/en/simROS2.htm
+[150.193s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/index/simROS2.json
+[150.193s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-ce.lua
+[150.193s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/libsimROS2.so
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/package_run_dependencies/sim_ros2_interface
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/parent_prefix_path/sim_ros2_interface
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.sh
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.dsv
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.sh
+[150.194s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.dsv
+[150.195s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.bash
+[150.195s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.sh
+[150.195s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.zsh
+[150.195s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.dsv
+[150.195s] -- Symlinking: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.dsv
+[150.198s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/packages/sim_ros2_interface
+[150.198s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig.cmake
+[150.198s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig-version.cmake
+[150.198s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.xml
+[150.199s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface

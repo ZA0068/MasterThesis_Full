@@ -1,0 +1,1 @@
+/home/zain/Projects/MasterThesis/build/sim_ros2_interface/ament_cmake_environment_hooks/local_setup.bash

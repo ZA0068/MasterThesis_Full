@@ -1,0 +1,30 @@
+[0.086s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[0.121s] [ 75%] Built target generate_ros_code
+[0.136s] [35m[1mConsolidate compiler generated dependencies of target simROS2[0m
+[0.181s] [100%] Built target simROS2
+[0.188s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface -- -j16 -l16
+[0.216s] Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[0.219s] -- Install configuration: "Release"
+[0.220s] -- Execute custom install script
+[0.220s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-typecheck.lua
+[0.220s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2.lua
+[0.220s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/en/simROS2.htm
+[0.220s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/helpFiles/index/simROS2.json
+[0.221s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/lua/simROS2-ce.lua
+[0.221s] -- Up-to-date symlink: /opt/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04/libsimROS2.so
+[0.221s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/package_run_dependencies/sim_ros2_interface
+[0.221s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/parent_prefix_path/sim_ros2_interface
+[0.221s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.sh
+[0.221s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/ament_prefix_path.dsv
+[0.221s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.sh
+[0.222s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/environment/path.dsv
+[0.222s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.bash
+[0.222s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.sh
+[0.222s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.zsh
+[0.222s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/local_setup.dsv
+[0.222s] -- Symlinking: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.dsv
+[0.227s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/ament_index/resource_index/packages/sim_ros2_interface
+[0.227s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig.cmake
+[0.227s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/cmake/sim_ros2_interfaceConfig-version.cmake
+[0.227s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.xml
+[0.229s] Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface

@@ -1,0 +1,684 @@
+-- Found ament_cmake: 1.3.8 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 16.0.8 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found geometry_msgs: 4.2.3 (/opt/ros/humble/share/geometry_msgs/cmake)
+-- Found ament_lint_auto: 0.12.10 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (0.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/zain/Projects/MasterThesis/build/drone_controller_vrep
+[ 66%] [32mBuilding CXX object CMakeFiles/controller.dir/src/drone_feedback_controller.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/controller.dir/src/OIAC.cpp.o[0m
+In file included from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/drone_feedback_controller.cpp:1[m[K:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/drone_feedback_controller.hpp:1:10:[m[K [01;31m[Kfatal error: [m[Kboost/chrono: No such file or directory
+    1 | #include [01;31m[K<boost/chrono>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/controller.dir/build.make:76: CMakeFiles/controller.dir/src/drone_feedback_controller.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+In file included from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:30:54:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+   30 |         void set_lower_and_upper_bound(double, double[01;31m[K)[m[K
+      |                                                      [01;31m[K^[m[K
+      |                                                       [32m[K;[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In constructor ‘[01m[KOIAC::OIAC(double, double, double)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:9:21:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Kdouble[m[K’ to ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’
+    9 |     set_feedforward([01;31m[K0.0[m[K);
+      |                     [01;31m[K^~~[m[K
+      |                     [01;31m[K|[m[K
+      |                     [01;31m[Kdouble[m[K
+In file included from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:29:30:[m[K [01;36m[Knote: [m[K  initializing argument 1 of ‘[01m[Kvoid OIAC::set_feedforward(boost::numeric::ublas::vector<double>)[m[K’
+   29 |         void set_feedforward([01;36m[Kublas::vector<double>[m[K);
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In constructor ‘[01m[KOIAC::OIAC(double, double, double, double, double)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:27:21:[m[K [01;31m[Kerror: [m[K‘[01m[Kfeedforward[m[K’ was not declared in this scope; did you mean ‘[01m[K_feedforward[m[K’?
+   27 |     set_feedforward([01;31m[Kfeedforward[m[K);
+      |                     [01;31m[K^~~~~~~~~~~[m[K
+      |                     [32m[K_feedforward[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In member function ‘[01m[Kboost::numeric::ublas::vector<double> OIAC::calculate_gamma(boost::numeric::ublas::vector<double>)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kpow(boost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type)[m[K’
+   63 |     return _a / (1 + _b * [01;31m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;31m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/c++/11/complex:44[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/cmath:415:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class _Up> constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up)[m[K’
+  415 |     [01;36m[Kpow[m[K(_Tp __x, _Up __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/cmath:415:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1019:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::pow(const std::complex<_Tp>&, int)[m[K’
+ 1019 |     [01;36m[Kpow[m[K(const complex<_Tp>& __z, int __n)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1019:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst std::complex<_Tp>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type[m[K’ {aka ‘[01m[Kdouble[m[K’}
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1028:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::pow(const std::complex<_Tp>&, const _Tp&)[m[K’
+ 1028 |     [01;36m[Kpow[m[K(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1028:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst std::complex<_Tp>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type[m[K’ {aka ‘[01m[Kdouble[m[K’}
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1062:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::pow(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+ 1062 |     [01;36m[Kpow[m[K(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1062:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst std::complex<_Tp>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type[m[K’ {aka ‘[01m[Kdouble[m[K’}
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1073:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::pow(const _Tp&, const std::complex<_Tp>&)[m[K’
+ 1073 |     [01;36m[Kpow[m[K(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1073:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1883:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class _Up> std::complex<typename __gnu_cxx::__promote_2<_Tp, _Up>::__type> std::pow(const std::complex<_Tp>&, const _Up&)[m[K’
+ 1883 |     [01;36m[Kpow[m[K(const std::complex<_Tp>& __x, const _Up& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1883:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst std::complex<_Tp>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type[m[K’ {aka ‘[01m[Kdouble[m[K’}
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1891:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class _Up> std::complex<typename __gnu_cxx::__promote_2<_Tp, _Up>::__type> std::pow(const _Tp&, const std::complex<_Up>&)[m[K’
+ 1891 |     [01;36m[Kpow[m[K(const _Tp& __x, const std::complex<_Up>& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1891:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:1899:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class _Up> std::complex<typename __gnu_cxx::__promote_2<_Tp, _Up>::__type> std::pow(const std::complex<_Tp>&, const std::complex<_Up>&)[m[K’
+ 1899 |     [01;36m[Kpow[m[K(const std::complex<_Tp>& __x, const std::complex<_Up>& __y)
+      |     [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/complex:1899:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:35:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst std::complex<_Tp>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector_scalar_unary_traits<boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector_norm_2<boost::numeric::ublas::vector<double> > >::result_type[m[K’ {aka ‘[01m[Kdouble[m[K’}
+   63 |     return _a / (1 + _b * [01;36m[Kstd::pow(ublas::norm_2(epsilon))[m[K, 2));
+      |                           [01;36m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/features.h:486[m[K,
+                 from [01m[K/usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:39[m[K,
+                 from [01m[K/usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:586[m[K,
+                 from [01m[K/usr/include/c++/11/cstddef:49[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/config/compiler/gcc.hpp:165[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/config.hpp:39[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:20[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/x86_64-linux-gnu/bits/mathcalls.h:140:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kdouble pow(double, double)[m[K’
+  140 | [01;36m[K__MATHCALL_VEC[m[K (pow,, (_Mdouble_ __x, _Mdouble_ __y));
+      | [01;36m[K^~~~~~~~~~~~~~[m[K
+[01m[K/usr/include/x86_64-linux-gnu/bits/mathcalls.h:140:1:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+In file included from [01m[K/usr/include/c++/11/complex:44[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/cmath:388:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr float std::pow(float, float)[m[K’
+  388 |   [01;36m[Kpow[m[K(float __x, float __y)
+      |   [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/cmath:388:3:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+[01m[K/usr/include/c++/11/cmath:392:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr long double std::pow(long double, long double)[m[K’
+  392 |   [01;36m[Kpow[m[K(long double __x, long double __y)
+      |   [01;36m[K^~~[m[K
+[01m[K/usr/include/c++/11/cmath:392:3:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:63:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[K)[m[K’ token
+   63 |     return _a / (1 + _b * std::pow(ublas::norm_2(epsilon)), 2)[01;31m[K)[m[K;
+      |                                                               [01;31m[K^[m[K
+      |                                                               [32m[K;[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:63:63:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K)[m[K’ token
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In member function ‘[01m[Kboost::numeric::ublas::vector<double> OIAC::calculate_F(boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:20:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator/[m[K’ (operand types are ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’)
+   67 |     return [32m[Kepsilon[m[K [01;31m[K/[m[K [34m[Kgamma[m[K;
+      |            [32m[K~~~~~~~[m[K [01;31m[K^[m[K [34m[K~~~~~[m[K
+      |            [32m[K|[m[K         [34m[K|[m[K
+      |            [32m[K|[m[K         [34m[Kvector<[...]>[m[K
+      |            [32m[Kvector<[...]>[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:422:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator/(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+  422 |     [01;36m[Koperator[m[K/(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:422:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:431:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator/(const std::complex<_Tp>&, const _Tp&)[m[K’
+  431 |     [01;36m[Koperator[m[K/(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:431:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:440:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator/(const _Tp&, const std::complex<_Tp>&)[m[K’
+  440 |     [01;36m[Koperator[m[K/(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:440:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:137:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator/(I, const std::complex<_Tp>&)[m[K’
+  137 |       std::complex<R> >::type inline [01;36m[Koperator[m[K/ (I in1, std::complex<R> const& in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:137:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:147:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator/(const std::complex<_Tp>&, I)[m[K’
+  147 |       std::complex<R> >::type inline [01;36m[Koperator[m[K/ (std::complex<R> const& in1, I in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:147:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:22[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1496:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_divides<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator/(const boost::numeric::ublas::vector_expression<E>&, const T2&)[m[K’
+ 1496 |     [01;36m[Koperator[m[K / (const vector_expression<E1> &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1496:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_divides<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator/(const boost::numeric::ublas::vector_expression<E>&, const T2&) [with E1 = boost::numeric::ublas::vector<double>; T2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1496:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar2<boost::numeric::ublas::vector<double>, const boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_divides<double, boost::numeric::ublas::vector<double> > > >[m[K’
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:4006:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::matrix_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_divides<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator/(const boost::numeric::ublas::matrix_expression<E>&, const T2&)[m[K’
+ 4006 | [01;36m[Koperator[m[K / (const matrix_expression<E1> &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:4006:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:67:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E>[m[K’
+   67 |     return epsilon / [01;36m[Kgamma[m[K;
+      |                      [01;36m[K^~~~~[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In member function ‘[01m[Kboost::numeric::ublas::vector<double> OIAC::calculate_K(boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:14:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator*[m[K’ (operand types are ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’)
+   71 |     return [32m[KF[m[K [01;31m[K*[m[K [34m[Ke[m[K;
+      |            [32m[K~[m[K [01;31m[K^[m[K [34m[K~[m[K
+      |            [32m[K|[m[K   [34m[K|[m[K
+      |            [32m[K|[m[K   [34m[Kvector<[...]>[m[K
+      |            [32m[Kvector<[...]>[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+  392 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const _Tp&)[m[K’
+  401 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const _Tp&, const std::complex<_Tp>&)[m[K’
+  410 |     [01;36m[Koperator[m[K*(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(I, const std::complex<_Tp>&)[m[K’
+  117 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (I in1, std::complex<R> const& in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(const std::complex<_Tp>&, I)[m[K’
+  127 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (std::complex<R> const& in1, I in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:22[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&)[m[K’
+ 1241 |     [01;36m[Koperator[m[K * (const T1 &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&) [with T1 = boost::numeric::ublas::vector<double>; E2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar1<const boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<boost::numeric::ublas::vector<double>, double> > >[m[K’
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&)[m[K’
+ 1484 |     [01;36m[Koperator[m[K * (const vector_expression<E1> &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&) [with E1 = boost::numeric::ublas::vector<double>; T2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar2<boost::numeric::ublas::vector<double>, const boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<double, boost::numeric::ublas::vector<double> > > >[m[K’
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::matrix_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::matrix_expression<E2>&)[m[K’
+ 3466 | [01;36m[Koperator[m[K * (const T1 &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E2>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::matrix_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::matrix_expression<E>&, const T2&)[m[K’
+ 3994 | [01;36m[Koperator[m[K * (const matrix_expression<E1> &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:71:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E>[m[K’
+   71 |     return F * [01;36m[Ke[m[K;
+      |                [01;36m[K^[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In member function ‘[01m[Kboost::numeric::ublas::vector<double> OIAC::calculate_D(boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:14:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator*[m[K’ (operand types are ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’)
+   75 |     return [32m[KF[m[K [01;31m[K*[m[K [34m[Ke_dot[m[K;
+      |            [32m[K~[m[K [01;31m[K^[m[K [34m[K~~~~~[m[K
+      |            [32m[K|[m[K   [34m[K|[m[K
+      |            [32m[K|[m[K   [34m[Kvector<[...]>[m[K
+      |            [32m[Kvector<[...]>[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+  392 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const _Tp&)[m[K’
+  401 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const _Tp&, const std::complex<_Tp>&)[m[K’
+  410 |     [01;36m[Koperator[m[K*(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(I, const std::complex<_Tp>&)[m[K’
+  117 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (I in1, std::complex<R> const& in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(const std::complex<_Tp>&, I)[m[K’
+  127 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (std::complex<R> const& in1, I in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:22[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&)[m[K’
+ 1241 |     [01;36m[Koperator[m[K * (const T1 &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&) [with T1 = boost::numeric::ublas::vector<double>; E2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar1<const boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<boost::numeric::ublas::vector<double>, double> > >[m[K’
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&)[m[K’
+ 1484 |     [01;36m[Koperator[m[K * (const vector_expression<E1> &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&) [with E1 = boost::numeric::ublas::vector<double>; T2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar2<boost::numeric::ublas::vector<double>, const boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<double, boost::numeric::ublas::vector<double> > > >[m[K’
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::matrix_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::matrix_expression<E2>&)[m[K’
+ 3466 | [01;36m[Koperator[m[K * (const T1 &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E2>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::matrix_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::matrix_expression<E>&, const T2&)[m[K’
+ 3994 | [01;36m[Koperator[m[K * (const matrix_expression<E1> &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:75:16:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E>[m[K’
+   75 |     return F * [01;36m[Ke_dot[m[K;
+      |                [01;36m[K^~~~~[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:[m[K In member function ‘[01m[Kboost::numeric::ublas::vector<double> OIAC::run(boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>)[m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:17:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator*[m[K’ (operand types are ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’)
+   86 |     return F + [32m[KK[m[K[01;31m[K*[m[K[34m[Ke[m[K + D*e_dot + feedforward;
+      |                [32m[K~[m[K[01;31m[K^[m[K[34m[K~[m[K
+      |                [32m[K|[m[K [34m[K|[m[K
+      |                [32m[K|[m[K [34m[Kvector<[...]>[m[K
+      |                [32m[Kvector<[...]>[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+  392 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const _Tp&)[m[K’
+  401 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const _Tp&, const std::complex<_Tp>&)[m[K’
+  410 |     [01;36m[Koperator[m[K*(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(I, const std::complex<_Tp>&)[m[K’
+  117 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (I in1, std::complex<R> const& in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(const std::complex<_Tp>&, I)[m[K’
+  127 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (std::complex<R> const& in1, I in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:22[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&)[m[K’
+ 1241 |     [01;36m[Koperator[m[K * (const T1 &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&) [with T1 = boost::numeric::ublas::vector<double>; E2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar1<const boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<boost::numeric::ublas::vector<double>, double> > >[m[K’
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&)[m[K’
+ 1484 |     [01;36m[Koperator[m[K * (const vector_expression<E1> &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&) [with E1 = boost::numeric::ublas::vector<double>; T2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar2<boost::numeric::ublas::vector<double>, const boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<double, boost::numeric::ublas::vector<double> > > >[m[K’
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::matrix_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::matrix_expression<E2>&)[m[K’
+ 3466 | [01;36m[Koperator[m[K * (const T1 &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E2>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::matrix_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::matrix_expression<E>&, const T2&)[m[K’
+ 3994 | [01;36m[Koperator[m[K * (const matrix_expression<E1> &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:18:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E>[m[K’
+   86 |     return F + K*[01;36m[Ke[m[K + D*e_dot + feedforward;
+      |                  [01;36m[K^[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:23:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator*[m[K’ (operand types are ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ and ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’)
+   86 |     return F + K*e + [32m[KD[m[K[01;31m[K*[m[K[34m[Ke_dot[m[K + feedforward;
+      |                      [32m[K~[m[K[01;31m[K^[m[K[34m[K~~~~~[m[K
+      |                      [32m[K|[m[K [34m[K|[m[K
+      |                      [32m[K|[m[K [34m[Kvector<[...]>[m[K
+      |                      [32m[Kvector<[...]>[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const std::complex<_Tp>&)[m[K’
+  392 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:392:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const std::complex<_Tp>&, const _Tp&)[m[K’
+  401 |     [01;36m[Koperator[m[K*(const complex<_Tp>& __x, const _Tp& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:401:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:17[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::complex<_Tp> std::operator*(const _Tp&, const std::complex<_Tp>&)[m[K’
+  410 |     [01;36m[Koperator[m[K*(const _Tp& __x, const complex<_Tp>& __y)
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/c++/11/complex:410:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(I, const std::complex<_Tp>&)[m[K’
+  117 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (I in1, std::complex<R> const& in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:117:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/storage.hpp:27[m[K,
+                 from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:21[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class R, class I> typename boost::enable_if<boost::mpl::and_<boost::is_float<R>, boost::is_integral<I> >, std::complex<_Tp> >::type boost::numeric::ublas::operator*(const std::complex<_Tp>&, I)[m[K’
+  127 |       std::complex<R> >::type inline [01;36m[Koperator[m[K* (std::complex<R> const& in1, I in2) {
+      |                                      [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/traits.hpp:127:38:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector.hpp:22[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:2[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&)[m[K’
+ 1241 |     [01;36m[Koperator[m[K * (const T1 &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::vector_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::vector_expression<E2>&) [with T1 = boost::numeric::ublas::vector<double>; E2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1241:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar1<const boost::numeric::ublas::vector<double>, boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<boost::numeric::ublas::vector<double>, double> > >[m[K’
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&)[m[K’
+ 1484 |     [01;36m[Koperator[m[K * (const vector_expression<E1> &e1,
+      |     [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp: In substitution of ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::vector_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::vector_expression<E>&, const T2&) [with E1 = boost::numeric::ublas::vector<double>; T2 = boost::numeric::ublas::vector<double>][m[K’:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K   required from here
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/vector_expression.hpp:1484:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct boost::enable_if<boost::is_convertible<boost::numeric::ublas::vector<double>, double>, boost::numeric::ublas::vector_binary_scalar2<boost::numeric::ublas::vector<double>, const boost::numeric::ublas::vector<double>, boost::numeric::ublas::scalar_multiplies<double, boost::numeric::ublas::vector<double> > > >[m[K’
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T1, class E2> typename boost::enable_if<boost::is_convertible<T1, typename E2::value_type>, typename boost::numeric::ublas::matrix_binary_scalar1_traits<const T1, E2, boost::numeric::ublas::scalar_multiplies<T1, typename E2::value_type> >::result_type>::type boost::numeric::ublas::operator*(const T1&, const boost::numeric::ublas::matrix_expression<E2>&)[m[K’
+ 3466 | [01;36m[Koperator[m[K * (const T1 &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3466:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E2>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+In file included from [01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix.hpp:19[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/include/drone_controller_vrep/OIAC.hpp:3[m[K,
+                 from [01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1[m[K:
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class E1, class T2> typename boost::enable_if<boost::is_convertible<T2, typename E1::value_type>, typename boost::numeric::ublas::matrix_binary_scalar2_traits<E1, const T2, boost::numeric::ublas::scalar_multiplies<typename E1::value_type, T2> >::result_type>::type boost::numeric::ublas::operator*(const boost::numeric::ublas::matrix_expression<E>&, const T2&)[m[K’
+ 3994 | [01;36m[Koperator[m[K * (const matrix_expression<E1> &e1,
+      | [01;36m[K^~~~~~~~[m[K
+[01m[K/opt/anaconda3/envs/MasterThesis/include/boost/numeric/ublas/matrix_expression.hpp:3994:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:24:[m[K [01;36m[Knote: [m[K  ‘[01m[Kboost::numeric::ublas::vector<double>[m[K’ is not derived from ‘[01m[Kconst boost::numeric::ublas::matrix_expression<E>[m[K’
+   86 |     return F + K*e + D*[01;36m[Ke_dot[m[K + feedforward;
+      |                        [01;36m[K^~~~~[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:86:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kfeedforward[m[K’ was not declared in this scope; did you mean ‘[01m[K_feedforward[m[K’?
+   86 |     return F + K*e + D*e_dot + [01;31m[Kfeedforward[m[K;
+      |                                [01;31m[K^~~~~~~~~~~[m[K
+      |                                [32m[K_feedforward[m[K
+gmake[2]: *** [CMakeFiles/controller.dir/build.make:90: CMakeFiles/controller.dir/src/OIAC.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/controller.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

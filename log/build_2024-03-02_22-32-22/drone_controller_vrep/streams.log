@@ -1,0 +1,21 @@
+[0.104s] Invoking command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/drone_controller_vrep -- -j16 -l16
+[0.143s] Invoked command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/drone_controller_vrep -- -j16 -l16
+[0.178s] Invoking command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --install /home/zain/Projects/MasterThesis/build/drone_controller_vrep
+[0.184s] -- Install configuration: "Release"
+[0.185s] -- Execute custom install script
+[0.185s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/ament_index/resource_index/package_run_dependencies/drone_controller_vrep
+[0.186s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/ament_index/resource_index/parent_prefix_path/drone_controller_vrep
+[0.186s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/environment/ament_prefix_path.sh
+[0.187s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/environment/ament_prefix_path.dsv
+[0.187s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/environment/path.sh
+[0.187s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/environment/path.dsv
+[0.187s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/local_setup.bash
+[0.188s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/local_setup.sh
+[0.188s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/local_setup.zsh
+[0.188s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/local_setup.dsv
+[0.188s] -- Symlinking: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/package.dsv
+[0.200s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/ament_index/resource_index/packages/drone_controller_vrep
+[0.200s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/cmake/drone_controller_vrepConfig.cmake
+[0.200s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/cmake/drone_controller_vrepConfig-version.cmake
+[0.200s] -- Up-to-date symlink: /home/zain/Projects/MasterThesis/install/drone_controller_vrep/share/drone_controller_vrep/package.xml
+[0.204s] Invoked command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --install /home/zain/Projects/MasterThesis/build/drone_controller_vrep

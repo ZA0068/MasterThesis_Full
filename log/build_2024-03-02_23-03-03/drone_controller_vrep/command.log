@@ -1,0 +1,2 @@
+Invoking command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/drone_controller_vrep -- -j16 -l16
+Invoked command in '/home/zain/Projects/MasterThesis/build/drone_controller_vrep' returned '2': CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/local/bin/cmake --build /home/zain/Projects/MasterThesis/build/drone_controller_vrep -- -j16 -l16

@@ -1,0 +1,13 @@
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/drone_feedback_controller.cpp:1:10:[m[K [01;31m[Kfatal error: [m[Kdrone_controller_vrep/drone_feedback_controller.hpp: No such file or directory
+    1 | #include [01;31m[K"drone_controller_vrep/drone_feedback_controller.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/zain/Projects/MasterThesis/src/drone_controller_vrep/src/OIAC.cpp:1:10:[m[K [01;31m[Kfatal error: [m[Kdrone_controller_vrep/OIAC.hpp: No such file or directory
+    1 | #include [01;31m[K"drone_controller_vrep/OIAC.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+compilation terminated.
+gmake[2]: *** [CMakeFiles/controller.dir/build.make:90: CMakeFiles/controller.dir/src/OIAC.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/controller.dir/build.make:76: CMakeFiles/controller.dir/src/drone_feedback_controller.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/controller.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

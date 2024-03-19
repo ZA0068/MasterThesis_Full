@@ -1,0 +1,4 @@
+gmake[2]: *** Deleting file 'CMakeFiles/simROS2.dir/src/sim_ros2_interface.cpp.o'
+gmake[2]: *** [CMakeFiles/simROS2.dir/build.make:183: CMakeFiles/simROS2.dir/src/sim_ros2_interface.cpp.o] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:164: CMakeFiles/simROS2.dir/all] Interrupt
+gmake: *** [Makefile:146: all] Interrupt

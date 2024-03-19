@@ -1,0 +1,152 @@
+[0.894s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install', '--event-handlers', 'console_direct+', '--parallel-workers', '1']
+[0.895s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=1, event_handlers=['console_direct+'], ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f152d672ec0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f152e88bc10>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f152e88bc10>>)
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.934s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.934s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/zain/Projects/MasterThesis'
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.935s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.935s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.935s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['ignore', 'ignore_ament_install']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'ignore'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'ignore_ament_install'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['colcon_pkg']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'colcon_pkg'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['colcon_meta']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'colcon_meta'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['ros']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'ros'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['cmake', 'python']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'cmake'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'python'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extensions ['python_setup_py']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(Simulation) by extension 'python_setup_py'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.943s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.944s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extensions ['ignore', 'ignore_ament_install']
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extension 'ignore'
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extension 'ignore_ament_install'
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extensions ['colcon_pkg']
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extension 'colcon_pkg'
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extensions ['colcon_meta']
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extension 'colcon_meta'
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extensions ['ros']
+[0.945s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_ros2_interface) by extension 'ros'
+[0.948s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sim_ros2_interface' with type 'ros.ament_cmake' and name 'sim_ros2_interface'
+[0.948s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.948s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.948s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.948s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.948s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.029s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.029s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.058s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 321 installed packages in /opt/ros/humble
+[1.065s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_args' from command line to 'None'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_target' from command line to 'None'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_clean_cache' from command line to 'False'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_clean_first' from command line to 'False'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'cmake_force_configure' from command line to 'False'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'ament_cmake_args' from command line to 'None'
+[1.144s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'catkin_cmake_args' from command line to 'None'
+[1.145s] Level 5:colcon.colcon_core.verb:set package 'sim_ros2_interface' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.145s] DEBUG:colcon.colcon_core.verb:Building package 'sim_ros2_interface' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zain/Projects/MasterThesis/build/sim_ros2_interface', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zain/Projects/MasterThesis/install/sim_ros2_interface', 'merge_install': False, 'path': '/home/zain/Projects/MasterThesis/src/sim_ros2_interface', 'symlink_install': True, 'test_result_base': None}
+[1.158s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[1.172s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[1.172s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/zain/Projects/MasterThesis/src/sim_ros2_interface' with build type 'ament_cmake'
+[1.172s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/zain/Projects/MasterThesis/src/sim_ros2_interface'
+[1.187s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.187s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.187s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.220s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[103.386s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --build /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[103.420s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[103.590s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sim_ros2_interface)
+[103.591s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zain/Projects/MasterThesis/build/sim_ros2_interface' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(MasterThesis) /usr/bin/cmake --install /home/zain/Projects/MasterThesis/build/sim_ros2_interface
+[103.608s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface' for CMake module files
+[103.608s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface' for CMake config files
+[103.608s] Level 1:colcon.colcon_core.shell:create_environment_hook('sim_ros2_interface', 'cmake_prefix_path')
+[103.623s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.ps1'
+[103.630s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.dsv'
+[103.630s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.sh'
+[103.631s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/bin'
+[103.631s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/lib/pkgconfig/sim_ros2_interface.pc'
+[103.631s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/lib/python3.10/site-packages'
+[103.631s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/bin'
+[103.646s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.ps1'
+[103.646s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.dsv'
+[103.647s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.sh'
+[103.647s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.bash'
+[103.648s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.zsh'
+[103.648s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/colcon-core/packages/sim_ros2_interface)
+[103.696s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sim_ros2_interface)
+[103.710s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface' for CMake module files
+[103.711s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface' for CMake config files
+[103.711s] Level 1:colcon.colcon_core.shell:create_environment_hook('sim_ros2_interface', 'cmake_prefix_path')
+[103.725s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.ps1'
+[103.725s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.dsv'
+[103.726s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/hook/cmake_prefix_path.sh'
+[103.726s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/bin'
+[103.726s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/lib/pkgconfig/sim_ros2_interface.pc'
+[103.727s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/lib/python3.10/site-packages'
+[103.727s] Level 1:colcon.colcon_core.environment:checking '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/bin'
+[103.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.ps1'
+[103.742s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.dsv'
+[103.742s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.sh'
+[103.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.bash'
+[103.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/sim_ros2_interface/package.zsh'
+[103.743s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zain/Projects/MasterThesis/install/sim_ros2_interface/share/colcon-core/packages/sim_ros2_interface)
+[103.744s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[103.744s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[103.744s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[103.744s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[103.762s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[103.763s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[103.763s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[103.765s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[103.781s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zain/Projects/MasterThesis/install/local_setup.ps1'
+[103.781s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zain/Projects/MasterThesis/install/_local_setup_util_ps1.py'
+[103.783s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zain/Projects/MasterThesis/install/setup.ps1'
+[103.798s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zain/Projects/MasterThesis/install/local_setup.sh'
+[103.798s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zain/Projects/MasterThesis/install/_local_setup_util_sh.py'
+[103.798s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zain/Projects/MasterThesis/install/setup.sh'
+[103.813s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zain/Projects/MasterThesis/install/local_setup.bash'
+[103.814s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zain/Projects/MasterThesis/install/setup.bash'
+[103.829s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zain/Projects/MasterThesis/install/local_setup.zsh'
+[103.830s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zain/Projects/MasterThesis/install/setup.zsh'

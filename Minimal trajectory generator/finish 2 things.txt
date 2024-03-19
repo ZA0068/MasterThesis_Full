@@ -1,0 +1,19 @@
+finish 2 things
+
+1) drone maps an obstacle
+
+2) has base motion planner
+
+2-2) online modulate trajectory
+
+3) live drone demonstration
+
+6) vrep simulation
+
+7) merge trajectory planner and OIAC
+
+8) drone simulation
+
+4) motion replanning
+
+5) simulation
