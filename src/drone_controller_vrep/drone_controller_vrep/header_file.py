@@ -170,17 +170,15 @@ class Plotter:
         plt.plot(self.__trajectory_data[:, 0], self.__trajectory_data[:, 1], label=label, **kwargs)
 
     def plot_3D(self, **kwargs):
-        if kwargs.get('overlap_plot') is True or self.__ax_3d is None:
-            self.set_3d_figure()
+        self.set_3d_figure()
         self.plot_3d_data(**kwargs)
-        if kwargs.get('show_plot') is True:
-            self.display_labels_3d(**kwargs)
+        self.display_labels_3d(**kwargs)
 
     def set_3d_figure(self):
         self.__ax_3d = plt.figure().add_subplot(111, projection='3d')
 
     def plot_3d_data(self, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot', 'show_plot', 'overlap_plot'])
+        self._pop_multiple_keys(kwargs, ['save_plot'])
         self.plot_3d_trajectory(label='Trajectory', **kwargs)
         self.plot_3d_waypoints(label='Waypoints', **kwargs)
 
@@ -228,7 +226,7 @@ class Plotter:
         return os.path.join(directory_path, filename)
 
     def save_data(self, filename, DATA):
-        np.savetxt(self.get_file_location(filename), DATA, delimiter=",", fmt='%f')
+        np.savetxt(self.get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
 
     def plot_time_data_individually(self, **kwargs):
         for derivative in range(self.__max_derivative.value + 1):

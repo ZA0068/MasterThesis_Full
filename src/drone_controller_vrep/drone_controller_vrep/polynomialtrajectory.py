@@ -67,7 +67,7 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
 
     def validate_input_data(self):
         if self.__waypoints.shape[0] - 1 != self.__durations.shape[0]:
-            raise ValueError("Number of waypoints and duration must match")
+            raise ValueError(f"Number of waypoints and duration must match\n Waypoints: {self.__waypoints.shape[0]}\n Durations: {self.__durations.shape[0]}")
         
     def generate_nth_degrees(self, trajectory_type):
         if trajectory_type.__class__.__name__ == 'Degree':
