@@ -41,3 +41,7 @@ widgets.html
 
 # clion project files 
 .idea/
+
+cmake_install
+
+log/*
