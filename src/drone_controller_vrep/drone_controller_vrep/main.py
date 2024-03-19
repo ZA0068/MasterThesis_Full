@@ -26,10 +26,10 @@ def main():
     trajectory = plotter.read_data("straight_trajectory.csv")
     drone_path = plotter.read_data("drone_path_straight.csv")
     plotter.initialize(trajectory, waypoints, durations, Derivative_data=Derivative.JERK)
-    plotter.append_title_name("with Straight Drone path other")
+    plotter.append_title_name("with Straight Drone path PID")
     plotter.plot_2d_trajectory(label = "Trajectory")
     plotter.set_trajectory(drone_path)
-    plotter.plot_2d_trajectory(label = "Straight drone path other")
+    plotter.plot_2d_trajectory(label = "Straight drone path PID")
     plotter.display_labels_2d(save_plot = False)    
     #drone_force_and_torque = plotter.read_data("drone_force_and_torque_snap.csv")
     

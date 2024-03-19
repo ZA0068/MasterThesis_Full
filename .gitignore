@@ -45,3 +45,7 @@ widgets.html
 cmake_install
 
 log/*
+
+*.csv
+
+*.png
