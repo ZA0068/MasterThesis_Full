@@ -290,14 +290,14 @@ class MinJerkPlanner():
 if __name__ == "__main__":
     trajen = MinJerkPlanner()
     plotter = Plotter()
-    waypoints = np.array([[0.8, -2.0, 1.0], [-2.15, 0.03, 1.0], [-1.18, 1.03, 1.0], [0.75, 1.95, 1.0], [1.73, 1.03, 1.0], [0.8, 0.03, 1.0], [0.83, -0.95, 1.0]])
+    waypoints = np.array([[1.93, -1.45, 1.0], [1.55, -1.63, 1.0], [0.8, -2.0, 1.0], [0.2, -1.55, 1.0],[-0.08, -1.38, 1.0], [-0.6, -1.03, 1.0], [-1.25, -0.58, 1.0], [-2.15, 0.03, 1.0], [-1.63, 0.53, 1.0], [-1.18, 1.03, 1.0], [-0.35, 1.4, 1.0], [0.13, 1.63, 1.0], [0.75, 1.95, 1.0], [1.3, 1.53, 1.0], [1.73, 1.03, 1.0], [1.25, 0.43, 1.0], [0.8, 0.03, 1.0], [0.83, -0.4, 1.0], [0.83, -0.95, 1.0], [1.7, -0.98, 1.0]])
     head_state = np.vstack(([2.48, -1.08, 1.0], np.zeros(3), np.zeros(3)))
     tail_state = np.vstack(([2.48, -1.08, 1.0], np.zeros(3), np.zeros(3)))
-    durations = np.array([5, 10, 4, 6, 3, 4, 2, 4])
+    durations = np.array([1, 1, 1, 2, 2, 2, 2, 0.5, 0.5, 1.5, 1.5, 0.5, 0.5, 0.7, 0.6, 1, 0.3, 0.3, 0.2, 1, 0.5])
     trajen.plan(3, head_state, tail_state, waypoints, durations)
     trajectory = trajen.get_pos_array()
     plotter.initialize(trajectory, waypoints, durations, Derivative.JERK)
-    plotter.plot_3D(save_plot=False)
+    plotter.plot_3D(overlap_plot=True, show_plot=True, save_plot=False)
     coefficients = trajen.coefficients
     plotter.save_data("minimal_jerk_trajectory_for_pipeline.csv", trajectory)
     plotter.save_data("minimal_jerk_coefficients_for_pipeline.csv", coefficients)

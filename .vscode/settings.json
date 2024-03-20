@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
+        "dval",
         "feedforward",
+        "kval",
+        "minmaxmean",
         "OIAC",
         "pyqtgraph",
         "rclcpp",

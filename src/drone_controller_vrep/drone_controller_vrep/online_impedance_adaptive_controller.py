@@ -60,6 +60,12 @@ class OIAC:
         self.compute_output()
         return self.get_output()
     
+    def get_K(self):
+        return self.K
+    
+    def get_D(self):
+        return self.D
+    
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import CubicSpline
 

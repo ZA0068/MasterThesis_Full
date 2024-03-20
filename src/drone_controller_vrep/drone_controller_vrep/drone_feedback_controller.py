@@ -112,8 +112,10 @@ class DroneFeedbackController(Node):
         self.max_timestep = 1
         self.cnt = 0
         self.count_up = True
-        self.pos_data = np.empty((0, 3))
-        self.force_data = np.empty((0, 4))
+        self.pos_data = []
+        self.force_data = []
+        self.K_values = []
+        self.D_values = []
         self.finished = False
         
 
@@ -124,12 +126,12 @@ class DroneFeedbackController(Node):
             case TrajectoryState.RUNNING:
                 self.fly_drone()
                 if self.is_under_min_dist(0.5):
-                    self.append_positions_and_torque()
+                    self.append_positions_and_data()
                     self.cnt += 1
                 self.check_final_step()
             case TrajectoryState.FINAL:
                 self.fly_drone()
-                self.append_positions_and_torque()
+                self.append_positions_and_data()
                 if self.is_under_min_dist(0.1):
                     self.save_drone_path_data()
             case TrajectoryState.STOP:
@@ -141,9 +143,13 @@ class DroneFeedbackController(Node):
         self.check_out_of_control()
         self.publish_data()
 
-    def append_positions_and_torque(self):
-        self.pos_data = np.append(self.pos_data, np.array([[self.position.x, self.position.y, self.position.z]]), axis=0)
-        self.force_data = np.append(self.force_data, np.array([[self.torque.x, self.torque.y, self.torque.z, self.thrust.data]]), axis=0)
+    def append_positions_and_data(self):
+        self.pos_data.append([self.position.x, self.position.y, self.position.z])
+        self.force_data.append([self.torque.x, self.torque.y, self.torque.z, self.thrust.data])
+        if self.controller_type == Controller.OIAC:
+            self.K_values.append(np.concatenate(([self.throttle.get_K()], self.outer_loop.get_K().ravel(), self.inner_loop.get_K().ravel())))
+            self.D_values.append(np.concatenate(([self.throttle.get_D()], self.outer_loop.get_D().ravel(), self.inner_loop.get_D().ravel())))
+
 
     def is_under_min_dist(self, threshold):
         return np.linalg.norm(np.array(self.trajectory[self.cnt]) - np.array([self.position.x, self.position.y])) < threshold
@@ -181,8 +187,11 @@ class DroneFeedbackController(Node):
             self.state = TrajectoryState.FINAL
         
     def save_drone_path_data(self):    
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_path_straight.csv", self.pos_data, delimiter=",")
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_force_and_torque_straight.csv", self.force_data, delimiter=",")
+        np.savetxt("./src/drone_controller_vrep/resource/data/drone_path_jerk_OIAC.csv", self.pos_data, delimiter=",")
+        np.savetxt("./src/drone_controller_vrep/resource/data/drone_force_and_torque_jerk_OIAC.csv", self.force_data, delimiter=",")
+        if self.controller_type == Controller.OIAC:
+            np.savetxt("./src/drone_controller_vrep/resource/data/drone_K_values.csv", self.K_values, delimiter=",")
+            np.savetxt("./src/drone_controller_vrep/resource/data/drone_D_values.csv", self.D_values, delimiter=",")
         self.state = TrajectoryState.STOP
 
     def pose_callback(self, msg):
@@ -239,7 +248,7 @@ def main(args=None):
     rclpy.init(args=args)
     try:
         drone_controller = DroneFeedbackController(controller_type=Controller.PID)
-        drone_controller.import_trajectory('./src/drone_controller_vrep/resource/data/straight_trajectory.csv')
+        drone_controller.import_trajectory('./src/drone_controller_vrep/resource/data/Minimal_jerk_trajectory_for_pipelines.csv')
         while rclpy.ok() and not drone_controller.finished:
             rclpy.spin_once(drone_controller, timeout_sec=0.05)
     except Exception as e:
