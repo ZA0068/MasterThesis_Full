@@ -53,15 +53,16 @@ class RRTStar:
                     raise Exception("Cost increased after rewiring")
 
                 if cost < old_cost:
-                    print("Iteration: {} | Cost: {}".format(it, cost))
+                    print(f"Iteration: {it} | Cost: {cost}")
                     self.store_best_tree()
                     old_cost = cost
                     self.dynamic_it_counter = 0
                 else:
                     self.dynamic_it_counter += 1
                     print(
-                        "\r Percentage to stop unless better path is found: {}%".format(
-                            np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, 2)), end="\t")
+                        f"\r Percentage to stop unless better path is found: {np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, 2)}%",
+                        end="\t",
+                    )
 
                 if self.dynamic_it_counter >= self.dynamic_break_at:
                     break
@@ -70,7 +71,7 @@ class RRTStar:
             raise Exception("No path found")
 
         self.best_path, cost = self.get_path(self.best_tree)
-        print("\nBest path found with cost: {}".format(cost))
+        print(f"\nBest path found with cost: {cost}")
 
     def store_best_tree(self):
         """
@@ -85,10 +86,7 @@ class RRTStar:
         """
         Calculate the cost of the path
         """
-        cost = 0
-        for i in range(len(path) - 1):
-            cost += np.linalg.norm(path[i + 1] - path[i])
-        return cost
+        return sum(np.linalg.norm(path[i + 1] - path[i]) for i in range(len(path) - 1))
 
     def _generate_random_node(self):
         # with probability epsilon, sample the goal
@@ -98,15 +96,11 @@ class RRTStar:
         x_rand = np.random.uniform(self.space_limits_lw[0], self.space_limits_up[0])
         y_rand = np.random.uniform(self.space_limits_lw[1], self.space_limits_up[1])
         z_rand = np.random.uniform(self.space_limits_lw[2], self.space_limits_up[2])
-        random_node = np.round(np.array([x_rand, y_rand, z_rand]), 2)
-        return random_node
+        return np.round(np.array([x_rand, y_rand, z_rand]), 2)
 
     def _find_nearest_node(self, new_node):
-        distances = []
-        for node in self.all_nodes:
-            distances.append(np.linalg.norm(new_node - node))
-        nearest_node = self.all_nodes[np.argmin(distances)]
-        return nearest_node
+        distances = [np.linalg.norm(new_node - node) for node in self.all_nodes]
+        return self.all_nodes[np.argmin(distances)]
 
     def _adapt_random_node_position(self, new_node, nearest_node):
         """
@@ -135,8 +129,7 @@ class RRTStar:
             cost = np.linalg.norm(neighbor - self.start)
             costs.append(cost)
 
-        best_neighbor = neighbors[np.argmin(costs)]
-        return best_neighbor
+        return neighbors[np.argmin(costs)]
 
     def _update_tree(self, node, new_node):
         """
@@ -242,15 +235,15 @@ class RRTStar:
 if __name__ == "__main__":
 
     start = np.array([0, 0, 0])
-    goal = np.array([7, 7, 7])
+    goal = np.array([2, -2, -1])
 
-    space_limits = np.array([[0., 0., 0.9], [10., 10., 10.]])
+    space_limits = np.array([[-10., -10., -10], [10., 10., 10.]])
 
     rrt = RRTStar(
         space_limits,
         start=start,
         goal=goal,
-        max_distance=3,
+        max_distance=0.1,
         max_iterations=1000,
         obstacles=None,
     )

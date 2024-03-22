@@ -304,7 +304,7 @@ class Plotter:
     def plot_other_data_vs_time(self, **kwargs):
         _, ax = plt.subplots(figsize=(10, 6))
         log_scale = kwargs.pop('log_scale',False)
-        length = np.array(kwargs.pop('length', range(self.__other_data_counter))).flatten()
+        length = np.array(kwargs.pop('index', range(self.__other_data_counter))).flatten()
         for cnt in length:
             ax.plot(self.time_data, self.__other_data[cnt][1], label=self.__other_data[cnt][0],**kwargs)
         ax.set_xlabel("Time [s]")

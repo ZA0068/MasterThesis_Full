@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import TwistStamped, PoseStamped, Vector3, Quaternion, Point
+import rclpy.publisher
 from std_msgs.msg import Float64, Bool
 from tf_transformations import euler_from_quaternion
 from .online_impedance_adaptive_controller import OIAC
@@ -69,7 +70,7 @@ class DroneFeedbackController(Node):
         self.throttle.set_feedforward([5.45])
         self.throttle.set_saturation(-1, 2)
         print("PID controller")
-        self.outer_loop = PID(0.025, 0, 0.0)
+        self.outer_loop = PID(0.025, 0.0, 0.0)
         self.outer_loop.set_saturation(-1, 1)
         self.inner_loop = PID(0.005, 0, 1)
         self.inner_loop.set_saturation(-1, 1)
@@ -187,11 +188,11 @@ class DroneFeedbackController(Node):
             self.state = TrajectoryState.FINAL
         
     def save_drone_path_data(self):    
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_path_jerk_OIAC.csv", self.pos_data, delimiter=",")
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_force_and_torque_jerk_OIAC.csv", self.force_data, delimiter=",")
+        np.savetxt("./src/drone_controller_vrep/resource/data/drone_path_snap_PID.csv", self.pos_data, delimiter=",")
+        np.savetxt("./src/drone_controller_vrep/resource/data/drone_force_and_torque_snap_PID.csv", self.force_data, delimiter=",")
         if self.controller_type == Controller.OIAC:
-            np.savetxt("./src/drone_controller_vrep/resource/data/drone_K_values.csv", self.K_values, delimiter=",")
-            np.savetxt("./src/drone_controller_vrep/resource/data/drone_D_values.csv", self.D_values, delimiter=",")
+            np.savetxt("./src/drone_controller_vrep/resource/data/drone_K_values_snap.csv", self.K_values, delimiter=",")
+            np.savetxt("./src/drone_controller_vrep/resource/data/drone_D_values_snap.csv", self.D_values, delimiter=",")
         self.state = TrajectoryState.STOP
 
     def pose_callback(self, msg):
@@ -216,6 +217,8 @@ class DroneFeedbackController(Node):
             raise Exception("Dronee is gone out of control!!!!")
     
     def stop_simulation(self):
+        print("Stopping")
+        self.simulation_publisher_start.publish(Bool(data=False))
         self.simulation_publisher_stop.publish(Bool(data=True))
         self.gui.close()
         self.app.quit()
@@ -248,11 +251,13 @@ def main(args=None):
     rclpy.init(args=args)
     try:
         drone_controller = DroneFeedbackController(controller_type=Controller.PID)
-        drone_controller.import_trajectory('./src/drone_controller_vrep/resource/data/Minimal_jerk_trajectory_for_pipelines.csv')
+        drone_controller.import_trajectory('./src/drone_controller_vrep/resource/data/Minimal_snap_trajectory_for_pipelines.csv')
         while rclpy.ok() and not drone_controller.finished:
             rclpy.spin_once(drone_controller, timeout_sec=0.05)
     except Exception as e:
         print(e)
+    except KeyboardInterrupt:
+        print("Interrupted by user")
     finally:
         drone_controller.stop_simulation()
         drone_controller.destroy_node()

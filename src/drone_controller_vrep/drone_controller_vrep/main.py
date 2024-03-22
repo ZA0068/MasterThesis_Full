@@ -18,31 +18,48 @@ def generate_trajectory(plotter: Plotter):
     generator.compute_splines()
     trajectory = generator.get_splines()
     plotter.initialize(trajectory, waypoints, durations)
-    plotter.plot_3D(save_plot=False)
+    plotter.plot_3D(save_plot=True)
+    plotter.plot_time_data_at_same_time(save_plot=True)
     plotter.save_data("Minimal_snap_trajectory_for_pipelines.csv", trajectory)
     plotter.save_data("Minimal_snap_trajectory_coefficients_for_pipelines.csv", generator.get_coefficients())
-    
+
 
 def plot_trajectory(plotter: Plotter):
     trajectory = plotter.read_data("Minimal_snap_trajectory_for_pipelines.csv")
     waypoints = plotter.read_data("Waypoints.csv")
     durations = plotter.read_data("Durations.csv")
-    drone_path = plotter.read_data("drone_path_jerk_OIAC.csv")
-    drone_force_and_torque = plotter.read_data("drone_force_and_torque_jerk_OIAC.csv")
-    drone_k_values = plotter.read_data("drone_K_values.csv")
-    drone_d_values = plotter.read_data("drone_D_values.csv")
-    
-    plotter.initialize(trajectory, waypoints, durations, Derivative_data=Derivative.JERK)
-    #plotter.plot_3D(save_plot=False)
-    #plotter.plot_time_data_at_same_time(save_plot=False)
-    #plotter.plot_time_data_individually(save_plot=False)
-    #plotter.append_title_name("with Straight Drone path PID")
-    #plotter.plot_2d_trajectory(label = "Trajectory")
-    #plotter.set_trajectory(drone_path)
-    #plotter.plot_2d_trajectory(label = "Straight drone path PID")
-    #plotter.display_labels_2d(save_plot = False)  
+    drone_path = plotter.read_data("drone_path_snap_OIAC.csv")
+    drone_force_and_torque = plotter.read_data("drone_force_and_torque_snap_OIAC.csv")
+    drone_k_values = plotter.read_data("drone_K_values_snap.csv")
+    drone_d_values = plotter.read_data("drone_D_values_snap.csv")
+
+    #plot_KD_Terms(plotter, waypoints, durations, drone_k_values, "K")
     #plot_KD_Terms(plotter, waypoints, durations, drone_d_values, "D")
-    find_KD_values(drone_k_values, drone_d_values)
+    #find_KD_values(drone_k_values, drone_d_values)
+    plot2D_drone_path(plotter, trajectory, waypoints, durations, drone_path, Derivative.SNAP, "PID")
+    plot_drone_force_and_torque(plotter, waypoints, durations, drone_force_and_torque, Derivative.SNAP, "PID")
+
+def plot2D_drone_path(plotter, trajectory, waypoints, durations, drone_path, derivative_data, controller):
+    plotter.initialize(trajectory, waypoints, durations, derivative_data)
+    plotter.append_title_name(f"with drone path {controller}")
+    plotter.plot_2d_trajectory(label = "Trajectory")
+    plotter.plot_2d_waypoints()
+    plotter.set_trajectory(drone_path)
+    plotter.plot_2d_trajectory(label = f"drone path {controller}")
+    plotter.display_labels_2d(save_plot = True)
+
+def plot_drone_force_and_torque(plotter, waypoints, durations, drone_force_and_torque, derivative_data, controller):
+    plotter.initialize(drone_force_and_torque, waypoints, durations, derivative_data)
+    plotter.add_other_data(drone_force_and_torque[:, 3],f"{controller} Minimal {str(derivative_data.name).lower()} throttle")
+    plotter.set_title(f"Minimal {str(derivative_data.name).lower()} throttle {controller}")
+    plotter.plot_other_data_vs_time(index=0)
+    plotter.add_other_data(drone_force_and_torque[:, 0],f"{controller} Minimal {str(derivative_data.name).lower()} Roll")
+    plotter.add_other_data(drone_force_and_torque[:, 1],f"{controller} Minimal {str(derivative_data.name).lower()} Pitch")
+    plotter.add_other_data(drone_force_and_torque[:, 2],f"{controller} Minimal {str(derivative_data.name).lower()} Yaw")
+    plotter.set_title(f"Minimal {str(derivative_data.name).lower()} moments {controller}")
+    plotter.plot_other_data_vs_time(index=range(1, 4))
+    
+
     
 
 def find_KD_values(kval, dval):
@@ -58,22 +75,22 @@ def find_KD_minmaxmean(arg0, arg1, arg2, arg3):
 def minmaxmean(name, data):
     print(f"{name} Max: {np.max(data)}")
     print(f"{name} Min: {np.min(data)}")
-    print(f"{name} Mean: {np.mean(data)}")
+    print(f"{name} Avg: {np.mean(data)}")
 
 def plot_KD_Terms(plotter, waypoints, durations, data, letter):
     plotter.initialize(data, waypoints, durations)
     plotter.set_title(f"Minimal jerk trajectory with Drone {letter} values for throttle")
     plotter.add_other_data(other_data=data[: , 0], name=f"{letter} values for throttle")
-    plotter.plot_other_data_vs_time(length=0)
+    plotter.plot_other_data_vs_time(index=0)
     plotter.set_title(f"Minimal jerk trajectory with Drone {letter} values for x and y")
     plotter.add_other_data(other_data=data[: , 1], name=f"{letter} values for outer loop x")
     plotter.add_other_data(other_data=data[: , 2], name=f"{letter} values for outer loop y")
-    plotter.plot_other_data_vs_time(length=[1, 2])
+    plotter.plot_other_data_vs_time(index=[1, 2])
     plotter.set_title(f"Minimal jerk trajectory with Drone {letter} values for roll, pitch and yaw")
     plotter.add_other_data(other_data=data[: , 3], name=f"{letter} values for inner loop roll")
     plotter.add_other_data(other_data=data[: , 4], name=f"{letter} values for inner loop pitch")
     plotter.add_other_data(other_data=data[: , 5], name=f"{letter} values for inner loop yaw")
-    plotter.plot_other_data_vs_time(length=range(3, 6))
+    plotter.plot_other_data_vs_time(index=range(3, 6))
     
     
 if __name__ == "__main__":
