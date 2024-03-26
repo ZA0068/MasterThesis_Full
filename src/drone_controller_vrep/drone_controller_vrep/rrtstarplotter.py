@@ -5,19 +5,28 @@ from rrtstar import RRTStar
 
 
 class RRTPlotter:
-    def __init__(self, rrt: RRTStar, optimal_trajectory, state_history):
+    def __init__(self, rrt: RRTStar = None, optimal_trajectory: np.ndarray = None, real_trajectory: np.ndarray=None):
         mlab.figure(size=(1920, 1080), bgcolor=(.3, .3, .3))
-        self.rrt = rrt
+        self.set_RRT(rrt)
+        self.set_optimal_trajectory(optimal_trajectory)
+        self.set_drone_trajectory(real_trajectory)
+
+    def set_drone_trajectory(self, real_trajectory):
+        self.real_trajectory = real_trajectory
+
+    def set_optimal_trajectory(self, optimal_trajectory):
         self.optimal_trajectory = optimal_trajectory
-        self.state_history = state_history
+
+    def set_RRT(self, rrt):
+        self.rrt = rrt
 
 
     def animate_mesh(self, mesh, rpy=(True, True, True), delay=60):
+        self.check_if_real_trajectory_is_instantiated()
         r, p, y = rpy
-
         @mlab.animate(delay=delay)
         def anim():
-            for coord in self.state_history:
+            for coord in self.real_trajectory:
                 x, y, z = coord[:3]
 
                 if r or p or y:
@@ -31,11 +40,17 @@ class RRTPlotter:
                 yield
         anim()
 
+    def check_if_real_trajectory_is_instantiated(self):
+        self.check_if_real_trajectory_is_instantiated()
+        if self.real_trajectory is None:
+            raise ValueError("Drone (real) trajectory is not provided")
+
 
     def animate_point(self, moving_object, delay=60):
+        self.check_if_real_trajectory_is_instantiated()
         @mlab.animate(delay=delay)
         def anim():
-            for coord in self.state_history:
+            for coord in self.real_trajectory:
                 x, y, z = coord[:3]
                 moving_object.mlab_source.set(x=x, y=y, z=z)
                 yield
@@ -43,13 +58,16 @@ class RRTPlotter:
 
 
     def plot_executed_trajectory(self):
+        self.check_if_real_trajectory_is_instantiated()
         mlab.plot3d(
-            self.state_history[:, 0],
-            self.state_history[:, 1],
-            self.state_history[:, 2], color=(0, 0, 1), tube_radius=0.04, opacity=0.3)
+            self.real_trajectory[:, 0],
+            self.real_trajectory[:, 1],
+            self.real_trajectory[:, 2], color=(0, 0, 1), tube_radius=0.04, opacity=0.3)
 
 
     def plot_start_and_goal(self, color_start=(1, 0, 0), color_goal=(0, 1, 0)):
+        if self.rrt is None:
+            raise ValueError("RRT is not provided")
         start = self.rrt.start
         goal = self.rrt.goal
         mlab.points3d(*start, color=color_start, scale_factor=0.2, resolution=60)
@@ -59,7 +77,6 @@ class RRTPlotter:
     @staticmethod
     def plot_obstacles(obstacles, color_obs=(.6, .6, .6), color_true_obs=(.9, 0, 0), true_obstacles_size_factor=0.5):
         offset = 0.5  # need to offset the obstacle by 0.5 due to mayavi way of plotting cubes
-
         for obstacle in obstacles:
             xx, yy, zz = np.mgrid[obstacle[0] + offset:obstacle[1]:1,
                                   obstacle[2] + offset:obstacle[3]:1,

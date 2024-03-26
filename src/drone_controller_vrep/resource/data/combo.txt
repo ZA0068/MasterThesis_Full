@@ -8,4 +8,4 @@ Avg K - Max D = 0.0
 Avg K - Min D = 0.0
 Avg K - Avg D = 0.0
 
-Def K - Def D = 1.0
+Default K - Default D = 1.0

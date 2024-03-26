@@ -1,9 +1,11 @@
 import numpy as np
 from numpy.testing import *
 import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation
 import csv
 import os
 from enum import Enum
+
 class Degree(Enum):
     CONSTANT = 0
     LINEAR = 1
@@ -315,6 +317,43 @@ class Plotter:
         ax.legend()
         plt.show()
         
+
+    def plot_2D_distance_error(self, trajectory, drone_path,  **kwargs):
+        _, ax = plt.subplots(figsize=(10, 6))
+        self.plot_distance_error(ax, trajectory, drone_path, **kwargs)
+        self.set_label_for_distance_error(ax)
+        self.save_distance_error_plot(**kwargs)
+        plt.show()
+
+    def plot_1d_distance_error(self, trajectory, drone_path, dimension, **kwargs):
+        _, ax = plt.subplots(figsize=(10, 6))
+        self.plot_distance_error(ax, trajectory[:, dimension], drone_path[:, dimension], **kwargs)
+        self.set_label_for_distance_error(ax)
+        self.save_distance_error_plot(**kwargs)
+        plt.show()
+
+    def save_distance_error_plot(self, **kwargs):
+        if kwargs.get('save_plot') is True:
+            self.save_image(self.__title)
+            
+    def set_label_for_distance_error(self, ax):
+        ax.set_xlabel("Time [s]")
+        ax.set_ylabel("Distance [m]")
+        ax.set_title(self.__title)
+        ax.legend()
+        
+    def plot_distance_error(self, ax, trajectory, drone_path, **kwargs):
+        self._pop_multiple_keys(kwargs, ['save_plot'])
+        distance_error = self.calculate_distance_error(trajectory, drone_path)
+        ax.plot(self.time_data, distance_error, label='Distance error', **kwargs)
+        ax.text(13.24, 0.521, f'Mean error: {np.mean(distance_error):.2f}', fontsize=12, bbox=dict(facecolor='red', alpha=0.5))
+        
+    def calculate_distance_error(self, trajectory, drone_path):
+        min_length = min(len(trajectory), len(drone_path))
+        trajectory = trajectory[:min_length, :3]
+        drone_path = drone_path[:min_length, :3]
+        return np.linalg.norm(trajectory - drone_path, axis=1)
+    
 
     def _format_unit_label(self, derivative_name, derivative_order):
         unit_latex_str = self._format_meters_per_seconds(derivative_order)

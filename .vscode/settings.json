@@ -1,13 +1,20 @@
 {
     "cSpell.words": [
+        "dtype",
         "dval",
         "feedforward",
+        "ififif",
         "kval",
+        "mayavi",
         "minmaxmean",
+        "mlab",
+        "ndarray",
         "OIAC",
         "pyqtgraph",
         "rclcpp",
         "rclpy",
+        "rrtstar",
+        "rrtstarplotter",
         "ublas",
         "xlabel",
         "ylabel"

@@ -1,19 +1,27 @@
 finish 2 things
 
-1) drone maps an obstacle
+1) drone maps an obstacle - 
 
-2) has base motion planner
+2) has base motion planner - complete
 
-2-2) online modulate trajectory
+2-2) online modulate trajectory - complete
 
 3) live drone demonstration
 
-6) vrep simulation
+6) vrep simulation - complete
 
-7) merge trajectory planner and OIAC
+7) merge trajectory planner and OIAC - complete
 
-8) drone simulation
+8) drone simulation - complete
 
 4) motion replanning
 
-5) simulation
+5) simulation - complete
+
+6) plot tracking error
+
+7) get tracking error value
+
+8) create obstacle avoidance algorithm
+
+9) 3D movement of the drone

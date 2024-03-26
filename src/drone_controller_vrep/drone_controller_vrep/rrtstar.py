@@ -1,22 +1,26 @@
 import copy
 import time
 import numpy as np
+from obstacle import Obstacle
 from mayavi import mlab
 
 class RRTStar:
-    """
-    Rapidly-exploring Random Tree (RRT*) algorithm
-    """
-    def __init__(self, space_limits, start, goal, max_distance, max_iterations, obstacles=None):
-        self.space_limits_lw, self.space_limits_up = space_limits[0], space_limits[1]
-        self.start = np.round(start, 2)
-        self.goal = np.round(goal, 2)
-        self.step_size = max_distance
-        self.max_iterations = max_iterations
-        self.obstacles = obstacles
-        self.epsilon = 0.15
+    def __init__(self, start, goal, step_size):
+        self.reset()
+        self.set_start_and_goal(start, goal)
+        self.set_step_size(step_size)
+        assert self.neighborhood_radius > self.step_size, "Neighborhood radius must be larger than step size"
+        assert self.space_limits_up[2] > self.start[2], "Upper limit on z must be > than the z location of the start"
+        assert self.space_limits_up[2] > self.goal[2], "Upper limit on z must be > than the z location of the goal"
 
-        self.neighborhood_radius = 1.5 * max_distance
+    def reset(self):
+        self.set_start_and_goal([0,0,0], [1,1,1])
+        self.set_step_size(1)
+        self.set_max_iterations(1000)
+        self.set_epsilon(0.15)
+        self.obstacles = []
+
+        self.set_cuboid_dist(1.5)
         self.all_nodes = [self.start]
 
         self.tree = {}
@@ -26,9 +30,31 @@ class RRTStar:
         self.dynamic_it_counter = 0
         self.dynamic_break_at = self.max_iterations / 10
 
-        # assert self.neighborhood_radius > self.step_size, "Neighborhood radius must be larger than step size"
-        # assert self.space_limits_up[2] > self.start[2], "Upper limit on z must be > than the z location of the start"
-        # assert self.space_limits_up[2] > self.goal[2], "Upper limit on z must be > than the z location of the goal"
+
+
+    def set_cuboid_dist(self, cuboid_dist):
+        self.neighborhood_radius = cuboid_dist * self.max_distance
+
+    def set_epsilon(self, ε):
+        self.epsilon = ε
+
+    def set_start_and_goal(self, start, goal):
+        self.start = np.asarray(start).round(2)
+        self.goal = np.asarray(goal).round(2)
+
+    def set_step_size(self, step_size):
+        self.step_size = step_size
+
+    def set_max_iterations(self, max_iterations):
+        self.max_iterations = max_iterations
+
+    def add_obstacles(self, *obstacles):
+        for obstacle in obstacles:
+            self.obstacles.append(obstacle)
+
+    def set_boundaries(self, lower, upper):
+        self.space_limits_lw = np.asarray(lower).flatten()
+        self.space_limits_up = np.asarray(upper).flatten()
 
     def run(self):
         old_cost = np.inf
@@ -234,9 +260,17 @@ class RRTStar:
 
 if __name__ == "__main__":
 
-    start = np.array([0, 0, 0])
-    goal = np.array([2, -2, -1])
+    start = [0, 0, 0]
+    goal = [8, 8, -8]
+    ceiling = Obstacle([-10, 10, -10, 10, 9, 10], mode='ififif') 
+    floor = Obstacle([-10, 10, -10, 10, -10, -9], mode='ififif')
 
+    obstacles = np.array(
+        [4, 6, 3, 5, 0, 5],
+        [5, 8, 2, 5, 0, 5],
+        [1, 3, 3, 5, 0, 5],
+        [4, 8, 7, 9, 0, 5],
+    )
     space_limits = np.array([[-10., -10., -10], [10., 10., 10.]])
 
     rrt = RRTStar(
@@ -249,6 +283,7 @@ if __name__ == "__main__":
     )
     rrt.run()
 
+    
     # plot start and goal nodes in red and green
     mlab.points3d(start[0], start[1], start[2], color=(1, 0, 0), scale_factor=.2, resolution=60)
     mlab.points3d(goal[0], goal[1], goal[2], color=(0, 1, 0), scale_factor=.2, resolution=60)
@@ -267,7 +302,11 @@ if __name__ == "__main__":
 
     # Plot the paths
     mlab.plot3d(path[:, 0], path[:, 1], path[:, 2], color=(1, 1, 0), tube_radius=0.05)
+    # Add axes
+    mlab.axes()
 
+    # Add orientation axes
+    mlab.orientation_axes()
     mlab.show()
 
 
