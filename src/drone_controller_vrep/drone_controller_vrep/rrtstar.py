@@ -5,17 +5,15 @@ from obstacle import Obstacle
 from mayavi import mlab
 
 class RRTStar:
-    def __init__(self, start, goal, step_size):
+    def __init__(self, start, goal, max_step):
         self.reset()
         self.set_start_and_goal(start, goal)
-        self.set_step_size(step_size)
-        assert self.neighborhood_radius > self.step_size, "Neighborhood radius must be larger than step size"
-        assert self.space_limits_up[2] > self.start[2], "Upper limit on z must be > than the z location of the start"
-        assert self.space_limits_up[2] > self.goal[2], "Upper limit on z must be > than the z location of the goal"
-
+        self.set_max_step(max_step)
+        self.rounding_value = 2
+    
     def reset(self):
         self.set_start_and_goal([0,0,0], [1,1,1])
-        self.set_step_size(1)
+        self.set_max_step(1)
         self.set_max_iterations(1000)
         self.set_epsilon(0.15)
         self.obstacles = []
@@ -23,38 +21,59 @@ class RRTStar:
         self.set_cuboid_dist(1.5)
         self.all_nodes = [self.start]
 
+        self._init_tree()
+        self._init_dynamic_counter()
+
+    def _init_tree(self):
         self.tree = {}
         self.best_path = None
         self.best_tree = None
 
+    def _init_dynamic_counter(self):
         self.dynamic_it_counter = 0
         self.dynamic_break_at = self.max_iterations / 10
 
 
 
     def set_cuboid_dist(self, cuboid_dist):
-        self.neighborhood_radius = cuboid_dist * self.max_distance
+        self.neighborhood_radius = cuboid_dist * self.max_step
 
     def set_epsilon(self, ε):
         self.epsilon = ε
 
     def set_start_and_goal(self, start, goal):
-        self.start = np.asarray(start).round(2)
-        self.goal = np.asarray(goal).round(2)
+        self.start = np.asarray(start).round(self.rounding_value)
+        self.goal = np.asarray(goal).round(self.rounding_value)
 
-    def set_step_size(self, step_size):
-        self.step_size = step_size
+    def set_max_step(self, max_step):
+        self.max_step = max_step
 
     def set_max_iterations(self, max_iterations):
         self.max_iterations = max_iterations
 
     def add_obstacles(self, *obstacles):
+        if obstacles is None:
+            return
+        if isinstance(obstacles, list):
+            obstacles = obstacles[0]
         for obstacle in obstacles:
             self.obstacles.append(obstacle)
 
-    def set_boundaries(self, lower, upper):
+    def set_boundaries(self, *boundary):
+        lower, upper = self._extract_boundaries(boundary)
         self.space_limits_lw = np.asarray(lower).flatten()
         self.space_limits_up = np.asarray(upper).flatten()
+
+    def _extract_boundaries(self, *boundary):
+        match len(boundary):
+            case 2:
+                lower, upper = boundary
+            case 6:
+                lower = boundary[:3]
+                upper = boundary[3:]
+            case _:
+                raise ValueError("Boundaries must be a list of two elements: lower and upper limits.")
+        return lower,upper
 
     def run(self):
         old_cost = np.inf
@@ -86,7 +105,7 @@ class RRTStar:
                 else:
                     self.dynamic_it_counter += 1
                     print(
-                        f"\r Percentage to stop unless better path is found: {np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, 2)}%",
+                        f"\r Percentage to stop unless better path is found: {np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, self.rounding_value)}%",
                         end="\t",
                     )
 
@@ -122,7 +141,7 @@ class RRTStar:
         x_rand = np.random.uniform(self.space_limits_lw[0], self.space_limits_up[0])
         y_rand = np.random.uniform(self.space_limits_lw[1], self.space_limits_up[1])
         z_rand = np.random.uniform(self.space_limits_lw[2], self.space_limits_up[2])
-        return np.round(np.array([x_rand, y_rand, z_rand]), 2)
+        return np.round(np.array([x_rand, y_rand, z_rand]), self.rounding_value)
 
     def _find_nearest_node(self, new_node):
         distances = [np.linalg.norm(new_node - node) for node in self.all_nodes]
@@ -133,9 +152,9 @@ class RRTStar:
         Adapt the random node position if it is too far from the nearest node
         """
         distance_nearest = np.linalg.norm(new_node - nearest_node)
-        if distance_nearest > self.step_size:
-            new_node = nearest_node + (new_node - nearest_node) * self.step_size / distance_nearest
-            new_node = np.round(new_node, 2)
+        if distance_nearest > self.max_step:
+            new_node = nearest_node + (new_node - nearest_node) * self.max_step / distance_nearest
+            new_node = np.round(new_node, self.rounding_value)
         return new_node
 
     def _find_valid_neighbors(self, new_node):
@@ -165,8 +184,8 @@ class RRTStar:
         self.all_nodes.append(new_node)
 
         # add the new node to the tree
-        node_key = str(np.round(new_node, 2).tolist())
-        node_parent = np.round(node, 2)
+        node_key = str(np.round(new_node, self.rounding_value).tolist())
+        node_parent = np.round(node, self.rounding_value)
 
         if not np.array_equal(node_parent, new_node):
             self.tree[node_key] = node_parent
@@ -177,12 +196,12 @@ class RRTStar:
         current parent (re-wire).
         """
         for neighbor in neighbors:
-            if np.array_equal(neighbor, self.tree[str(np.round(new_node, 2).tolist())]):
+            if np.array_equal(neighbor, self.tree[str(np.round(new_node, self.rounding_value).tolist())]):
                 # if the neighbor is already the parent of the new node, skip
                 continue
 
             if self._is_valid_connection(neighbor, new_node):
-                current_parent = self.tree[str(np.round(neighbor, 2).tolist())]
+                current_parent = self.tree[str(np.round(neighbor, self.rounding_value).tolist())]
 
                 # cost to arrive to the neighbor
                 current_cost = np.linalg.norm(neighbor - self.start)
@@ -193,7 +212,7 @@ class RRTStar:
                 if potential_new_cost < current_cost:
                     # if it is cheaper to arrive to the neighbor through the new node, re-wire (update the parent of the
                     # neighbor to the new node)
-                    self.tree[str(np.round(neighbor, 2).tolist())] = new_node
+                    self.tree[str(np.round(neighbor, self.rounding_value).tolist())] = new_node
                     return True
         return False
 
@@ -230,7 +249,7 @@ class RRTStar:
         """
         Check if the goal node is in the tree as a child of another node
         """
-        goal_node_key = str(np.round(self.goal, 2).tolist())
+        goal_node_key = str(self.goal.round(self.rounding_value).tolist())
         return goal_node_key in tree.keys()
 
     def get_path(self, tree):
@@ -244,7 +263,7 @@ class RRTStar:
         s_time = time.time()
 
         while not np.array_equal(node, self.start):
-            node = tree[str(np.round(node, 2).tolist())]
+            node = tree[str(node.round(self.rounding_value).tolist())]
             path.append(node)
 
             if time.time() - s_time > 5:
@@ -256,30 +275,40 @@ class RRTStar:
         cost = RRTStar.path_cost(path)
         return np.array(path[::-1]).reshape(-1, 3), cost
 
-
+    @classmethod
+    def init_RRTStar(cls, start, goal, max_step, max_iterations, boundary, obstacles):
+        instance = cls(start, goal, max_step)
+        instance.set_max_iterations(max_iterations)
+        instance.set_boundaries(boundary)
+        instance.add_obstacles(*obstacles)
+        return instance
 
 if __name__ == "__main__":
 
     start = [0, 0, 0]
     goal = [8, 8, -8]
-    ceiling = Obstacle([-10, 10, -10, 10, 9, 10], mode='ififif') 
-    floor = Obstacle([-10, 10, -10, 10, -10, -9], mode='ififif')
+    lower_bound = [-10, -10, -10]
+    upper_bound = [10, 10, 10]
+    ceiling = Obstacle([-10, 10, -10, 10, 9, 10], 'ififif') 
+    floor = Obstacle([-10, 10, -10, 10, -10, -9], 'ififif')
+    step_size = 0.1
 
-    obstacles = np.array(
-        [4, 6, 3, 5, 0, 5],
-        [5, 8, 2, 5, 0, 5],
-        [1, 3, 3, 5, 0, 5],
-        [4, 8, 7, 9, 0, 5],
-    )
-    space_limits = np.array([[-10., -10., -10], [10., 10., 10.]])
-
-    rrt = RRTStar(
-        space_limits,
+    obstacles = [
+        ceiling,
+        floor,
+        Obstacle([4, 6, 3, 5, 0, 5], 'ififif'),
+        Obstacle([5, 8, 2, 5, 0, 5], 'ififif'),
+        Obstacle([1, 3, 3, 5, 0, 5], 'ififif'),
+        Obstacle([4, 8, 7, 9, 0, 5], 'ififif'),
+    ]
+    
+    rrt = RRTStar.init_RRTStar(
         start=start,
         goal=goal,
-        max_distance=0.1,
+        max_step=0.1,
         max_iterations=1000,
-        obstacles=None,
+        boundary=[lower_bound, upper_bound],
+        obstacles=obstacles,
     )
     rrt.run()
 

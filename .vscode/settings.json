@@ -1,9 +1,12 @@
 {
     "cSpell.words": [
+        "atleast",
         "dtype",
         "dval",
         "feedforward",
+        "hstack",
         "ififif",
+        "iiifff",
         "kval",
         "mayavi",
         "minmaxmean",
@@ -15,6 +18,7 @@
         "rclpy",
         "rrtstar",
         "rrtstarplotter",
+        "sincos",
         "ublas",
         "xlabel",
         "ylabel"
