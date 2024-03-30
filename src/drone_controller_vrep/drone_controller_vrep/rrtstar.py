@@ -6,10 +6,10 @@ from mayavi import mlab
 
 class RRTStar:
     def __init__(self, start, goal, max_step):
+        self.rounding_value = 2
         self.reset()
         self.set_start_and_goal(start, goal)
         self.set_max_step(max_step)
-        self.rounding_value = 2
     
     def reset(self):
         self.set_start_and_goal([0,0,0], [1,1,1])
@@ -17,12 +17,17 @@ class RRTStar:
         self.set_max_iterations(1000)
         self.set_epsilon(0.15)
         self.obstacles = []
+        self._init_cost()
 
         self.set_cuboid_dist(1.5)
         self.all_nodes = [self.start]
 
         self._init_tree()
         self._init_dynamic_counter()
+
+    def _init_cost(self):
+        self.previous_cost = np.inf
+        self.current_cost = np.inf
 
     def _init_tree(self):
         self.tree = {}
@@ -32,7 +37,7 @@ class RRTStar:
     def _init_dynamic_counter(self):
         self.dynamic_it_counter = 0
         self.dynamic_break_at = self.max_iterations / 10
-
+        self._has_rewired = False
 
 
     def set_cuboid_dist(self, cuboid_dist):
@@ -60,11 +65,11 @@ class RRTStar:
             self.obstacles.append(obstacle)
 
     def set_boundaries(self, *boundary):
-        lower, upper = self._extract_boundaries(boundary)
+        lower, upper = self._extract_boundaries(*boundary)
         self.space_limits_lw = np.asarray(lower).flatten()
         self.space_limits_up = np.asarray(upper).flatten()
 
-    def _extract_boundaries(self, *boundary):
+    def _extract_boundaries(self, boundary):
         match len(boundary):
             case 2:
                 lower, upper = boundary
@@ -76,47 +81,59 @@ class RRTStar:
         return lower,upper
 
     def run(self):
-        old_cost = np.inf
-
         for it in range(self.max_iterations):
-
-            new_node = self._generate_random_node()
-            nearest_node = self._find_nearest_node(new_node)
-            new_node = self._adapt_random_node_position(new_node, nearest_node)
-            neighbors = self._find_valid_neighbors(new_node)
-
+            new_node, neighbors = self._generate_new_node_with_neighbors()
             if len(neighbors) == 0: continue
 
-            best_neighbor = self._find_best_neighbor(neighbors)
-            self._update_tree(best_neighbor, new_node)
-            has_rewired = self._rewire_safely(neighbors, new_node)
+            self._update_tree_and_rewire(new_node, neighbors)
 
             if self._is_path_found(self.tree):
-                path, cost = self.get_path(self.tree)
+                self.get_path(self.tree)
 
-                if has_rewired and cost > old_cost:  # sanity check
+                if self._has_rewired and self.current_cost > self.previous_cost:  # sanity check
                     raise Exception("Cost increased after rewiring")
 
-                if cost < old_cost:
-                    print(f"Iteration: {it} | Cost: {cost}")
-                    self.store_best_tree()
-                    old_cost = cost
-                    self.dynamic_it_counter = 0
-                else:
-                    self.dynamic_it_counter += 1
-                    print(
-                        f"\r Percentage to stop unless better path is found: {np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, self.rounding_value)}%",
-                        end="\t",
-                    )
+                self._update_cost_and_store_best_tree(it)
 
                 if self.dynamic_it_counter >= self.dynamic_break_at:
                     break
 
+        self._validate_best_path()
+        self.best_path= self.get_path(self.best_tree)
+        print(f"\nBest path found with cost: {self.current_cost}")
+
+    def _validate_best_path(self):
         if not self._is_path_found(self.best_tree):
             raise Exception("No path found")
 
-        self.best_path, cost = self.get_path(self.best_tree)
-        print(f"\nBest path found with cost: {cost}")
+    def _update_cost_and_store_best_tree(self, it):
+        if self.current_cost < self.previous_cost:
+            self._update_best_tree(it)
+        else:
+            self._update_dynamic_progress()
+
+    def _update_dynamic_progress(self):
+        self.dynamic_it_counter += 1
+        print(f"\r Percentage to stop unless better path is found: {np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, self.rounding_value)}%",
+                        end="\t",
+                    )
+
+    def _update_best_tree(self, it):
+        print(f"Iteration: {it} | Cost: {self.current_cost}")
+        self.store_best_tree()
+        self.previous_cost = self.current_cost
+        self.dynamic_it_counter = 0
+
+    def _update_tree_and_rewire(self, new_node, neighbors):
+        self._update_tree(self._find_best_neighbor(neighbors), new_node)
+        self._has_rewired = self._rewire_safely(neighbors, new_node)
+
+    def _generate_new_node_with_neighbors(self):
+        new_node = self._generate_random_node()
+        nearest_node = self._find_nearest_node(new_node)
+        new_node = self._adapt_random_node_position(new_node, nearest_node)
+        neighbors = self._find_valid_neighbors(new_node)
+        return new_node, neighbors
 
     def store_best_tree(self):
         """
@@ -216,34 +233,16 @@ class RRTStar:
                     return True
         return False
 
-    def _is_valid_connection(self, node, new_node):
-        """
-        Check if the connection between the candidate node and the new node (random or goal) is collision-free
-        """
+    def _is_valid_connection(self, current_node, next_node):
         if self.obstacles is None:
             return True
+        t = np.linspace(0, 1, 100)
+        points = np.outer(t, next_node - current_node) + current_node
+        return not any(
+            obstacle.is_inside(points[:, 0], points[:, 1], points[:, 2])
+            for obstacle in self.obstacles
+        )
 
-        # check if the line connecting the nearest node and the random node intersects with any of the obstacles
-        for obstacle in self.obstacles:
-            xmin, xmax, ymin, ymax, zmin, zmax = obstacle
-            node1, node2 = node, new_node
-
-
-            direction = node2 - node1
-            # Calculate the parameter t for the line equation: line = node1 + t * direction
-            t = np.linspace(0, 1, 100)
-
-            # Points along the line
-            points = np.outer(t, direction) + node1
-
-
-            # Check if any of the points lie within the obstacle
-            if np.any((points[:, 0] >= xmin) & (points[:, 0] <= xmax) &
-                      (points[:, 1] >= ymin) & (points[:, 1] <= ymax) &
-                      (points[:, 2] >= zmin) & (points[:, 2] <= zmax)):
-                return False
-
-        return True
 
     def _is_path_found(self, tree):
         """
@@ -253,27 +252,23 @@ class RRTStar:
         return goal_node_key in tree.keys()
 
     def get_path(self, tree):
-        """
-        Get the path from the goal node to the start node and compute its cost
-        """
-
         path = [self.goal]
         node = self.goal
-
         s_time = time.time()
 
         while not np.array_equal(node, self.start):
             node = tree[str(node.round(self.rounding_value).tolist())]
             path.append(node)
 
-            if time.time() - s_time > 5:
-                # restart
-                print("Restarting...")
-                self.run()
-                # raise Exception("A problem occurred while computing the path.")
+            self._restart_if_elapsed_time_exceeded(s_time)
 
-        cost = RRTStar.path_cost(path)
-        return np.array(path[::-1]).reshape(-1, 3), cost
+        self.current_cost = RRTStar.path_cost(path)
+        return np.array(path[::-1]).reshape(-1, 3)
+
+    def _restart_if_elapsed_time_exceeded(self, s_time):
+        if time.time() - s_time > 5:
+            print("Restarting...")
+            self.run()
 
     @classmethod
     def init_RRTStar(cls, start, goal, max_step, max_iterations, boundary, obstacles):
@@ -289,41 +284,42 @@ if __name__ == "__main__":
     goal = [8, 8, -8]
     lower_bound = [-10, -10, -10]
     upper_bound = [10, 10, 10]
+    step_size = 0.5
+    
     ceiling = Obstacle([-10, 10, -10, 10, 9, 10], 'ififif') 
     floor = Obstacle([-10, 10, -10, 10, -10, -9], 'ififif')
-    step_size = 0.1
 
     obstacles = [
         ceiling,
         floor,
-        Obstacle([4, 6, 3, 5, 0, 5], 'ififif'),
-        Obstacle([5, 8, 2, 5, 0, 5], 'ififif'),
-        Obstacle([1, 3, 3, 5, 0, 5], 'ififif'),
-        Obstacle([4, 8, 7, 9, 0, 5], 'ififif'),
+        Obstacle([4, 6, 3, 5, 0, 5], 'ififif').center().rotate(30,20,10),
+        Obstacle([5, 8, 2, 5, 0, 5], 'ififif').center().rotate(30,20, 0),
+        Obstacle([1, 3, 3, 5, 0, 5], 'ififif').center().rotate(30,-20,0),
+        Obstacle([4, 8, 7, 9, 0, 5], 'ififif').center().rotate(30,-20,10),
     ]
     
     rrt = RRTStar.init_RRTStar(
         start=start,
         goal=goal,
-        max_step=0.1,
+        max_step=step_size,
         max_iterations=1000,
         boundary=[lower_bound, upper_bound],
         obstacles=obstacles,
     )
     rrt.run()
 
-    
+    mlab.figure(size=(1920, 1080))
     # plot start and goal nodes in red and green
     mlab.points3d(start[0], start[1], start[2], color=(1, 0, 0), scale_factor=.2, resolution=60)
     mlab.points3d(goal[0], goal[1], goal[2], color=(0, 1, 0), scale_factor=.2, resolution=60)
 
     tree = rrt.best_tree
     for node, parent in tree.items():
-        node = np.array(eval(node))
-        # plot the nodes and connections between the nodes and their parents
-        mlab.points3d(node[0], node[1], node[2], color=(0, 0, 1), scale_factor=.1)
-        mlab.points3d(parent[0], parent[1], parent[2], color=(0, 0, 1), scale_factor=.1)
-        mlab.plot3d([node[0], parent[0]], [node[1], parent[1]], [node[2], parent[2]], color=(0, 0, 0), tube_radius=0.01)
+       node = np.array(eval(node))
+       # plot the nodes and connections between the nodes and their parents
+       mlab.points3d(node[0], node[1], node[2], color=(0, 0, 1), scale_factor=.1)
+       mlab.points3d(parent[0], parent[1], parent[2], color=(0, 0, 1), scale_factor=.1)
+       mlab.plot3d([node[0], parent[0]], [node[1], parent[1]], [node[2], parent[2]], color=(0, 0, 0), tube_radius=0.01)
 
 
     # find the path from the start node to the goal node
