@@ -106,14 +106,17 @@ class Obstacle:
         self.create_vertices()
         return self
 
-    def is_inside(self, x, y, z):
-        return np.any(self._is_point_inside(self._get_point_Vector(x, y, z)))
+    def is_inside(self, *xyz):
+        return np.any(self._is_point_inside(self._get_point_Vector(self._modify_xyz_args(xyz))))
 
-    def _get_point_Vector(self, x, y, z):
-        return self._get_points_on_line(self._modify_array(x, y, z))
+    def _modify_xyz_args(self, xyz):
+        return xyz[0] if len(xyz) == 1 else xyz
 
-    def _modify_array(self, x, y, z):
-        return np.broadcast_arrays(np.atleast_1d(x), np.atleast_1d(y), np.atleast_1d(z))
+    def _get_point_Vector(self, xyz):
+        return self._get_points_on_line(self._modify_array(xyz))
+
+    def _modify_array(self, xyz):
+        return np.broadcast_arrays(np.atleast_1d(xyz[0]), np.atleast_1d(xyz[1]), np.atleast_1d(xyz[2]))
 
     def _get_points_on_line(self, xyz):
         return np.stack([xyz[0].ravel(), xyz[1].ravel(), xyz[2].ravel()], axis=-1)
