@@ -1,15 +1,41 @@
-from mayavi import mlab
 import numpy as np
-
+from vispy import scene
+from vispy.scene import visuals, transforms
+from vispy import app
 from rrtstar import RRTStar
-
+from obstacle import Obstacle
 
 class RRTPlotter:
-    def __init__(self, rrt: RRTStar = None, optimal_trajectory: np.ndarray = None, real_trajectory: np.ndarray=None):
-        mlab.figure(size=(1920, 1080), bgcolor=(.3, .3, .3))
+    def __init__(self, rrt: RRTStar = None, optimal_trajectory: np.ndarray = None, real_trajectory: np.ndarray = None):
+        self._init_canvas()
         self.set_RRT(rrt)
         self.set_optimal_trajectory(optimal_trajectory)
         self.set_drone_trajectory(real_trajectory)
+        self._init_faces()
+        self._init_edges()
+
+    def _init_edges(self):
+        self.__edges = np.array([
+            [0, 1], [1, 2], [2, 3], [3, 0], 
+            [4, 5], [5, 6], [6, 7], [7, 4],
+            [0, 4], [1, 5], [2, 6], [3, 7]
+        ])
+
+    def _init_faces(self):
+        self.__faces = np.array([
+            [0, 1, 2], [0, 2, 3],
+            [4, 5, 6], [4, 6, 7],
+            [0, 3, 7], [0, 7, 4],
+            [1, 2, 6], [1, 6, 5],
+            [0, 1, 5], [0, 5, 4],
+            [2, 3, 7], [2, 7, 6]
+        ])
+
+    def _init_canvas(self):
+        self.__canvas = scene.SceneCanvas(keys='interactive', size=(1920, 1080), show=True, config={'samples': 4})
+        self.__view = self.__canvas.central_widget.add_view()
+        self.__view.camera = 'arcball'
+        self.__view.camera.set_range(x=(-2, 2), y=(-2, 2), z=(-2, 2))
 
     def set_drone_trajectory(self, real_trajectory):
         self.real_trajectory = real_trajectory
@@ -17,114 +43,84 @@ class RRTPlotter:
     def set_optimal_trajectory(self, optimal_trajectory):
         self.optimal_trajectory = optimal_trajectory
 
-    def set_RRT(self, rrt):
-        self.rrt = rrt
+    def set_RRT(self, rrt: RRTStar):
+        self.__start_and_goal = np.array([rrt.get_start_point(), rrt.get_goal_point()])
+        self.__path = rrt.get_best_path()
+        self.__tree = rrt.get_best_tree()
+        self.__obstacles = rrt.get_obstacles()
 
-
-    def animate_mesh(self, mesh, rpy=(True, True, True), delay=60):
-        self.check_if_real_trajectory_is_instantiated()
-        r, p, y = rpy
-        @mlab.animate(delay=delay)
-        def anim():
-            for coord in self.real_trajectory:
-                x, y, z = coord[:3]
-
-                if r or p or y:
-                    roll, pitch, yaw = coord[3:6]
-
-                    if r: mesh.actor.actor.rotate_y(roll)
-                    if p: mesh.actor.actor.rotate_x(pitch)
-                    if y: mesh.actor.actor.rotate_z(yaw)
-
-                mesh.actor.actor.position = (x, y, z)
-                yield
-        anim()
-
-    def check_if_real_trajectory_is_instantiated(self):
-        self.check_if_real_trajectory_is_instantiated()
+    def animate_trajectory(self, visual, delay=60):
         if self.real_trajectory is None:
             raise ValueError("Drone (real) trajectory is not provided")
+        
+        index = 0
+        def update(ev):
+            nonlocal index
+            if index < len(self.real_trajectory):
+                coord = self.real_trajectory[index]
+                visual.transform = transforms.STTransform(translate=coord[:3])
+                index += 1
+            else:
+                index = 0  # Reset or stop the timer as needed
 
-
-    def animate_point(self, moving_object, delay=60):
-        self.check_if_real_trajectory_is_instantiated()
-        @mlab.animate(delay=delay)
-        def anim():
-            for coord in self.real_trajectory:
-                x, y, z = coord[:3]
-                moving_object.mlab_source.set(x=x, y=y, z=z)
-                yield
-        anim()
-
+        timer = app.Timer(interval=delay / 1000.0, connect=update, start=True)
 
     def plot_executed_trajectory(self):
-        self.check_if_real_trajectory_is_instantiated()
-        mlab.plot3d(
-            self.real_trajectory[:, 0],
-            self.real_trajectory[:, 1],
-            self.real_trajectory[:, 2], color=(0, 0, 1), tube_radius=0.04, opacity=0.3)
+        if self.real_trajectory is not None:
+            visuals.Line(pos=self.real_trajectory[:, :3], color=(0, 0, 1), parent=self.__view.scene, method='gl')
+
+    def plot_start_and_goal(self):
+        visuals.Markers(parent=self.__view.scene).set_data(self.__start_and_goal, edge_color=None, face_color=['red', 'green'], size=20)
 
 
-    def plot_start_and_goal(self, color_start=(1, 0, 0), color_goal=(0, 1, 0)):
-        if self.rrt is None:
-            raise ValueError("RRT is not provided")
-        start = self.rrt.start
-        goal = self.rrt.goal
-        mlab.points3d(*start, color=color_start, scale_factor=0.2, resolution=60)
-        mlab.points3d(*goal, color=color_goal, scale_factor=0.2, resolution=60)
+    def plot_obstacles(self):
+        for idx, obs in enumerate(self.__obstacles):
+            vertices = obs.get_vertices()
+            inflated_vertices = obs.inflate(1.1).get_vertices()
+            if idx in [0, 1]:
+                visuals.Mesh(vertices=vertices, faces=self.__faces, color=(0.1, 0.1, 0.1, 1), parent=self.__view.scene)
+                visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(0.1, 0.1, 0.1, 0.1), parent=self.__view.scene)
+            else:
+                visuals.Mesh(vertices=vertices, faces=self.__faces, color=(1, 0, 0, 1), parent=self.__view.scene)
+                visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(1, 1, 1, .5), parent=self.__view.scene)
+            for line in self.__edges:
+                line = visuals.Line(pos=vertices[line], color=(0.1, 0.1, 0.1, 1), parent=self.__view.scene, width=2)
+
+    def plot_tree(self):
+        for node, parent in self.__tree.items():
+            if parent is not None:
+                node = np.array(eval(node))
+                visuals.Line(pos=np.array([node, parent]), color=(0, 1, 1, 0.5), parent=self.__view.scene, method='gl')
+                
+    def plot_path(self, color_path=(1, 1, 0, 1)):
+        visuals.Line(pos=self.__path, color=color_path, parent=self.__view.scene, method='gl')
+        visuals.Markers(parent=self.__view.scene).set_data(self.__path[1:-1], edge_color=None, face_color=['cyan'], size=20)
 
 
-    @staticmethod
-    def plot_obstacles(obstacles, color_obs=(.6, .6, .6), color_true_obs=(.9, 0, 0), true_obstacles_size_factor=0.5):
-        offset = 0.5  # need to offset the obstacle by 0.5 due to mayavi way of plotting cubes
-        for obstacle in obstacles:
-            xx, yy, zz = np.mgrid[obstacle[0] + offset:obstacle[1]:1,
-                                  obstacle[2] + offset:obstacle[3]:1,
-                                  obstacle[4] + offset:obstacle[5]:1]
-            mlab.points3d(xx, yy, zz, color=color_obs, scale_factor=1, mode='cube', opacity=0.2)
+    def plot_trajectory(self, color_traj=(0, 1, 1, 1)):
+        if self.optimal_trajectory is not None:
+            visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
 
-        # true obstacles (non-enhanced):
-        rm = true_obstacles_size_factor / 2  # remove factor/2 from each side and factor from height
-        offset = offset + rm
-        matrix_factor = np.ones(obstacles.shape) * rm if rm > 0 else np.ones(obstacles.shape)
-
-        matrix_factor[:, [1, 3, 5]] = matrix_factor[:, [1, 3, 5]] * -1
-        obstacles_true = obstacles + matrix_factor
-
-        # ensure z_min is 0 if z_min=rm
-        obstacles_true[:, 4] = np.where(obstacles_true[:, 4] == rm, 0, obstacles_true[:, 4])
-
-        for obstacle in obstacles_true:
-            xx, yy, zz = (
-                np.mgrid[obstacle[0] + offset:obstacle[1]:1,
-                         obstacle[2] + offset:obstacle[3]:1,
-                         obstacle[4] + offset - rm:obstacle[5]:1]
-            )
-            mlab.points3d(xx, yy, zz, color=color_true_obs, scale_factor=1, mode='cube', opacity=1)
-
-
-    def plot_tree(self, color_node=(0, 0, 1), color_edges=(0, 0, 0)):
-        """
-        Plot the nodes and connections between the nodes and their parents
-        """
-        for node, parent in self.rrt.best_tree.items():
-            node = np.array(eval(node))
-            mlab.points3d(node[0], node[1], node[2], color=color_node, scale_factor=.1, opacity=0.1)
-            mlab.points3d(parent[0], parent[1], parent[2], color=color_node, scale_factor=.1, opacity=0.1)
-            mlab.plot3d([node[0], parent[0]], [node[1], parent[1]], [node[2], parent[2]],
-                        color=color_edges, tube_radius=0.01, opacity=0.1)
-
-
-    def plot_path(self, color_path=(1, 1, 0)):
-        path = self.rrt.best_path
-        mlab.plot3d(path[:, 0], path[:, 1], path[:, 2], color=color_path, tube_radius=0.02)
-
-
-    def plot_trajectory(self, color_traj=(0, 1, 1)):
-        mlab.plot3d(
-            self.optimal_trajectory[:, 0],
-            self.optimal_trajectory[:, 1], self.optimal_trajectory[:, 2], tube_radius=0.02, color=color_traj)
-
-
-if __name__ == "__main__":
-    pass
+# Example usage
+if __name__ == '__main__':
+    ceiling = Obstacle([-10, 10, -10, 10, 9, 10], 'ififif')
+    floor = Obstacle([-10, 10, -10, 10, -10, -9], 'ififif')
+    obstacles = [
+        ceiling,
+        floor,
+        Obstacle([1, 1, 1, 4, 4, -4]).rotate(80,-180,0),
+    ]
+    rrt = RRTStar.init_RRTStar(
+        start=[0, 0, 0],
+        goal=[8, 8, -8],
+        max_step=0.5,
+        max_iterations=1000,
+        boundary=[-10,-10,-10,10,10,10],
+        obstacles=obstacles,
+    )
+    rrt.run()
+    plotter = RRTPlotter(rrt)
+    plotter.plot_path()
+    plotter.plot_obstacles()
+    plotter.plot_start_and_goal()
+    app.run()

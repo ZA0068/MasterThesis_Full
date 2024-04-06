@@ -3,50 +3,17 @@ from polynomialtrajectory import MinimalTrajectoryGenerator as MinTrajGen
 import numpy as np
 from rrtstar import RRTStar
 from rrtstarplotter import RRTPlotter
-from mayavi import mlab
+from obstacle import Obstacle
+
 
 def main():
-    #waypoints = np.array([[2.48, -1.08, 1.0], [1.93, -1.45, 1.0], [1.55, -1.63, 1.0], [0.8, -2.0, 1.0], [0.2, -1.55, 1.0],[-0.08, -1.38, 1.0], [-0.6, -1.03, 1.0], [-1.25, -0.58, 1.0], [-2.15, 0.03, 1.0], [-1.63, 0.53, 1.0], [-1.18, 1.03, 1.0], [-0.35, 1.4, 1.0], [0.13, 1.63, 1.0], [0.75, 1.95, 1.0], [1.3, 1.53, 1.0], [1.73, 1.03, 1.0], [1.25, 0.43, 1.0], [0.8, 0.03, 1.0], [0.83, -0.4, 1.0], [0.83, -0.95, 1.0], [1.7, -0.98, 1.0], [2.48, -1.08, 1.0]])
+    waypoints = np.array([[2.48, -1.08, 1.0], [0.8, -2.0, 1.0], [-2.15, 0.03, 1.0], [-1.18, 1.03, 1.0], [0.75, 1.95, 1.0], [1.73, 1.03, 1.0], [0.8, 0.03, 1.0], [0.83, -0.95, 1.0], [2.48, -1.08, 1.0]])
+    rrt = RRTStar(start=[0, 0, 0], goal=[1, 1, 1], obstacles=[obstacle], step_size=0.1, max_iterations=1000)
+    obstacle = Obstacle([-1.275, -1.4, 0.0, -0.325, -0.425, 0.985])
     #rrt_plottingn(waypoints)
-    plotter = Plotter()    
+    #plotter = Plotter()    
     #generate_trajectory(plotter)
-    plot_trajectory(plotter)
-
-def rrt_plottingn(waypoints):
-    ceiling = [-10, 10, -10, 10, 9, 10]
-    floor = [-10, 10, -10, 10, -10, -9]
-    space_limits = np.array([[-3., -3., -3], [3., 3., 3.]])
-    #obstacles = np.array(
-#        [floor,
-#        ceiling,
-#        [4, 6, 3, 5, 0, 5],
-#        [5, 8, 2, 5, 0, 5],
-#        [1, 3, 3, 5, 0, 5],
-#        [4, 8, 7, 9, 0, 5],
-#        ]
-#    )
-    for i, waypoint in enumerate(waypoints):
-        if i == len(waypoints) - 1:
-            break
-        rrt = RRTStar(
-            space_limits,
-            start=waypoint,
-            goal=waypoints[i+1],
-            max_distance=0.8,
-            max_iterations=1000,
-            obstacles=None,
-        )
-        rrt.run()
-    
-    rrt_plotter = RRTPlotter(rrt, None, None)
-    #rrt_plotter.plot_obstacles(obstacles)
-    rrt_plotter.plot_start_and_goal()
-    rrt_plotter.plot_path()
-    rrt_plotter.plot_tree()
-    
-    mlab.orientation_axes()
-    mlab.axes()
-    mlab.show()
+    #plot_trajectory(plotter)
 
 
 def generate_trajectory(plotter: Plotter):

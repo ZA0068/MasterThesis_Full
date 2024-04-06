@@ -1,0 +1,6 @@
+lowerbound square: -1.275, -1.4, 0.0
+upperbound square: -0.325, -0.425, 0.985
+
+lower_bound_square 2: -0.75, 1.1, 0.0
+upper_bound_square 2: 0.125, 2.05, 0.985
+rotated +30 deg

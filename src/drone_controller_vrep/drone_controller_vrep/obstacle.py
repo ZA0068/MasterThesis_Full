@@ -1,5 +1,7 @@
 import numpy as np
-from mayavi import mlab
+from vispy import scene, app
+from vispy.scene import visuals
+from copy import deepcopy
 class Obstacle:
     
     def __init__(self, *args):
@@ -27,17 +29,18 @@ class Obstacle:
                 raise ValueError("Invalid array sizes: Arrays must 2x3 arrays or 1x6 array")
 
     def _init_mode_arr(self, args):
-        self._origin = np.array(args[0])
-        self._dimensions = np.array(args[1]) - self._origin
+        self._init_mode(args[0], args[1])
 
     def _init_mode_args(self, args):
-        self._origin = np.array(args[:3])
-        self._dimensions = np.array(args[3:]) - self._origin
-    
-    
+        self._init_mode(args[:3], args[3:])
+
     def _init_mode_cross_arg(self, array):
-        self._origin = np.array(array[::2])
-        self._dimensions = np.array(array[1::2]) - self._origin
+        self._init_mode(array[::2], array[1::2])
+        
+    def _init_mode(self, array1, array2):
+        self.set_origin(np.array(array1))
+        self.set_dimensions(np.abs(np.array(array2) - self._origin))
+        
     def _init_mode_list(self, array, mode='iiifff'):
         match mode:
             case 'iiifff':
@@ -47,10 +50,19 @@ class Obstacle:
             case _:
                 raise ValueError("Invalid mode")
 
+    def inflate(self, scale):
+        center = self._get_cuboid_center()
+        new_vertices = (self._vertices - center) * scale + center
+        new_obs = deepcopy(self)
+        new_obs.set_dimensions(self._dimensions * scale)
+        new_obs.create_vertices(new_vertices)
+        return new_obs
 
-
-    def create_vertices(self):
-        self._vertices = self._origin + self._corners() * self._dimensions
+    def create_vertices(self, vertices=None):
+        if vertices is not None:
+            self._vertices = vertices
+        else:
+            self._vertices = self._origin + self._corners() * self._dimensions
 
     def _corners(self):
         return np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
@@ -87,16 +99,20 @@ class Obstacle:
         return [sincos[3] * sincos[5], sincos[5] * sincos[0] * sincos[1] - sincos[4] * sincos[2], sincos[4] * sincos[5] * sincos[1] + sincos[0] * sincos[2]]
     
     def move(self, x, y, z):
-        self.move_origin(x, y, z)
+        self.set_origin(x, y, z)
         self.create_vertices()
         return self
 
-    def move_origin(self, x, y, z):
-        self._origin += np.array([x, y, z])
+    def set_origin(self, *xyz):
+        self._origin = np.asarray(xyz).flatten()
+        return self
+
+    def set_dimensions(self, *dimensions):
+        self._dimensions = np.asarray(dimensions).flatten()
         return self
 
     def scale(self, x, y, z):
-        self._dimensions *= np.array([x, y, z])
+        self._dimensions = self._dimensions * (x, y, z).flatten()
         self.create_vertices()
         return self
     
@@ -105,33 +121,20 @@ class Obstacle:
         self._dimensions = np.array([x_f, y_f, z_f])
         self.create_vertices()
         return self
-
     def is_inside(self, *xyz):
-        return np.any(self._is_point_inside(self._get_point_Vector(self._modify_xyz_args(xyz))))
-
-    def _modify_xyz_args(self, xyz):
-        return xyz[0] if len(xyz) == 1 else xyz
-
-    def _get_point_Vector(self, xyz):
-        return self._get_points_on_line(self._modify_array(xyz))
-
-    def _modify_array(self, xyz):
-        return np.broadcast_arrays(np.atleast_1d(xyz[0]), np.atleast_1d(xyz[1]), np.atleast_1d(xyz[2]))
-
-    def _get_points_on_line(self, xyz):
-        return np.stack([xyz[0].ravel(), xyz[1].ravel(), xyz[2].ravel()], axis=-1)
+        return not np.all(self._is_point_inside(xyz))
 
     def _is_point_inside(self, points):
-        return np.all(self._compare_point_and_cuboid(points), axis=1)
+        return np.any(self._compare_point_and_cuboid(points), axis=-1)
 
     def _compare_point_and_cuboid(self, points):
-        return self._get_axis_vectors(self._get_direction_vector(points)) <= self._dimensions
+        return self._get_axis_vectors(self._get_direction_vector(points)) > self._dimensions
 
-    def _get_axis_vectors(self, d):
-        return self._calculate_vector_point(d, self._get_normalized_vectors())
+    def _get_axis_vectors(self, direction_vector):
+        return self._calculate_vector_point(direction_vector, self._get_normalized_vectors())
 
     def _calculate_vector_point(self, d, val):
-        return np.abs(np.dot(d, val)) * 2
+        return np.abs(d @ val) * 2
 
     def _get_direction_vector(self, points):
         return points - self._get_cuboid_center() 
@@ -140,10 +143,25 @@ class Obstacle:
         return (self._vertices[0] + self._vertices[6]) / 2.0
 
     def _get_normalized_vectors(self):
-        return (self._vertices[[1, 3, 4]] - self._vertices[0]) / self._dimensions[:3]
+        return (self._vertices[[1, 3, 4]] - self._vertices[0]) / self._dimensions
 
+    def _get_point(self):
+        return np.concatenate((self._vertices[0], self._vertices[6]))
+
+    def _get_point_crossed(self):
+        return np.array(self._vertices)[[0, 6], :].flatten(order='F')
+    
     def get_vertices(self):
         return self._vertices
+
+    def get_point(self, mode='iiifff'):
+        match mode:
+            case 'iiifff':
+                return self._get_point()
+            case 'ififif':
+                return self._get_point_crossed()
+            case _:
+                raise ValueError("Invalid mode")
 
     def get_origin(self):
         return self._origin
@@ -158,31 +176,43 @@ class Obstacle:
     def center_origin(cls, *args):
         return cls(args).center()
     
+
+    
 if __name__ == '__main__':
-    mlab.figure(size=(1920, 1080))
-    obs = Obstacle.center_origin(-1, -1, -1, 1, 1, 1)
-    mlab.points3d(*obs.get_vertices().T, scale_factor=0.1, color=(0, 1, 1))
-    print("Original Vertices:\n", obs.get_vertices())
-    x = np.linspace(2, 1, 100)
-    y = np.linspace(3, 0, 100)
-    z = np.linspace(-1, 0, 100)
-    print("Is inside:", obs.is_inside(0, 0, 0))
-    print("Is inside:", obs.is_inside(0.25, 0.25, 0.25))
-    print("Is inside:", obs.is_inside(x, 0.5, 0.5))
-    print("Is inside:", obs.is_inside(x, 1.5, 1.5))
-    print("Is inside:", obs.is_inside(x, y, z))
-    obs.rotate(45, 0, 0)
-    print("Rotated and Resized Vertices:\n", obs.get_vertices())
-    x = np.linspace(-0.2, 0.4, 100)
-    y = np.linspace(-0.2, 0.4, 100)
-    z = np.linspace(0, 1.05, 100)
-    print("Is inside:", obs.is_inside(0, 0, 0))
-    print("Is inside:", obs.is_inside(0.2, 0.2, 0.2))
-    mlab.points3d(*obs.get_origin(), scale_factor=0.2, color=(0, 1, 0))
-    mlab.points3d(*obs.get_vertices().T, scale_factor=0.1, color=(1, 0, 0))
-    mlab.axes()
-    mlab.orientation_axes()
-    mlab.show()
+    # Create an instance of the Obstacle class
+    obs = Obstacle([1, 1, 1, 4, 4, -4], 'iiifff').rotate(80,-180,0)
+    # Setup VisPy canvas
+    canvas = scene.SceneCanvas(keys='interactive', size=(1920, 1080), show=True)
+    view = canvas.central_widget.add_view()
+    view.camera = 'turntable'  # Or use 'arcball' for alternative interaction
+
+    # Vertices for cuboid
+    vertices = obs.get_vertices()
+    # Assuming the cuboid is represented as a line loop
+    lines = np.array([
+        [0, 1], [1, 2], [2, 3], [3, 0],  # Bottom face
+        [4, 5], [5, 6], [6, 7], [7, 4],  # Top face
+        [0, 4], [1, 5], [2, 6], [3, 7]   # Side faces
+    ])
+    faces = np.array([
+        [0, 1, 2], [0, 2, 3],  # Bottom face
+        [4, 5, 6], [4, 6, 7],  # Top face
+        [0, 3, 7], [0, 7, 4],  # Side face
+        [1, 2, 6], [1, 6, 5],  # Opposite side face
+        [0, 1, 5], [0, 5, 4],  # Front face
+        [2, 3, 7], [2, 7, 6]   # Back face
+    ])
+    mesh = visuals.Mesh(vertices=vertices, faces=faces, color=(1, 0, 0, 1), parent=view.scene)
+    for line in lines:
+        line = visuals.Line(pos=vertices[line], color=(0, 0, 0, 1), parent=view.scene, width=2)
+
+    # Optionally, add a marker at the origin for reference
+    origin_visual = visuals.Markers()
+    origin_visual.set_data(obs.get_origin()[np.newaxis, :], edge_color=None, face_color=(0, 1, 0), size=10)
+    view.add(origin_visual)
+
+    # Configure the camera to view the entire cuboid
+    view.camera.set_range(x=(-3, 3), y=(-3, 3), z=(-3, 3))
 
 
-
+    app.run()
