@@ -53,7 +53,10 @@ def diff2deg(order_type):
     else:
         raise ValueError("Invalid data type")
     
-
+def get_file_location(filename, location='data'):
+    directory_path = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), location)
+    os.makedirs(directory_path, exist_ok=True)
+    return os.path.join(directory_path, filename)
 class Plotter:
     def __init__(self, Trajectory_data=None, Waypoint_data=None, Duration_data=None, Derivative_data=None) -> None:
         self.reset()
@@ -211,7 +214,7 @@ class Plotter:
         self.__ax_3d.legend()
 
     def save_image(self, name):
-        plt.savefig(self.get_file_location(f"{name}.png", 'resource/img'))
+        plt.savefig(get_file_location(f"{name}.png", 'resource/img'))
         
     def plot_3d_waypoints(self, **kwargs):
         self.__ax_3d.scatter(self.__waypoint_data[:, 0], self.__waypoint_data[:, 1], self.__waypoint_data[:, 2], **kwargs)
@@ -221,7 +224,7 @@ class Plotter:
 
 
     def read_data(self, filename, order=-1, dimensions=-1):
-        filename = self.get_file_location(filename, 'resource/data')
+        filename = get_file_location(filename, 'resource/data')
         with open(filename, 'r') as file:
             return self.read_file(file, order, dimensions)
 
@@ -231,13 +234,8 @@ class Plotter:
         data_array = np.array(data_list).astype(np.float64)
         return data_array[:, order:order+dimensions] if order > -1 and dimensions > -1 else data_array
 
-    def get_file_location(self, filename, location='data'):
-        directory_path = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), location)
-        os.makedirs(directory_path, exist_ok=True)
-        return os.path.join(directory_path, filename)
-
     def save_data(self, filename, DATA):
-        np.savetxt(self.get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
+        np.savetxt(get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
 
     def plot_time_data_individually(self, **kwargs):
         for derivative in range(self.__max_derivative.value + 1):

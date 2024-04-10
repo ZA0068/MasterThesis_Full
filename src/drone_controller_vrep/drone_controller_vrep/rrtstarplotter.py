@@ -4,7 +4,9 @@ from vispy.scene import visuals, transforms
 from vispy import app
 from rrtstar import RRTStar
 from obstacle import Obstacle
+from header_file import *
 
+global temp_array
 class RRTPlotter:
     def __init__(self, rrt: RRTStar = None, optimal_trajectory: np.ndarray = None, real_trajectory: np.ndarray = None):
         self._init_canvas()
@@ -44,10 +46,41 @@ class RRTPlotter:
         self.optimal_trajectory = optimal_trajectory
 
     def set_RRT(self, rrt: RRTStar):
+        if rrt is None:
+            return
         self.__start_and_goal = np.array([rrt.get_start_point(), rrt.get_goal_point()])
         self.__path = rrt.get_best_path()
         self.__tree = rrt.get_best_tree()
         self.__obstacles = rrt.get_obstacles()
+
+    def set_rrt_path(self, *best_path):
+        if len(best_path) == 1 and isinstance(best_path[0], (list, np.ndarray)):
+            best_path = best_path[0]
+        temp_array = np.empty((0, best_path[0].shape[1]), dtype=best_path[0].dtype)
+        for array in best_path:
+            temp_array = np.concatenate((temp_array, array))
+        self.__path = temp_array
+        
+    def set_rrt_tree(self, *best_tree):
+        if len(best_tree) == 1 and isinstance(best_tree, tuple):
+            best_tree = best_tree[0]
+        self.__tree = best_tree
+        
+    def set_rrt_obstacles(self, obstacles):
+        self.__obstacles = obstacles
+    
+    def set_rrt_start_and_goal(self, start_and_goal):
+        self.__start_and_goal = start_and_goal
+
+    def save_rrt_path(self):
+        np.savetxt(get_file_location('rrt_path.csv', location='resource/data'), self.__path, delimiter=',')
+        
+    def save_rrt_tree(self):
+        np.savetxt(get_file_location('rrt_tree.csv', location='resource/data'), self.__tree, delimiter=',')
+        
+    def save_rrt_obstacles(self):
+        for idx, obs in enumerate(self.__obstacles):
+            np.savetxt(get_file_location(f'obstacle_{idx}.csv', location='resource/data'), obs.get_vertices(), delimiter=',')
 
     def animate_trajectory(self, visual, delay=60):
         if self.real_trajectory is None:
@@ -100,6 +133,9 @@ class RRTPlotter:
     def plot_trajectory(self, color_traj=(0, 1, 1, 1)):
         if self.optimal_trajectory is not None:
             visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
+
+    def plot(self):
+        app.run()
 
 # Example usage
 if __name__ == '__main__':

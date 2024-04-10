@@ -22,6 +22,7 @@
         "rclpy",
         "rrtstar",
         "rrtstarplotter",
+        "savetxt",
         "sincos",
         "ublas",
         "vispy",

@@ -6,18 +6,57 @@ from obstacle import Obstacle
 from mayavi import mlab
 
 class RRTStar:
-    def __init__(self, start=None, goal=None, max_step=1):
+    def __init__(self):
         self.__rounding_value = 2
-        if start is not None and goal is not None:
-            self.initialize(start, goal, max_step)
+        self.clear()
     
-    def initialize(self, start, goal, max_step):
+    def reset(self):
+        self.__start = None
+        self.__goal = None
+        self.__previous_cost = np.inf
+        self.__current_cost = np.inf
+        self.__tree = {}
+        self.__best_path = None
+        self.__best_tree = None
+        self.__new_node = None
+        self.__neighbors = None
+        self.__dynamic_it_counter = 0
+        self.__has_rewired = False
+        self.__all_nodes = []
+        self.__kdtree = None
+
+
+    def clear(self):
+        self.__start = None
+        self.__goal = None
+        self.__max_step = 1
+        self.__max_iterations = 1000
+        self.__epsilon = 0.15
+        self.__neighborhood_radius = 1.5
+        self.__space_limits = None
+        self.__obstacles = []
+        self.__previous_cost = np.inf
+        self.__current_cost = np.inf
+        self.__tree = {}
+        self.__best_path = None
+        self.__best_tree = None
+        self.__new_node = None
+        self.__neighbors = None
+        self.__t = np.linspace(0, 1, 100)
+        self.__dynamic_it_counter = 0
+        self.__dynamic_break_at = self.__max_iterations / 100
+        self.__has_rewired = False
+        self.__all_nodes = []
+        self.__kdtree = None
+
+    def initialize(self, start, goal, max_step, boundary, iterations, epsilon, cuboid_distance):
         self.set_start_and_goal(start, goal)
         self.set_max_step(max_step)
-        self.set_max_iterations(1000)
-        self.set_epsilon(0.15)
+        self.set_max_iterations(iterations)
+        self.set_epsilon(epsilon)
+        self.set_cuboid_dist(cuboid_distance)
+        self.set_boundaries(boundary)
         self._init_cost()
-        self.set_cuboid_dist(1.5)
         self._init_nodes_and_tree()
         self._init_dynamic_counter()
 
@@ -29,8 +68,6 @@ class RRTStar:
         self.__tree = {}
         self.__best_path = None
         self.__best_tree = None
-        self.__kdtree = KDTree([self.__start])
-        self.__all_nodes = [self.__start]
         self.__new_node = None
         self.__neighbors = None
         self.__t = np.linspace(0, 1, 100)
@@ -53,8 +90,11 @@ class RRTStar:
         return value.round(self.__rounding_value)
     
     def set_start_and_goal(self, start, goal):
-        self.__start = self._round_value(np.asarray(start))
-        self.__goal = self._round_value(np.asarray(goal))
+        if start is not None and goal is not None:
+            self.__start = self._round_value(np.asarray(start))
+            self.__kdtree = KDTree([self.__start])
+            self.__all_nodes = [self.__start]
+            self.__goal = self._round_value(np.asarray(goal))
 
     def set_max_step(self, max_step):
         self.__max_step = max_step
@@ -65,17 +105,10 @@ class RRTStar:
     def add_obstacles(self, *obstacles):
         if obstacles is None:
             return
-        if isinstance(obstacles, list):
+        if len(obstacles) == 1:
             obstacles = obstacles[0]
         for obstacle in obstacles:
-            self._validate_start_goal(obstacle)
             self.__obstacles.append(obstacle)
-
-    def _validate_start_goal(self, obstacle):
-        if obstacle.is_inside(self.__start):
-            raise ValueError("Start point is inside an obstacle")
-        if obstacle.is_inside(self.__goal):
-            raise ValueError("Goal point is inside an obstacle")
 
     def set_boundaries(self, *boundary):
         self.__space_limits = np.asarray(boundary).flatten()
@@ -285,11 +318,14 @@ class RRTStar:
 
     @classmethod
     def init_RRTStar(cls, start, goal, max_step, max_iterations, boundary, obstacles):
-        instance = cls(start, goal, max_step)
-        instance.set_max_iterations(max_iterations)
-        instance.set_boundaries(boundary)
+        instance = cls()
+        instance.initialize(start=start,goal=goal,max_step=max_step,iterations=max_iterations,boundary=boundary,epsilon=0.15,cuboid_distance= 1.5)
         instance.add_obstacles(*obstacles)
         return instance
+    
+    @classmethod
+    def default_RRTSTAR(cls, start, goal, max_step):
+        return cls(start, goal, max_step)
     
     def get_best_tree(self):
         return self.__best_tree

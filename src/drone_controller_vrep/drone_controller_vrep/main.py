@@ -5,11 +5,39 @@ from rrtstar import RRTStar
 from rrtstarplotter import RRTPlotter
 from obstacle import Obstacle
 
+global true_rrt_path;
+global true_rrt_tree;
 
 def main():
-    waypoints = np.array([[2.48, -1.08, 1.0], [0.8, -2.0, 1.0], [-2.15, 0.03, 1.0], [-1.18, 1.03, 1.0], [0.75, 1.95, 1.0], [1.73, 1.03, 1.0], [0.8, 0.03, 1.0], [0.83, -0.95, 1.0], [2.48, -1.08, 1.0]])
-    rrt = RRTStar(start=[0, 0, 0], goal=[1, 1, 1], obstacles=[obstacle], step_size=0.1, max_iterations=1000)
-    obstacle = Obstacle([-1.275, -1.4, 0.0, -0.325, -0.425, 0.985])
+    true_rrt_path = []
+    true_rrt_tree = []
+    main_waypoints = np.array([[2.48, -1.08, 1.0], [0.8, -2.0, 1.0], [-2.15, 0.03, 1.0], [-1.18, 1.03, 1.0], [0.75, 1.95, 1.0], [1.73, 1.03, 1.0], [0.8, 0.03, 1.0], [0.83, -0.95, 1.0], [2.48, -1.08, 1.0]])
+    
+    rrt = build_rrt(true_rrt_path, true_rrt_tree, main_waypoints)
+    
+    plotter = RRTPlotter(rrt)
+    plotter.set_rrt_path(true_rrt_path)
+    plotter.save_rrt_path()
+    #plotter.set_rrt_tree(true_rrt_tree)
+    #plotter.save_rrt_tree()
+    plotter.plot()
+
+def build_rrt(true_rrt_path, true_rrt_tree, main_waypoints):
+    rrt = RRTStar()
+    obstacle1 = Obstacle([-1.275, -1.4, 0.0, -0.325, -0.425, 0.985])
+    obstacle2 = Obstacle([-0.75, 1.1, 0.0, 0.125, 2.05, 0.985]).rotate(0,0,30)
+    floor = Obstacle([-3, -3, -0.2, 3.0, 3.0, 0.0])
+    rrt.add_obstacles([obstacle1, obstacle2, floor])
+    rrt.set_max_step(0.1)
+    rrt.set_boundaries([-3, -3, 0, 3, 3, 5])
+    for i in range(len(main_waypoints) - 1):
+        rrt.set_start_and_goal(main_waypoints[i], main_waypoints[i + 1])
+        rrt.run()
+        true_rrt_path.append(rrt.get_best_path())
+        true_rrt_tree.append(rrt.get_best_tree())
+        rrt.reset()
+    return rrt
+    
     #rrt_plottingn(waypoints)
     #plotter = Plotter()    
     #generate_trajectory(plotter)
