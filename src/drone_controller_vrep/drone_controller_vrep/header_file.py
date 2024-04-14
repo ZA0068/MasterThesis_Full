@@ -44,19 +44,68 @@ class Color(Enum):
         members = list(cls)
         return members[index % 3].name.lower()
 
+class Controller(Enum):
+    OIAC = 0
+    PID = 1
+
+class TrajectoryState(Enum):
+    START = 0
+    RUNNING = 1
+    FINAL = 2
+    STOP = 3
+
+@staticmethod
 def ensure_numpy_array(array_or_scalar):
     return np.asarray(array_or_scalar)
 
+@staticmethod
 def diff2deg(order_type):
     if order_type.__class__.__name__ == 'Derivative':
         return Degree(max(order_type.value * 2 - 1, 0))
     else:
         raise ValueError("Invalid data type")
-    
+
+@staticmethod
 def get_file_location(filename, location='data'):
     directory_path = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), location)
     os.makedirs(directory_path, exist_ok=True)
     return os.path.join(directory_path, filename)
+
+def read_data(filename, order=-1, dimensions=-1):
+    filename = get_file_location(filename, 'resource/data')
+    with open(filename, 'r') as file:
+        return read_file(file, order, dimensions)
+
+@staticmethod
+def read_file(file, order=-1, dimensions=-1):
+    reader = csv.reader(file)
+    data_list = list(reader)
+    data_array = np.array(data_list).astype(np.float64)
+    return data_array[:, order:order+dimensions] if order > -1 and dimensions > -1 else data_array
+
+@staticmethod
+def save_data(filename, DATA):
+    np.savetxt(get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
+
+
+@staticmethod
+def extract_rrt_star_array(*best_path):
+    if len(best_path) == 1:
+        temp_array = best_path[0]
+    if isinstance(temp_array, list):
+        temp_array = prune_array(np.concatenate(temp_array))
+    return temp_array
+
+@staticmethod
+def prune_array(data, tolerance=1e-5):
+    if data.size == 0:
+        return data
+    pruned_data = [data[0]]
+    for point in data[1:]:
+        if np.linalg.norm(pruned_data[-1] - point) > tolerance:
+            pruned_data.append(point)
+    return np.array(pruned_data)
+
 class Plotter:
     def __init__(self, Trajectory_data=None, Waypoint_data=None, Duration_data=None, Derivative_data=None) -> None:
         self.reset()
@@ -122,8 +171,7 @@ class Plotter:
         self.__duration_data = duration_data
 
     def _extract_derivatives_and_degrees(self, derivative_data):
-        max_derivative_value = self._check_max_derivative_value()
-        self._set_max_derivative_and_degrees(max_derivative_value)
+        self._set_max_derivative_and_degrees(self._check_max_derivative_value())
         self._set_degrees_and_derivative_type(derivative_data)
 
     def _set_degrees_and_derivative_type(self, derivative_data):
@@ -151,7 +199,7 @@ class Plotter:
 
     def _set_time_data(self):
         if self.__duration_data is not None:
-            self.time_data = np.linspace(0, sum(self.__duration_data), self.__length)
+            self.__time_data = np.linspace(0, sum(self.__duration_data), self.__length)
             self.__durations = np.cumsum(np.append(0, self.__duration_data))
 
     def plot_2D(self, **kwargs):
@@ -159,9 +207,11 @@ class Plotter:
         self.display_labels_2d(**kwargs)
 
     def plot_2D_data(self, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot', 'show_plot', 'overlap_plot'])
-        self.plot_2d_trajectory(**kwargs)
-        self.plot_2d_waypoints(**kwargs)
+        trajectory_label, waypoint_label =self._pop_multiple_keys(kwargs, ['trajectory_label', 'waypoint_label'], ['Optimal Trajectory', 'Waypoints'])
+        plt.figure(figsize=(10*2, 8*2))
+        plt.rcParams.update({'font.size': 24})
+        self.plot_2d_trajectory(label=trajectory_label)
+        self.plot_2d_waypoints(label=waypoint_label)
 
     def display_labels_2d(self, **kwargs):
         plt.xlabel("X [m]")
@@ -169,19 +219,18 @@ class Plotter:
         self.append_title_name("2D")
         plt.title(self.__title)
         plt.legend()
-        self._save_space_plot(**kwargs)
+        self.save_plot(**kwargs)
         plt.show()
 
-    def _save_space_plot(self, **kwargs):
+    def save_plot(self, **kwargs):
         if kwargs.get('save_plot') is True:
             self.save_image(self.__title)
 
     def plot_2d_waypoints(self, **kwargs):
-        plt.scatter(self.__waypoint_data[:, 0], self.__waypoint_data[:, 1], label='Waypoints', **kwargs)
+        plt.scatter(self.__waypoint_data[:, 0], self.__waypoint_data[:, 1], **kwargs)
 
     def plot_2d_trajectory(self, **kwargs):
-        label = kwargs.pop('label', 'Trajectory')
-        plt.plot(self.__trajectory_data[:, 0], self.__trajectory_data[:, 1], label=label, **kwargs)
+        plt.plot(self.__trajectory_data[:, 0], self.__trajectory_data[:, 1], **kwargs)
 
     def plot_3D(self, **kwargs):
         self.set_3d_figure()
@@ -189,29 +238,29 @@ class Plotter:
         self.display_labels_3d(**kwargs)
 
     def set_3d_figure(self):
-        self.__ax_3d = plt.figure().add_subplot(111, projection='3d')
+        plt.rcParams.update({'font.size': 24})
+        self.__ax_3d = plt.figure(figsize=(10*2, 8*2)).add_subplot(111, projection='3d')
 
     def plot_3d_data(self, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot'])
-        self.plot_3d_trajectory(label='Trajectory', **kwargs)
-        self.plot_3d_waypoints(label='Waypoints', **kwargs)
+        trajectory_label, waypoint_label = self._pop_multiple_keys(kwargs, ['trajectory_label', 'waypoint_label'], ['Trajectory', 'Waypoints'])
+        plt.rcParams.update({'font.size': 24})
+        self.plot_3d_trajectory(label=trajectory_label)
+        self.plot_3d_waypoints(label=waypoint_label)
 
     def display_labels_3d(self, **kwargs):
         self.show_labels_3D_plots()
-        self.save_3D_plot(kwargs)
+        self.save_plot(**kwargs)
         plt.show()
 
-    def save_3D_plot(self, kwargs):
-        if kwargs.get('save_plot') is True:
-            self.save_image(self.__title)
-
     def show_labels_3D_plots(self) :
+        plt.rcParams.update({'font.size': 24})
         self.__ax_3d.set_xlabel("X-axis [m]")
         self.__ax_3d.set_ylabel("Y-axis [m]")
         self.__ax_3d.set_zlabel("Z-axis [m]")
         self.append_title_name("3D")
         self.__ax_3d.set_title(f"{self.__title}")
         self.__ax_3d.legend()
+        
 
     def save_image(self, name):
         plt.savefig(get_file_location(f"{name}.png", 'resource/img'))
@@ -222,43 +271,27 @@ class Plotter:
     def plot_3d_trajectory(self, **kwargs):
         self.__ax_3d.plot(self.__trajectory_data[:, 0], self.__trajectory_data[:, 1], self.__trajectory_data[:, 2], **kwargs)
 
-
-    def read_data(self, filename, order=-1, dimensions=-1):
-        filename = get_file_location(filename, 'resource/data')
-        with open(filename, 'r') as file:
-            return self.read_file(file, order, dimensions)
-
-    def read_file(self, file, order=-1, dimensions=-1):
-        reader = csv.reader(file)
-        data_list = list(reader)
-        data_array = np.array(data_list).astype(np.float64)
-        return data_array[:, order:order+dimensions] if order > -1 and dimensions > -1 else data_array
-
-    def save_data(self, filename, DATA):
-        np.savetxt(get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
-
     def plot_time_data_individually(self, **kwargs):
         for derivative in range(self.__max_derivative.value + 1):
             axs = self.get_subplot_for_individual_plots()
-            self.plot_time_vs_trajectory_and_waypoint(axs, derivative, **kwargs)
+            self.plot_time_vs_trajectory_and_waypoint(axs, derivative)
             plt.tight_layout()
-            self.save_time_plot(derivative, "individual", **kwargs)
+            self.set_title(f"Minimal {self.__derivative_type.name.lower()} trajectory {Derivative(derivative).name.lower()} individual")
+            plt.rcParams.update({'font.size': 24})
+            self.save_plot(**kwargs)
         plt.show()
 
-    def save_time_plot(self, derivative, keyname, **kwargs):
-        if kwargs.get('save_plot') is True:
-            self.save_image(f"Minimal {self.__derivative_type.name.lower()} trajectory {Derivative(derivative).name.lower()} {keyname}")
+
 
     def get_subplot_for_individual_plots(self):
         _, axs = plt.subplots(self.__dimensions, 1, figsize=(10, self.__dimensions * 4))
         return np.array(axs).reshape(-1)
 
-    def plot_time_vs_trajectory_and_waypoint(self, axs, derivative, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot'])
+    def plot_time_vs_trajectory_and_waypoint(self, axs, derivative):
         for dimension in range(self.__dimensions):
-            self.plot_time_vs_trajectory(dimension + derivative*self.__dimensions, axs[dimension],  label=f"{Dimension(dimension).name} {Derivative(derivative).name.lower()}", color=Color.get_color(dimension), **kwargs)
+            self.plot_time_vs_trajectory(dimension + derivative*self.__dimensions, axs[dimension],  label=f"{Dimension(dimension).name} {Derivative(derivative).name.lower()}", color=Color.get_color(dimension))
             if derivative == 0:
-                self.plot_durations_vs_waypoints(dimension, axs[dimension], color=Color.get_color(dimension), **kwargs)
+                self.plot_durations_vs_waypoints(dimension, axs[dimension], color=Color.get_color(dimension))
             self.set_label_for_time_plot(dimension, derivative, axs)
             
 
@@ -269,22 +302,34 @@ class Plotter:
         axs[i].legend()
 
     def plot_time_vs_trajectory(self, dimension, ax, **kwargs):
-        ax.plot(self.time_data, self.__trajectory_data[:, dimension], **kwargs)
+        ax.plot(self.__time_data, self.__trajectory_data[:, dimension], **kwargs)
 
     def plot_durations_vs_waypoints(self, dimension,  ax, **kwargs):
         ax.scatter(self.__durations, self.__waypoint_data[:, dimension], **kwargs)
 
 
-    def _pop_multiple_keys(self, dictionary, keys, default=None):
-        return [dictionary.pop(key, default) for key in keys]
+    def _pop_multiple_keys(self, dictionary, keys, defaults=None):
+        if defaults is None:
+            defaults = [None] * len(keys)
+        elif not isinstance(defaults, (list, tuple)):
+            defaults = [defaults] * len(keys)
+        if len(defaults) != len(keys):
+            raise ValueError("Length of defaults must match length of keys")
+        return tuple(dictionary.pop(key, default) for key, default in zip(keys, defaults))
+
+
+
+
 
     def plot_time_data_at_same_time(self, **kwargs):
         for derivative in range(self.__max_derivative.value + 1):
-            _, ax = plt.subplots(figsize=(10, 6))
-            self.plot_time_vs_trajectory_at_same_time(derivative, ax, **kwargs)
+            _, ax = plt.subplots(figsize=(10*2, 8*2))
+            self.plot_time_vs_trajectory_at_same_time(derivative, ax)
             self.set_label_for_time_vs_trajectory_at_same_time(derivative, ax)
             plt.tight_layout()
-            self.save_time_plot(derivative, "simultaneous", **kwargs)
+            self.set_title(f"Minimal {self.__derivative_type.name.lower()} trajectory {Derivative(derivative).name.lower()} simultaneous")
+            plt.rcParams.update({'font.size': 24})
+            self.save_plot(**kwargs)
         plt.show()
 
     def set_label_for_time_vs_trajectory_at_same_time(self, derivative, ax):
@@ -294,45 +339,44 @@ class Plotter:
         ax.legend()
 
 
-    def plot_time_vs_trajectory_at_same_time(self, derivative, ax, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot'])
+    def plot_time_vs_trajectory_at_same_time(self, derivative, ax):
         for dimension in range(self.__dimensions):
-            self.plot_time_vs_trajectory(dimension + derivative*self.__dimensions, ax, label=f'{Dimension(dimension).name} trajectory', color=Color.get_color(dimension), **kwargs)
+            self.plot_time_vs_trajectory(dimension + derivative*self.__dimensions, ax, label=f'{Dimension(dimension).name} trajectory', color=Color.get_color(dimension))
             if derivative == 0:
-                self.plot_durations_vs_waypoints(dimension, ax, label=f'{Dimension(dimension).name} waypoint', color=Color.get_color(dimension), **kwargs)
+                self.plot_durations_vs_waypoints(dimension, ax, label=f'{Dimension(dimension).name} waypoint', color=Color.get_color(dimension))
             
     def plot_other_data_vs_time(self, **kwargs):
-        _, ax = plt.subplots(figsize=(10, 6))
+        _, ax = plt.subplots(figsize=(10*2, 8*2))
         log_scale = kwargs.pop('log_scale',False)
         length = np.array(kwargs.pop('index', range(self.__other_data_counter))).flatten()
         for cnt in length:
-            ax.plot(self.time_data, self.__other_data[cnt][1], label=self.__other_data[cnt][0],**kwargs)
+            ax.plot(self.__time_data, self.__other_data[cnt][1], label=self.__other_data[cnt][0])
         ax.set_xlabel("Time [s]")
         ax.set_ylabel("Value")
         ax.set_title(self.__title)
         if log_scale:
             ax.set_yscale('log')
         ax.legend()
+        plt.rcParams.update({'font.size': 24})
+        self.save_plot(**kwargs)
         plt.show()
         
 
+
     def plot_2D_distance_error(self, trajectory, drone_path,  **kwargs):
-        _, ax = plt.subplots(figsize=(10, 6))
+        plt.rcParams.update({'font.size': 24})
+        _, ax = plt.subplots(figsize=(10*2, 8*2))
         self.plot_distance_error(ax, trajectory, drone_path, **kwargs)
         self.set_label_for_distance_error(ax)
-        self.save_distance_error_plot(**kwargs)
+        self.save_plot(**kwargs)
         plt.show()
 
     def plot_1d_distance_error(self, trajectory, drone_path, dimension, **kwargs):
-        _, ax = plt.subplots(figsize=(10, 6))
+        _, ax = plt.subplots(figsize=(10*2, 8*2))
         self.plot_distance_error(ax, trajectory[:, dimension], drone_path[:, dimension], **kwargs)
         self.set_label_for_distance_error(ax)
-        self.save_distance_error_plot(**kwargs)
+        self.save_plot(**kwargs)
         plt.show()
-
-    def save_distance_error_plot(self, **kwargs):
-        if kwargs.get('save_plot') is True:
-            self.save_image(self.__title)
             
     def set_label_for_distance_error(self, ax):
         ax.set_xlabel("Time [s]")
@@ -343,8 +387,8 @@ class Plotter:
     def plot_distance_error(self, ax, trajectory, drone_path, **kwargs):
         self._pop_multiple_keys(kwargs, ['save_plot'])
         distance_error = self.calculate_distance_error(trajectory, drone_path)
-        ax.plot(self.time_data, distance_error, label='Distance error', **kwargs)
-        ax.text(13.24, 0.521, f'Mean error: {np.mean(distance_error):.2f}', fontsize=12, bbox=dict(facecolor='red', alpha=0.5))
+        ax.plot(self.__time_data, distance_error, label='Distance error', **kwargs)
+        ax.text(20.24, 0.4, f'Mean error: {np.mean(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='red', alpha=0.5))
         
     def calculate_distance_error(self, trajectory, drone_path):
         min_length = min(len(trajectory), len(drone_path))

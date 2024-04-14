@@ -2,11 +2,11 @@ import itertools
 from header_file import *
 from polynomialgenerator import PolynomialGenerator
 class MinimalTrajectoryGenerator(PolynomialGenerator):
-    def __init__(self, waypoints=None, durations=None, minimal_trajectory_order=None):
+    def __init__(self, waypoints=None, durations=None, minimal_trajectory_derivative=None):
         self.reset()
-        if all(v is not None for v in [waypoints, durations, minimal_trajectory_order]):
+        if all(v is not None for v in [waypoints, durations, minimal_trajectory_derivative]):
             self.initialize_spline_parameters(waypoints, durations)
-            self.initialize_polynomial_parameters(minimal_trajectory_order)
+            self.initialize_polynomial_parameters(minimal_trajectory_derivative)
         
         
     def reset(self):
@@ -54,20 +54,19 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
 
     def set_durations(self, duration):
         self.__durations = ensure_numpy_array(duration)
-        self.__number_of_splines = duration.shape[0]
-        self.__time_matrix = np.hstack((0, np.cumsum(duration)))
+        self.__number_of_splines = self.__durations.shape[0]
+        self.__time_matrix = np.hstack((0, np.cumsum(self.__durations)))
         self.__dur_mat = np.zeros(self.__durations.size * 2 + 1, dtype=self.__durations.dtype)
         self.__dur_mat[1::2] = self.__durations
 
     def set_waypoints(self, positions):
         self.__waypoints = ensure_numpy_array(positions)
-        self.__total_positions = positions.shape[0]
-        self.__number_of_waypoints = np.max(positions.shape[0] - 2, 0)
-        self.__dimensions = positions.shape[1]
+        self.__number_of_waypoints = np.max(self.__waypoints.shape[0] - 2, 0)
+        self.__dimensions = self.__waypoints.shape[1]
 
     def validate_input_data(self):
         if self.__waypoints.shape[0] - 1 != self.__durations.shape[0]:
-            raise ValueError(f"Number of waypoints and duration must match\n Waypoints: {self.__waypoints.shape[0]}\n Durations: {self.__durations.shape[0]}")
+            raise ValueError(f"Number of waypoints and duration must match!!!\n Number of waypoints: {self.__waypoints.shape[0]}\n Number of durations: {self.__durations.shape[0]}\nExpected:\n Number of waypoints: {self.__waypoints.shape[0]}\n Number of durations: {self.__durations.shape[0] - 1}")
         
     def generate_nth_degrees(self, trajectory_type):
         if trajectory_type.__class__.__name__ == 'Degree':

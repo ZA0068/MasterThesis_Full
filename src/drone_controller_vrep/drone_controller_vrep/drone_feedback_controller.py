@@ -6,19 +6,10 @@ from std_msgs.msg import Float64, Bool
 from tf_transformations import euler_from_quaternion
 from .online_impedance_adaptive_controller import OIAC
 from .propotional_integral_derivative_controller import PID
+from drone_controller_vrep.header_file import read_data, Derivative, Controller, TrajectoryState
 import numpy as np
 from .gui import App, QApplication
 from enum import Enum
-
-class Controller(Enum):
-    OIAC = 0
-    PID = 1
-
-class TrajectoryState(Enum):
-    START = 0
-    RUNNING = 1
-    FINAL = 2
-    STOP = 3
 
 class DroneFeedbackController(Node):
     @staticmethod
@@ -31,10 +22,11 @@ class DroneFeedbackController(Node):
         ])
         return Vector3(x=euler[0], y=euler[1], z=euler[2])
         
-    def __init__(self, controller_type = Controller.OIAC):
+    def __init__(self, controller_type = Controller.OIAC, trajectory_type = Derivative.JERK):
         super().__init__('drone_feedback_controller')
         self.reset()
         self._init_controller(controller_type)
+        self._init_derivative(trajectory_type)
         self._init_pubsub()
         self._init_gui()
         self._init_state()
@@ -42,12 +34,15 @@ class DroneFeedbackController(Node):
     def _init_state(self):
         self.state = TrajectoryState.START
 
+    def _init_derivative(self, derivative_type: Derivative):
+        self.derivative_type = derivative_type
+
     def _init_gui(self):
         self.app = QApplication([])
         self.gui = App(self)
         self.gui.show()
 
-    def _init_controller(self, controller_type):
+    def _init_controller(self, controller_type: Controller):
         self.controller_type = controller_type
         match controller_type:
             case Controller.OIAC:
@@ -109,7 +104,7 @@ class DroneFeedbackController(Node):
         self.torque = Vector3()
         self.rp = [0.0, 0.0, 0.0]
         self.twist = [0.0, 0.0, 0.0]
-        self.trajectory = np.array([[0.0, 0.0]])
+        self.trajectory = np.array([[0.0, 0.0, 0.0]])
         self.max_timestep = 1
         self.cnt = 0
         self.count_up = True
@@ -153,7 +148,7 @@ class DroneFeedbackController(Node):
 
 
     def is_under_min_dist(self, threshold):
-        return np.linalg.norm(np.array(self.trajectory[self.cnt]) - np.array([self.position.x, self.position.y])) < threshold
+        return np.linalg.norm(np.array(self.trajectory[self.cnt]) - np.array([self.position.x, self.position.y, self.position.z])) < threshold
 
     def publish_data(self):
         self.app.processEvents()
@@ -173,14 +168,14 @@ class DroneFeedbackController(Node):
                 self.run_PID_controller()
 
     def run_OIAC_controller(self):
-        self.rp = self.outer_loop.run_OIAC([self.position.x, self.position.y], self.trajectory[self.cnt], [self.velocity.x, self.velocity.y], [0.0, 0.0]).ravel()
+        self.rp = self.outer_loop.run_OIAC([self.position.x, self.position.y], self.trajectory[self.cnt, :2], [self.velocity.x, self.velocity.y], [0.0, 0.0]).ravel()
         self.twist = self.inner_loop.run_OIAC([self.orientation.x, self.orientation.y, self.orientation.z], [-self.rp[1], self.rp[0], 0.0], [self.angular_velocity.x, self.angular_velocity.y, self.angular_velocity.z], [0.0, 0.0, 0.0])
-        self.thrust.data = self.throttle.run_OIAC(self.position.z, 1.0, self.velocity.z, 0.0).ravel()[0]
+        self.thrust.data = self.throttle.run_OIAC(self.position.z, self.trajectory[self.cnt, 2], self.velocity.z, 0.0).ravel()[0]
 
     def run_PID_controller(self):
-        self.rp = self.outer_loop.run_PID([self.position.x, self.position.y], self.trajectory[self.cnt], [-0.1*self.velocity.x, -0.1*self.velocity.y])
+        self.rp = self.outer_loop.run_PID([self.position.x, self.position.y], self.trajectory[self.cnt, :2], [-0.1*self.velocity.x, -0.1*self.velocity.y])
         self.twist = self.inner_loop.run_PID([self.orientation.x, self.orientation.y, self.orientation.z], [-self.rp[1], self.rp[0], 0.0])
-        self.thrust.data = self.throttle.run_PID(self.position.z, 1.0, -2 * self.velocity.z).ravel()[0]
+        self.thrust.data = self.throttle.run_PID(self.position.z, self.trajectory[self.cnt, 2], -2 * self.velocity.z).ravel()[0]
 
     def check_final_step(self):
         if self.cnt == self.max_timestep:
@@ -188,11 +183,11 @@ class DroneFeedbackController(Node):
             self.state = TrajectoryState.FINAL
         
     def save_drone_path_data(self):    
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_path_snap_PID.csv", self.pos_data, delimiter=",")
-        np.savetxt("./src/drone_controller_vrep/resource/data/drone_force_and_torque_snap_PID.csv", self.force_data, delimiter=",")
+        np.savetxt(f"./src/drone_controller_vrep/resource/data/drone_path_{self.derivative_type.name}_{self.controller_type.name}.csv", self.pos_data, delimiter=",")
+        np.savetxt(f"./src/drone_controller_vrep/resource/data/drone_force_and_torque_{self.derivative_type.name}_{self.controller_type.name}.csv", self.force_data, delimiter=",")
         if self.controller_type == Controller.OIAC:
-            np.savetxt("./src/drone_controller_vrep/resource/data/drone_K_values_snap.csv", self.K_values, delimiter=",")
-            np.savetxt("./src/drone_controller_vrep/resource/data/drone_D_values_snap.csv", self.D_values, delimiter=",")
+            np.savetxt(f"./src/drone_controller_vrep/resource/data/drone_K_values_{self.derivative_type.name}.csv", self.K_values, delimiter=",")
+            np.savetxt(f"./src/drone_controller_vrep/resource/data/drone_D_values_{self.derivative_type.name}.csv", self.D_values, delimiter=",")
         self.state = TrajectoryState.STOP
 
     def pose_callback(self, msg):
@@ -235,23 +230,22 @@ class DroneFeedbackController(Node):
             "theta current": self.orientation.x,
             "theta dot": self.angular_velocity.x,
             "pitch torque": -self.twist[0],
+            "Z position": self.position.z,
             "X target": self.trajectory[self.cnt, 0],
             "Y target": self.trajectory[self.cnt, 1],
             "Path count": self.cnt,
             "psi dot": self.angular_velocity.z,
-            "yaw torque": -self.twist[2],
         }
 
     def import_trajectory(self, file):
-        self.trajectory = np.loadtxt(file, delimiter=',')
-        self.trajectory = self.trajectory[:, :2]
+        self.trajectory = read_data(file)[:, :3]
         self.max_timestep = self.trajectory.shape[0]
 
 def main(args=None):
     rclpy.init(args=args)
     try:
-        drone_controller = DroneFeedbackController(controller_type=Controller.PID)
-        drone_controller.import_trajectory('./src/drone_controller_vrep/resource/data/Minimal_snap_trajectory_for_pipelines.csv')
+        drone_controller = DroneFeedbackController(controller_type=Controller.PID, trajectory_type=Derivative.JERK)
+        drone_controller.import_trajectory('rrt_trajectory_jerk.csv')
         while rclpy.ok() and not drone_controller.finished:
             rclpy.spin_once(drone_controller, timeout_sec=0.05)
     except Exception as e:

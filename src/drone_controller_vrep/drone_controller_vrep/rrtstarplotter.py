@@ -5,10 +5,16 @@ from vispy import app
 from rrtstar import RRTStar
 from obstacle import Obstacle
 from header_file import *
+import imageio
 
 global temp_array
 class RRTPlotter:
     def __init__(self, rrt: RRTStar = None, optimal_trajectory: np.ndarray = None, real_trajectory: np.ndarray = None):
+        if rrt is None:
+            return
+        self.initialize(rrt, optimal_trajectory, real_trajectory)
+
+    def initialize(self, rrt, optimal_trajectory, real_trajectory):
         self._init_canvas()
         self.set_RRT(rrt)
         self.set_optimal_trajectory(optimal_trajectory)
@@ -16,6 +22,18 @@ class RRTPlotter:
         self._init_faces()
         self._init_edges()
 
+    def reset(self):
+        self.__path = None
+        self.__tree = None
+        self.__obstacles = None
+        self.__start_and_goal = None
+        self.__canvas = None
+        self.__view = None
+        self.__faces = None
+        self.__edges = None
+        self.real_trajectory = None
+        self.optimal_trajectory = None
+        
     def _init_edges(self):
         self.__edges = np.array([
             [0, 1], [1, 2], [2, 3], [3, 0], 
@@ -46,21 +64,14 @@ class RRTPlotter:
         self.optimal_trajectory = optimal_trajectory
 
     def set_RRT(self, rrt: RRTStar):
-        if rrt is None:
-            return
         self.__start_and_goal = np.array([rrt.get_start_point(), rrt.get_goal_point()])
         self.__path = rrt.get_best_path()
         self.__tree = rrt.get_best_tree()
         self.__obstacles = rrt.get_obstacles()
 
-    def set_rrt_path(self, *best_path):
-        if len(best_path) == 1 and isinstance(best_path[0], (list, np.ndarray)):
-            best_path = best_path[0]
-        temp_array = np.empty((0, best_path[0].shape[1]), dtype=best_path[0].dtype)
-        for array in best_path:
-            temp_array = np.concatenate((temp_array, array))
-        self.__path = temp_array
-        
+    def set_rrt_path(self, best_path):
+        self.__path = extract_rrt_star_array(best_path)
+       
     def set_rrt_tree(self, *best_tree):
         if len(best_tree) == 1 and isinstance(best_tree, tuple):
             best_tree = best_tree[0]
@@ -105,6 +116,8 @@ class RRTPlotter:
     def plot_start_and_goal(self):
         visuals.Markers(parent=self.__view.scene).set_data(self.__start_and_goal, edge_color=None, face_color=['red', 'green'], size=20)
 
+    def plot_waypoints(self, waypoints):
+        visuals.Markers(parent=self.__view.scene).set_data(waypoints, edge_color=None, face_color=['blue'], size=20)
 
     def plot_obstacles(self):
         for idx, obs in enumerate(self.__obstacles):
@@ -112,7 +125,7 @@ class RRTPlotter:
             inflated_vertices = obs.inflate(1.1).get_vertices()
             if idx in [0, 1]:
                 visuals.Mesh(vertices=vertices, faces=self.__faces, color=(0.1, 0.1, 0.1, 1), parent=self.__view.scene)
-                visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(0.1, 0.1, 0.1, 0.1), parent=self.__view.scene)
+                visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(0.5, 0.5, 0.5, 0.2), parent=self.__view.scene)
             else:
                 visuals.Mesh(vertices=vertices, faces=self.__faces, color=(1, 0, 0, 1), parent=self.__view.scene)
                 visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(1, 1, 1, .5), parent=self.__view.scene)
@@ -134,7 +147,10 @@ class RRTPlotter:
         if self.optimal_trajectory is not None:
             visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
 
-    def plot(self):
+    def display_and_save_plots(self, controller: Controller, derivative: Derivative):
+        self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)
+        img = self.__canvas.render()
+        imageio.imwrite(get_file_location(f'Minimal {derivative.name.lower()} trajectory {controller.name} obstacle map.png', 'resource/img'), img)
         app.run()
 
 # Example usage

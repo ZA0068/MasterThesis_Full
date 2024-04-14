@@ -20,6 +20,7 @@
         "pyqtgraph",
         "rclcpp",
         "rclpy",
+        "rrtplotter",
         "rrtstar",
         "rrtstarplotter",
         "savetxt",

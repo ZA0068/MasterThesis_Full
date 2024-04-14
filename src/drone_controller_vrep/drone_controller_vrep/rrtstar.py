@@ -44,7 +44,7 @@ class RRTStar:
         self.__neighbors = None
         self.__t = np.linspace(0, 1, 100)
         self.__dynamic_it_counter = 0
-        self.__dynamic_break_at = self.__max_iterations / 100
+        self.__dynamic_break_at = round(self.__max_iterations / 100)
         self.__has_rewired = False
         self.__all_nodes = []
         self.__kdtree = None
@@ -75,7 +75,7 @@ class RRTStar:
 
     def _init_dynamic_counter(self):
         self.__dynamic_it_counter = 0
-        self.__dynamic_break_at = self.__max_iterations / 10
+        self.__dynamic_break_at = round(self.__max_iterations / 10)
         self.__has_rewired = False
         self.__obstacles = []
 
