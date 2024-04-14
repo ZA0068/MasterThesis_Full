@@ -94,9 +94,9 @@ class Runner():
 
     def plot_3D_drone_path(self):
         self.__plotter.initialize(self.__optimal_trajectory, self.__rrt_waypoints, self.__durations, self.__derivative)
-        self.__plotter.append_title_name(f"with RRT* and drone path {self.__controller.name}")
+        self.__plotter.append_title_name(f"with rrt-star and drone path {self.__controller.name}")
         self.__plotter.set_3d_figure()
-        self.__plotter.plot_3d_data(waypoint_label="RRT* generated waypoints")
+        self.__plotter.plot_3d_data(waypoint_label="rrt-star generated waypoints")
         self.__plotter.set_trajectory(self.__drone_path)
         self.__plotter.plot_3d_trajectory(label = f"drone path {self.__controller.name}")
         self.__plotter.set_waypoints(self.__main_waypoints)
@@ -135,10 +135,10 @@ class Runner():
 
     def plot_2D_drone_path(self):
         self.__plotter.initialize(self.__optimal_trajectory, self.__rrt_waypoints, self.__durations, self.__derivative)
-        self.__plotter.append_title_name(f"with RRT* and drone path {self.__controller.name}")
-        self.__plotter.plot_2D_data(waypoint_label="RRT* generated waypoints")
+        self.__plotter.append_title_name(f"with rrt-star and drone path {self.__controller.name}")
+        self.__plotter.plot_2D_data(waypoint_label="rrt-star generated waypoints")
         self.__plotter.set_trajectory(self.__drone_path)
-        self.__plotter.plot_2d_trajectory(label = f"RRT* drone path {self.__controller.name}")
+        self.__plotter.plot_2d_trajectory(label = f"rrt-star drone path {self.__controller.name}")
         self.__plotter.set_waypoints(self.__main_waypoints)
         self.__plotter.plot_2d_waypoints(label='Waypoints')
         self.__plotter.display_labels_2d(save_plot = self.__save_plots)
