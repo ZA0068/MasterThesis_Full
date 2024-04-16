@@ -44,7 +44,7 @@ class RRTStar:
         self.__neighbors = None
         self.__t = np.linspace(0, 1, 100)
         self.__dynamic_it_counter = 0
-        self.__dynamic_break_at = round(self.__max_iterations / 100)
+        self.__dynamic_break_at = round(self.__max_iterations / 10)
         self.__has_rewired = False
         self.__all_nodes = []
         self.__kdtree = None
@@ -277,7 +277,7 @@ class RRTStar:
         return self._has_collision_with_obstacles(self._calculate_intermediate_points(current_node, next_node))
 
     def _has_collision_with_obstacles(self, points):
-        return not np.any([obstacle.inflate(1.1).is_inside(points) for obstacle in self.__obstacles])
+        return not np.any([obstacle.inflate(1.5).is_inside(points) for obstacle in self.__obstacles])
 
     def _calculate_intermediate_points(self, current_node, next_node):
         return np.outer(self.__t, next_node - current_node) + current_node

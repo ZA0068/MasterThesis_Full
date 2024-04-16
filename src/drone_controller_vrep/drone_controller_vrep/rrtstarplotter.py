@@ -122,7 +122,7 @@ class RRTPlotter:
     def plot_obstacles(self):
         for idx, obs in enumerate(self.__obstacles):
             vertices = obs.get_vertices()
-            inflated_vertices = obs.inflate(1.1).get_vertices()
+            inflated_vertices = obs.inflate(1.5).get_vertices()
             if idx in [0, 1]:
                 visuals.Mesh(vertices=vertices, faces=self.__faces, color=(0.1, 0.1, 0.1, 1), parent=self.__view.scene)
                 visuals.Mesh(vertices=inflated_vertices, faces=self.__faces, color=(0.5, 0.5, 0.5, 0.2), parent=self.__view.scene)
@@ -147,10 +147,11 @@ class RRTPlotter:
         if self.optimal_trajectory is not None:
             visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
 
-    def display_and_save_plots(self, controller: Controller, derivative: Derivative):
+    def display_and_save_plots(self, save: bool, controller: Controller, derivative: Derivative):
         self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)
-        img = self.__canvas.render()
-        imageio.imwrite(get_file_location(f'Minimal {derivative.name.lower()} trajectory {controller.name} obstacle map.png', 'resource/img'), img)
+        if save:
+            img = self.__canvas.render()
+            imageio.imwrite(get_file_location(f'Minimal {derivative.name.lower()} trajectory {controller.name} obstacle map.png', 'resource/img'), img)
         app.run()
 
 # Example usage

@@ -98,13 +98,31 @@ def extract_rrt_star_array(*best_path):
 
 @staticmethod
 def prune_array(data, tolerance=1e-5):
+    if isinstance(data, list):
+        return np.array(_prune_list(data, tolerance))
     if data.size == 0:
         return data
+    return np.array(_prune_data(data, tolerance))
+
+@staticmethod
+def _prune_list(data, tolerance=1e-5):
+    pruned_data = []
+    for datum in data:
+        for point in datum:
+            if (
+                not pruned_data
+                or np.linalg.norm(pruned_data[-1] - point) > tolerance
+            ):
+                pruned_data.append(point)
+    return pruned_data
+    
+@staticmethod
+def _prune_data(data, tolerance):
     pruned_data = [data[0]]
     for point in data[1:]:
         if np.linalg.norm(pruned_data[-1] - point) > tolerance:
             pruned_data.append(point)
-    return np.array(pruned_data)
+    return pruned_data
 
 class Plotter:
     def __init__(self, Trajectory_data=None, Waypoint_data=None, Duration_data=None, Derivative_data=None) -> None:

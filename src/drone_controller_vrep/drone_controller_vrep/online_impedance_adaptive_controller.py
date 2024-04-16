@@ -20,10 +20,7 @@ class OIAC:
         self.upper = upper
     
     def set_feedforward(self, array):
-        if isinstance(array, np.ndarray):
-            self.tau_FF = array
-        else:
-            self.tau_FF = np.array([array])
+        self.tau_FF = array if isinstance(array, np.ndarray) else np.array([array])
     
     def calculate_error_velocity(self, q_dot, qd_dot):
         self.e_dot = np.array(q_dot) - np.array(qd_dot)
