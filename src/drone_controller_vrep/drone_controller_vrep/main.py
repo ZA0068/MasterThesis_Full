@@ -101,8 +101,6 @@ class Runner():
         self.__drone_path_pid = read_data(f"drone_path_{self.__derivative.name}_PID.csv")
         self.__drone_force_and_torque_oiac = read_data(f"drone_force_and_torque_{self.__derivative.name}_OIAC.csv")
         self.__drone_force_and_torque_pid = read_data(f"drone_force_and_torque_{self.__derivative.name}_PID.csv")
-        self.__drone_error_trajectory_oiac = read_data(f"drone_error_{self.__derivative.name}_OIAC.csv")
-        self.__drone_error_trajectory_pid = read_data(f"drone_error_{self.__derivative.name}_PID.csv")
         self.__durations = np.ones(self.__drone_path_oiac.shape[0]) * 0.05
 
     def plot_3D_drone_path(self):
@@ -185,10 +183,10 @@ class Runner():
         self.__plotter.set_title(f"Minimal {self.__derivative.name.lower()}{arg3}")
 
     def plot_distance_error(self):
-        self.__plotter.initialize(self.__drone_error_trajectory_oiac, self.__rrt_waypoints, self.__durations, self.__derivative)
+        self.__plotter.initialize(self.__drone_path_oiac, self.__rrt_waypoints, self.__durations, self.__derivative)
         self.__plotter.set_title(f"Minimal {self.__derivative.name.lower()} trajectory vs drone path distance error OIAC")
         self.__plotter.plot_2D_distance_error(self.__drone_error_trajectory_oiac, save_plot=self.__save_plots)
-        self.__plotter.initialize(self.__drone_error_trajectory_pid, self.__rrt_waypoints, self.__durations, self.__derivative)
+        self.__plotter.initialize(self.__drone_path_pid, self.__rrt_waypoints, self.__durations, self.__derivative)
         self.__plotter.set_title(f"Minimal {self.__derivative.name.lower()} trajectory vs drone path distance error PID")
         self.__plotter.plot_2D_distance_error(self.__drone_error_trajectory_pid, save_plot=self.__save_plots)
         self.__plotter.reset()
