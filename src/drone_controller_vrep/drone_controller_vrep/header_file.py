@@ -410,7 +410,7 @@ class Plotter:
             
     def set_label_for_distance_error(self, ax):
         ax.set_xlabel("Time [s]")
-        ax.set_ylabel("Error Distance [cm]")
+        ax.set_ylabel("Error Distance [m]")
         ax.set_title(self.__title)
         ax.legend()
         
