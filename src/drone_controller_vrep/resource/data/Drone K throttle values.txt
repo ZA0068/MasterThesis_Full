@@ -1,0 +1,3 @@
+K throttle Max: 1.4805734106804564
+K throttle Min: -0.02151855783884335
+K throttle Avg: 0.011518998806656362

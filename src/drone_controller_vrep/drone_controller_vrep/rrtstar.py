@@ -11,8 +11,6 @@ class RRTStar:
         self.clear()
     
     def reset(self):
-        self.__start = None
-        self.__goal = None
         self.__previous_cost = np.inf
         self.__current_cost = np.inf
         self.__tree = {}
@@ -277,7 +275,7 @@ class RRTStar:
         return self._has_collision_with_obstacles(self._calculate_intermediate_points(current_node, next_node))
 
     def _has_collision_with_obstacles(self, points):
-        return not np.any([obstacle.inflate(1.5).is_inside(points) for obstacle in self.__obstacles])
+        return not np.any([obstacle.inflate(1.3).is_inside(points) for obstacle in self.__obstacles])
 
     def _calculate_intermediate_points(self, current_node, next_node):
         return np.outer(self.__t, next_node - current_node) + current_node
@@ -314,6 +312,7 @@ class RRTStar:
     def _restart_if_elapsed_time_exceeded(self, s_time):
         if time.time() - s_time > 5:
             print("Restarting...")
+            self.reset()
             self.run()
 
     @classmethod

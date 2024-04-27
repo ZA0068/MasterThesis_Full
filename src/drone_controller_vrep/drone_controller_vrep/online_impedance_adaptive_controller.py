@@ -37,7 +37,7 @@ class OIAC:
     def calculate_K(self):
         self.K = self.F * self.e
     
-    def calculate_B(self):
+    def calculate_D(self):
         self.D = self.F * self.e_dot
     
     def compute_output(self):
@@ -53,7 +53,7 @@ class OIAC:
         self.calculate_gamma()
         self.calculate_F()
         self.calculate_K()
-        self.calculate_B()
+        self.calculate_D()
         self.compute_output()
         return self.get_output()
     
@@ -67,7 +67,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import CubicSpline
 
 def main():
-    oiac = OIAC(a=20, b=0.5, beta=0.05)
+    oiac = OIAC(a=20, b=1, beta=0)
     oiac.set_saturation(-1, 10)
     
     waypoints = np.array([[0.0, 0.0, 10.0], [10.0, 10.0, 10.0], [20.0, 15.0, 25.0], [30.0, 25.0, 10.0], [15.0, 50.0, 15.0]])

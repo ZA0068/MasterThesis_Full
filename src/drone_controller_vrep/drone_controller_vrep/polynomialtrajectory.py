@@ -4,9 +4,12 @@ from polynomialgenerator import PolynomialGenerator
 class MinimalTrajectoryGenerator(PolynomialGenerator):
     def __init__(self, waypoints=None, durations=None, minimal_trajectory_derivative=None):
         self.reset()
-        if all(v is not None for v in [waypoints, durations, minimal_trajectory_derivative]):
-            self.initialize_spline_parameters(waypoints, durations)
-            self.initialize_polynomial_parameters(minimal_trajectory_derivative)
+        if any([waypoints is not None, durations is not None, minimal_trajectory_derivative is not None]):
+            self.initialize(waypoints, durations, minimal_trajectory_derivative)
+
+    def initialize(self, waypoints, durations, minimal_trajectory_derivative):
+        self.initialize_spline_parameters(waypoints, durations)
+        self.initialize_polynomial_parameters(minimal_trajectory_derivative)
         
         
     def reset(self):
@@ -20,8 +23,8 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
         self.__number_of_coefficients = 0
         self.__A = None
         self.__b = None
-        self.__maximum_velocity = 0.0
-        self.__dt = 0.0 
+        self.__maximum_velocity = 1.0
+        self.__dt = 0.05 
         
     def set_maximum_velocity(self, max_velocity):
         self.__maximum_velocity = max_velocity
@@ -47,13 +50,19 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
         self.__number_of_coefficients = self._degrees + 1
 
     def initialize_spline_parameters(self, waypoints, duration):
+        if waypoints is None:
+            raise ValueError("Waypoints must be provided!!!")
         self.set_waypoints(waypoints)
         self.set_durations(duration)
         self.validate_input_data()
         self.__splines = np.array([])
 
     def set_durations(self, duration):
-        self.__durations = ensure_numpy_array(duration)
+        self.__durations = None if duration is None else ensure_numpy_array(duration)
+
+    def _instantiate_durations(self):
+        if self.__durations is None:
+            self.__durations = np.linalg.norm(np.diff(self.__waypoints, axis=0), axis=1) / self.__maximum_velocity
         self.__number_of_splines = self.__durations.shape[0]
         self.__time_matrix = np.hstack((0, np.cumsum(self.__durations)))
         self.__dur_mat = np.zeros(self.__durations.size * 2 + 1, dtype=self.__durations.dtype)
@@ -61,12 +70,16 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
 
     def set_waypoints(self, positions):
         self.__waypoints = ensure_numpy_array(positions)
+
+    def _instantiate_waypoints(self):
         self.__number_of_waypoints = np.max(self.__waypoints.shape[0] - 2, 0)
         self.__dimensions = self.__waypoints.shape[1]
 
     def validate_input_data(self):
+        if self.__durations is None:
+            return
         if self.__waypoints.shape[0] - 1 != self.__durations.shape[0]:
-            raise ValueError(f"Number of waypoints and duration must match!!!\n Number of waypoints: {self.__waypoints.shape[0]}\n Number of durations: {self.__durations.shape[0]}\nExpected:\n Number of waypoints: {self.__waypoints.shape[0]}\n Number of durations: {self.__durations.shape[0] - 1}")
+            raise ValueError(f"Number of waypoints and duration must match!!!\n Number of waypoints: {self.__waypoints.shape[0]}\n Number of durations: {self.__durations.shape[0]}")
         
     def generate_nth_degrees(self, trajectory_type):
         if trajectory_type.__class__.__name__ == 'Degree':
@@ -95,6 +108,8 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
         self.__b = np.zeros((self.__number_of_splines * self.__number_of_coefficients, self.__dimensions))
 
     def create_poly_matrices(self):
+        self._instantiate_waypoints()
+        self._instantiate_durations()
         self.init_AB_matrices()
         self.generate_position_constraints()
         self.generate_continuity_constraints()

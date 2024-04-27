@@ -1,7 +1,6 @@
 import numpy as np
 from numpy.testing import *
 import matplotlib.pyplot as plt
-from scipy.spatial.transform import Rotation
 import csv
 import os
 from enum import Enum
@@ -100,9 +99,7 @@ def extract_rrt_star_array(*best_path):
 def prune_array(data, tolerance=1e-5):
     if isinstance(data, list):
         return np.array(_prune_list(data, tolerance))
-    if data.size == 0:
-        return data
-    return np.array(_prune_data(data, tolerance))
+    return data if data.size == 0 else np.array(_prune_data(data, tolerance))
 
 @staticmethod
 def _prune_list(data, tolerance=1e-5):
@@ -123,6 +120,17 @@ def _prune_data(data, tolerance):
         if np.linalg.norm(pruned_data[-1] - point) > tolerance:
             pruned_data.append(point)
     return pruned_data
+
+def calculate_distance_error(trajectory, drone_path):
+    trajectory, drone_path = equalize_data_length(trajectory[:, :3], drone_path[:, :3])
+    return np.linalg.norm(trajectory - drone_path, axis=1)
+
+def equalize_data_length(data1, data2):
+        min_length = min(len(data1), len(data2))
+        data1 = data1[:min_length, :]
+        data2 = data2[:min_length, :]
+        return data1, data2
+
 
 class Plotter:
     def __init__(self, Trajectory_data=None, Waypoint_data=None, Duration_data=None, Derivative_data=None) -> None:
@@ -258,6 +266,9 @@ class Plotter:
     def set_3d_figure(self):
         plt.rcParams.update({'font.size': 24})
         self.__ax_3d = plt.figure(figsize=(10*2, 8*2)).add_subplot(111, projection='3d')
+        self.__ax_3d.set_xlim([-3, 3])
+        self.__ax_3d.set_ylim([-3, 3])
+        self.__ax_3d.set_zlim([0, 3])
 
     def plot_3d_data(self, **kwargs):
         trajectory_label, waypoint_label = self._pop_multiple_keys(kwargs, ['trajectory_label', 'waypoint_label'], ['Trajectory', 'Waypoints'])
@@ -364,18 +375,19 @@ class Plotter:
                 self.plot_durations_vs_waypoints(dimension, ax, label=f'{Dimension(dimension).name} waypoint', color=Color.get_color(dimension))
             
     def plot_other_data_vs_time(self, **kwargs):
+        plt.rcParams.update({'font.size': 24})
         _, ax = plt.subplots(figsize=(10*2, 8*2))
         log_scale = kwargs.pop('log_scale',False)
         length = np.array(kwargs.pop('index', range(self.__other_data_counter))).flatten()
         for cnt in length:
-            ax.plot(self.__time_data, self.__other_data[cnt][1], label=self.__other_data[cnt][0])
+            ax.plot(self.__time_data[:len(self.__other_data[cnt][1])], self.__other_data[cnt][1], label=self.__other_data[cnt][0])
         ax.set_xlabel("Time [s]")
-        ax.set_ylabel("Value")
+        ylabel = kwargs.pop('ylabel', 'Value')
+        ax.set_ylabel(ylabel)
         ax.set_title(self.__title)
         if log_scale:
             ax.set_yscale('log')
         ax.legend()
-        plt.rcParams.update({'font.size': 24})
         self.save_plot(**kwargs)
         plt.show()
         
@@ -384,7 +396,7 @@ class Plotter:
     def plot_2D_distance_error(self, trajectory, drone_path,  **kwargs):
         plt.rcParams.update({'font.size': 24})
         _, ax = plt.subplots(figsize=(10*2, 8*2))
-        self.plot_distance_error(ax, trajectory, drone_path, **kwargs)
+        self.plot_distance_error(ax, trajectory, drone_path)
         self.set_label_for_distance_error(ax)
         self.save_plot(**kwargs)
         plt.show()
@@ -398,21 +410,17 @@ class Plotter:
             
     def set_label_for_distance_error(self, ax):
         ax.set_xlabel("Time [s]")
-        ax.set_ylabel("Distance [m]")
+        ax.set_ylabel("Error Distance [cm]")
         ax.set_title(self.__title)
         ax.legend()
         
-    def plot_distance_error(self, ax, trajectory, drone_path, **kwargs):
-        self._pop_multiple_keys(kwargs, ['save_plot'])
-        distance_error = self.calculate_distance_error(trajectory, drone_path)
-        ax.plot(self.__time_data, distance_error, label='Distance error', **kwargs)
-        ax.text(20.24, 0.4, f'Mean error: {np.mean(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='red', alpha=0.5))
+    def plot_distance_error(self, ax, trajectory, drone_path):
+        distance_error = calculate_distance_error(trajectory, drone_path)
+        ax.plot(self.__time_data[:len(distance_error)], distance_error, label='Distance error')
+        ax.text(20.24, 0.4, f'AVG error: {np.mean(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='red', alpha=0.5))
+        ax.text(20.24, 0.3, f'STD error: {np.std(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='blue', alpha=0.5))
         
-    def calculate_distance_error(self, trajectory, drone_path):
-        min_length = min(len(trajectory), len(drone_path))
-        trajectory = trajectory[:min_length, :3]
-        drone_path = drone_path[:min_length, :3]
-        return np.linalg.norm(trajectory - drone_path, axis=1)
+
     
 
     def _format_unit_label(self, derivative_name, derivative_order):

@@ -1,3 +1,4 @@
+import itertools
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel,QTableWidget, QTableWidgetItem, QVBoxLayout, QHeaderView
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QFont
@@ -27,9 +28,8 @@ class App(QWidget):
         data = self.drone_controller.get_data()
         keys = list(data.keys())
 
-        for i in range(3):
-            for j in range(5):
-                key = keys[i * 5 + j]
-                value = data[key]
-                self.table.setItem(i, j * 2, QTableWidgetItem(key.ljust(12)))
-                self.table.setItem(i, j * 2 + 1, QTableWidgetItem(f"{value:+10.6f}"))
+        for i, j in itertools.product(range(3), range(5)):
+            key = keys[i * 5 + j]
+            value = data[key]
+            self.table.setItem(i, j * 2, QTableWidgetItem(key.ljust(12)))
+            self.table.setItem(i, j * 2 + 1, QTableWidgetItem(f"{value:+10.6f}"))
