@@ -393,10 +393,10 @@ class Plotter:
         
 
 
-    def plot_2D_distance_error(self, trajectory, drone_path,  **kwargs):
+    def plot_2D_distance_error(self, drone_path,  **kwargs):
         plt.rcParams.update({'font.size': 24})
         _, ax = plt.subplots(figsize=(10*2, 8*2))
-        self.plot_distance_error(ax, trajectory, drone_path)
+        self.plot_distance_error(ax, drone_path)
         self.set_label_for_distance_error(ax)
         self.save_plot(**kwargs)
         plt.show()
@@ -414,8 +414,7 @@ class Plotter:
         ax.set_title(self.__title)
         ax.legend()
         
-    def plot_distance_error(self, ax, trajectory, drone_path):
-        distance_error = calculate_distance_error(trajectory, drone_path)
+    def plot_distance_error(self, ax, distance_error):
         ax.plot(self.__time_data[:len(distance_error)], distance_error, label='Distance error')
         ax.text(20.24, 0.4, f'AVG error: {np.mean(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='red', alpha=0.5))
         ax.text(20.24, 0.3, f'STD error: {np.std(distance_error):.2f}', fontsize=24, bbox=dict(facecolor='blue', alpha=0.5))
