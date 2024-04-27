@@ -185,10 +185,10 @@ class Runner():
     def plot_distance_error(self):
         self.__plotter.initialize(self.__drone_path_oiac, self.__rrt_waypoints, self.__durations, self.__derivative)
         self.__plotter.set_title(f"Minimal {self.__derivative.name.lower()} trajectory vs drone path distance error OIAC")
-        self.__plotter.plot_2D_distance_error(self.__drone_error_trajectory_oiac, save_plot=self.__save_plots)
+        self.__plotter.plot_2D_distance_error(self.__optimal_trajectory, self.__drone_path_oiac, save_plot=self.__save_plots)
         self.__plotter.initialize(self.__drone_path_pid, self.__rrt_waypoints, self.__durations, self.__derivative)
         self.__plotter.set_title(f"Minimal {self.__derivative.name.lower()} trajectory vs drone path distance error PID")
-        self.__plotter.plot_2D_distance_error(self.__drone_error_trajectory_pid, save_plot=self.__save_plots)
+        self.__plotter.plot_2D_distance_error(self.__optimal_trajectory, self.__drone_path_pid, save_plot=self.__save_plots)
         self.__plotter.reset()
 
 
