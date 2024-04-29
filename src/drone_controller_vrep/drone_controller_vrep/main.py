@@ -203,7 +203,7 @@ class Runner():
         self.__rrtplotter.plot_executed_trajectory(color=(0,0,1))
         self.__rrtplotter.set_drone_trajectory(self.__drone_path_pid)
         self.__rrtplotter.plot_executed_trajectory(color=(1,1,1))
-        self.__rrtplotter.display_and_save_plots(False, self.__derivative)
+        self.__rrtplotter.display_and_save_plots(self.__save_plots, self.__derivative)
         self.__rrtplotter.reset()
 
     def build_optimal_trajectory(self, derivative: Derivative):
