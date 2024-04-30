@@ -1,3 +1,4 @@
+from header_file import *
 from plotter import Plotter
 from polynomialtrajectory import MinimalTrajectoryGenerator as MinTrajGen
 import numpy as np
@@ -27,7 +28,7 @@ class Runner():
         if durations is not None:
             self.__durations = durations
         else:
-            self.__durations = read_data("Durations.csv")
+            self.__durations = read_data("Durations.csv").flatten()
     
     def set_rrt(self, rrt: RRTStar):
         self.__rrt = rrt

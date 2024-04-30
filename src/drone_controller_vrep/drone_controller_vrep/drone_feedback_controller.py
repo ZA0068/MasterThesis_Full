@@ -4,9 +4,9 @@ from geometry_msgs.msg import TwistStamped, PoseStamped, Vector3, Quaternion, Po
 import rclpy.publisher
 from std_msgs.msg import Float64, Bool
 from tf_transformations import euler_from_quaternion
-from .online_impedance_adaptive_controller import OIAC
-from .propotional_integral_derivative_controller import PID
-from .header_file import *
+from online_impedance_adaptive_controller import OIAC
+from proportional_integral_derivative_controller import PID
+from header_file import *
 import numpy as np
 from .gui import App, QApplication
 
