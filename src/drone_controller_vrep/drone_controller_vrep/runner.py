@@ -110,7 +110,7 @@ class Runner():
 
 
     def plot_all_3D(self):
-        self.__plotter.set_title("Optimal and Drone trajectories with RRT* waypoints")
+        self.__plotter.set_title("Optimal and Drone trajectories with RRT-star waypoints")
         self.__plotter.set_3d_figure()
         self.__plotter.plot_3d_trajectory(self.__optimal_trajectory["JERK"], 
                                           label="Minimal jerk trajectory", 
@@ -228,7 +228,7 @@ class Runner():
     
     def plot_trajectory_only(self, derivative: Derivative):
         self.__plotter.initialize(self.__optimal_trajectory, self.__rrt_waypoints, self.__durations, derivative)
-        self.__plotter.set_title("Trajectory plot with RRT* paths")
+        self.__plotter.set_title("Trajectory plot with RRT-star paths")
         self.__plotter.plot_3d_data(waypoint_label="rrt-star generated waypoints")
         self.__plotter.display_labels_3d(save_plot = False)
         self.__plotter.reset()
@@ -252,7 +252,7 @@ class Runner():
     def plot_all_2D(self):
         plt.rcParams.update({'font.size': 24})
         plt.figure(figsize=(10*2, 8*2))
-        self.__plotter.set_title("Optimal and Drone trajectories with RRT* waypoints")
+        self.__plotter.set_title("Optimal and Drone trajectories with RRT-star waypoints")
         self.__plotter.plot_2d_trajectory(self.__optimal_trajectory["JERK"], 
                                           label="Minimal jerk trajectory", 
                                           color="blue",
