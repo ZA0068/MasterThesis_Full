@@ -1,0 +1,3 @@
+SNAP D rpy Max: 0.000164
+SNAP D rpy Min: -2.4e-05
+SNAP D rpy Avg: 7.086981903093987e-08

@@ -1,0 +1,3 @@
+JERK K rpy Max: 0.000108
+JERK K rpy Min: -2.7e-05
+JERK K rpy Avg: 7.215411558669002e-08

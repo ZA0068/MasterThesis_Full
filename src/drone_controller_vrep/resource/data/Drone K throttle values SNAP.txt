@@ -1,0 +1,3 @@
+SNAP K throttle Max: 0.041529
+SNAP K throttle Min: -0.095724
+SNAP K throttle Avg: 2.880140105078809e-05

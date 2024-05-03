@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import csv
 import os
 from enum import Enum
+import pandas as pd
+from itertools import cycle
 
 class Degree(Enum):
     CONSTANT = 0
@@ -47,11 +49,7 @@ class Controller(Enum):
     OIAC = 0
     PID = 1
 
-class TrajectoryState(Enum):
-    START = 0
-    RUNNING = 1
-    FINAL = 2
-    STOP = 3
+
 
 @staticmethod
 def ensure_numpy_array(array_or_scalar):
@@ -70,6 +68,7 @@ def get_file_location(filename, location='data'):
     os.makedirs(directory_path, exist_ok=True)
     return os.path.join(directory_path, filename)
 
+@staticmethod
 def read_data(filename, order=-1, dimensions=-1):
     filename = get_file_location(filename, 'resource/data')
     with open(filename, 'r') as file:
@@ -86,6 +85,10 @@ def read_file(file, order=-1, dimensions=-1):
 def save_data(filename, DATA):
     np.savetxt(get_file_location(filename, location='resource/data'), DATA, delimiter=",", fmt='%f')
 
+
+@staticmethod
+def save_image(name):
+    plt.savefig(get_file_location(f"{name}.png", 'resource/img'))
 
 @staticmethod
 def extract_rrt_star_array(*best_path):
@@ -121,10 +124,12 @@ def _prune_data(data, tolerance):
             pruned_data.append(point)
     return pruned_data
 
+@staticmethod
 def calculate_distance_error(trajectory, drone_path):
     trajectory, drone_path = equalize_data_length(trajectory[:, :3], drone_path[:, :3])
     return np.linalg.norm(trajectory - drone_path, axis=1)
 
+@staticmethod
 def equalize_data_length(data1, data2):
         min_length = min(len(data1), len(data2))
         data1 = data1[-min_length:, :]
@@ -132,29 +137,31 @@ def equalize_data_length(data1, data2):
         return data1, data2
     
     
-def find_and_print_KD_values(kval, dval):
-    find_KD_minmaxmean("K throttle", kval, "K xy", "K rpy")
-    find_KD_minmaxmean("D throttle", dval, "D xy", "D rpy")
+@staticmethod
+def find_and_print_KD_values(kval, dval, derivative):
+    find_KD_minmaxmean("K throttle", kval, "K xy", "K rpy", derivative)
+    find_KD_minmaxmean("D throttle", dval, "D xy", "D rpy", derivative)
 
+@staticmethod
+def find_KD_minmaxmean(arg0, arg1, arg2, arg3, derivative):
+    minmaxmean(arg0, arg1[:, 0], derivative)
+    minmaxmean(arg2, arg1[:, 1:3], derivative)
+    minmaxmean(arg3, arg1[:, 3:6], derivative)
 
-def find_KD_minmaxmean(arg0, arg1, arg2, arg3):
-    minmaxmean(arg0, arg1[:, 0])
-    minmaxmean(arg2, arg1[:, 1:3])
-    minmaxmean(arg3, arg1[:, 3:6])
-
-def minmaxmean(name, data):
+@staticmethod
+def minmaxmean(name, data, derivative='POSITION'):
     min_data = np.min(data)
     max_data = np.max(data)
     avg_data = np.mean(data)
-    with open(get_file_location(f'Drone {name} values.txt', 'resource/data'), 'w') as file:
-        file.write(f"{name} Max: {max_data}\n")
-        file.write(f"{name} Min: {min_data}\n")
-        file.write(f"{name} Avg: {avg_data}\n")
-    print(f"{name} Max: {max_data}")
-    print(f"{name} Min: {min_data}")
-    print(f"{name} Avg: {avg_data}")
+    with open(get_file_location(f'Drone {name} values {derivative}.txt', 'resource/data'), 'w') as file:
+        file.write(f"{derivative} {name} Max: {max_data}\n")
+        file.write(f"{derivative} {name} Min: {min_data}\n")
+        file.write(f"{derivative} {name} Avg: {avg_data}\n")
+    print(f"{derivative} {name} Max: {max_data}")
+    print(f"{derivative} {name} Min: {min_data}")
+    print(f"{derivative} {name} Avg: {avg_data}")
 
 
-
+@staticmethod
 def save_optimal_trajectory(trajectory: np.ndarray, order: Derivative):
     save_data(f"rrt_trajectory_{order.name}.csv", trajectory)

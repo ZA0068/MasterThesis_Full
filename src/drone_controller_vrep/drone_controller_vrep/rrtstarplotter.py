@@ -147,11 +147,11 @@ class RRTPlotter:
         if self.optimal_trajectory is not None:
             visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
 
-    def display_and_save_plots(self, save: bool, derivative: Derivative):
+    def display_and_save_plots(self, save: bool):
         self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)
         if save:
             img = self.__canvas.render()
-            imageio.imwrite(get_file_location(f'Minimal {derivative.name.lower()} trajectory obstacle map.png', 'resource/img'), img)
+            imageio.imwrite(get_file_location('Optimal trajectory with drone path obstacle map.png', 'resource/img'), img)
         app.run()
 
 # Example usage

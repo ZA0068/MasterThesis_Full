@@ -10,6 +10,12 @@ from header_file import *
 import numpy as np
 from .gui import App, QApplication
 
+class TrajectoryState(Enum):
+    START = 0
+    RUNNING = 1
+    FINAL = 2
+    STOP = 3
+
 class DroneFeedbackController(Node):
     @staticmethod
     def quaternion_to_euler(quaternion: Quaternion) -> tuple:
