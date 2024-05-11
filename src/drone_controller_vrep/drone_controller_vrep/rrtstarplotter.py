@@ -143,9 +143,9 @@ class RRTPlotter:
         visuals.Markers(parent=self.__view.scene).set_data(self.__path[1:-1], edge_color=None, face_color=['cyan'], size=20)
 
 
-    def plot_optimal_trajectory(self, color_traj=(0, 1, 1, 1)):
+    def plot_optimal_trajectory(self, color=(0, 1, 1, 1)):
         if self.optimal_trajectory is not None:
-            visuals.Line(pos=self.optimal_trajectory[:, :3], color=color_traj, parent=self.__view.scene, method='gl')
+            visuals.Line(pos=self.optimal_trajectory[:, :3], color=color, parent=self.__view.scene, method='gl')
 
     def display_and_save_plots(self, save: bool):
         self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)

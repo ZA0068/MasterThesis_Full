@@ -1,0 +1,3 @@
+SNAP with std 0.1 D throttle Max: 1.960971
+SNAP with std 0.1 D throttle Min: -0.004208
+SNAP with std 0.1 D throttle Avg: 0.09703470753064798

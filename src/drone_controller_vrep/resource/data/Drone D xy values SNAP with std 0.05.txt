@@ -1,0 +1,3 @@
+SNAP with std 0.05 D xy Max: 0.006477
+SNAP with std 0.05 D xy Min: -2.2e-05
+SNAP with std 0.05 D xy Avg: 0.00015272679509632225

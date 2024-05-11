@@ -1,0 +1,3 @@
+SNAP with std 0.05 D rpy Max: 0.000444
+SNAP with std 0.05 D rpy Min: -2.2e-05
+SNAP with std 0.05 D rpy Avg: 6.093403385872737e-07

@@ -1,11 +1,14 @@
 import numpy as np
 from numpy.testing import *
+import matplotlib
 import matplotlib.pyplot as plt
 import csv
 import os
 from enum import Enum
 import pandas as pd
+import itertools
 from itertools import cycle
+import random
 
 class Degree(Enum):
     CONSTANT = 0
@@ -138,28 +141,29 @@ def equalize_data_length(data1, data2):
     
     
 @staticmethod
-def find_and_print_KD_values(kval, dval, derivative):
-    find_KD_minmaxmean("K throttle", kval, "K xy", "K rpy", derivative)
-    find_KD_minmaxmean("D throttle", dval, "D xy", "D rpy", derivative)
+def find_and_print_KD_values(kval, dval, derivative, gaussian=0.0):
+    find_KD_minmaxmean("K throttle", kval, "K xy", "K rpy", derivative, gaussian)
+    find_KD_minmaxmean("D throttle", dval, "D xy", "D rpy", derivative, gaussian)
 
 @staticmethod
-def find_KD_minmaxmean(arg0, arg1, arg2, arg3, derivative):
-    minmaxmean(arg0, arg1[:, 0], derivative)
-    minmaxmean(arg2, arg1[:, 1:3], derivative)
-    minmaxmean(arg3, arg1[:, 3:6], derivative)
+def find_KD_minmaxmean(arg0, arg1, arg2, arg3, derivative, gaussian=0.0):
+    minmaxmean(arg0, arg1[:, 0], derivative, gaussian)
+    minmaxmean(arg2, arg1[:, 1:3], derivative, gaussian)
+    minmaxmean(arg3, arg1[:, 3:6], derivative, gaussian)
 
 @staticmethod
-def minmaxmean(name, data, derivative='POSITION'):
+def minmaxmean(name, data, derivative='POSITION', gaussian=0.0):
+    append = f" with std {gaussian}" if gaussian != 0.0 else ""
     min_data = np.min(data)
     max_data = np.max(data)
     avg_data = np.mean(data)
-    with open(get_file_location(f'Drone {name} values {derivative}.txt', 'resource/data'), 'w') as file:
-        file.write(f"{derivative} {name} Max: {max_data}\n")
-        file.write(f"{derivative} {name} Min: {min_data}\n")
-        file.write(f"{derivative} {name} Avg: {avg_data}\n")
-    print(f"{derivative} {name} Max: {max_data}")
-    print(f"{derivative} {name} Min: {min_data}")
-    print(f"{derivative} {name} Avg: {avg_data}")
+    with open(get_file_location(f'Drone {name} values {derivative}{append}.txt', 'resource/data'), 'w') as file:
+        file.write(f"{derivative}{append} {name} Max: {max_data}\n")
+        file.write(f"{derivative}{append} {name} Min: {min_data}\n")
+        file.write(f"{derivative}{append} {name} Avg: {avg_data}\n")
+    print(f"{derivative}{append} {name} Max: {max_data}")
+    print(f"{derivative}{append} {name} Min: {min_data}")
+    print(f"{derivative}{append} {name} Avg: {avg_data}")
 
 
 @staticmethod

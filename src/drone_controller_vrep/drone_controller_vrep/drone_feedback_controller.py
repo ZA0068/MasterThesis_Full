@@ -4,9 +4,9 @@ from geometry_msgs.msg import TwistStamped, PoseStamped, Vector3, Quaternion, Po
 import rclpy.publisher
 from std_msgs.msg import Float64, Bool
 from tf_transformations import euler_from_quaternion
-from online_impedance_adaptive_controller import OIAC
-from proportional_integral_derivative_controller import PID
-from header_file import *
+from .online_impedance_adaptive_controller import OIAC
+from .proportional_integral_derivative_controller import PID
+from .header_file import *
 import numpy as np
 from .gui import App, QApplication
 
@@ -129,6 +129,7 @@ class DroneFeedbackController(Node):
         self._use_min_dist = False
         self._use_trajectory = False
         self._min_dist = 0.5
+        self._append_gaussian = ""
         
 
     def controller_callback(self):
@@ -169,10 +170,11 @@ class DroneFeedbackController(Node):
         if enable:
             self._min_dist = min_dist
         
-    def should_use_trajectory(self, enable):
+    def should_use_trajectory(self, enable, gaussian:float=0.0):
+        self._append_gaussian = f"_{gaussian}_gaussian" if gaussian != 0.0 else ""
         self._use_trajectory = enable
         if enable:
-            self.import_trajectory(f'rrt_trajectory_{self.derivative_type.name}.csv')
+            self.import_trajectory(f'rrt_trajectory_{self.derivative_type.name}{self._append_gaussian}.csv')
         else:
             self.__desired_trajectory = np.array([[2.0, 2.0, 2.0]])
             self.__desired_velocity = np.array([[0.0, 0.0, 0.0]])
@@ -263,12 +265,12 @@ class DroneFeedbackController(Node):
         )
 
     def __save_data(self):
-        save_data(f"drone_path_{self.derivative_type.name}_{self.controller_type.name}.csv", self._pos_data)
-        save_data(f"drone_force_and_torque_{self.derivative_type.name}_{self.controller_type.name}.csv", self._force_data)
-        save_data(f"drone_error_{self.derivative_type.name}_{self.controller_type.name}.csv", self._error_data)
+        save_data(f"drone_path_{self.derivative_type.name}_{self.controller_type.name}{self._append_gaussian}.csv", self._pos_data)
+        save_data(f"drone_force_and_torque_{self.derivative_type.name}_{self.controller_type.name}{self._append_gaussian}.csv", self._force_data)
+        save_data(f"drone_error_{self.derivative_type.name}_{self.controller_type.name}{self._append_gaussian}.csv", self._error_data)
         if self.controller_type == Controller.OIAC:
-            save_data(f"drone_K_values_{self.derivative_type.name}.csv", self._K_values)
-            save_data(f"drone_D_values_{self.derivative_type.name}.csv", self._D_values)
+            save_data(f"drone_K_values_{self.derivative_type.name}{self._append_gaussian}.csv", self._K_values)
+            save_data(f"drone_D_values_{self.derivative_type.name}{self._append_gaussian}.csv", self._D_values)
 
     def pose_callback(self, msg):
         self._position = msg.pose.position
@@ -302,7 +304,7 @@ class DroneFeedbackController(Node):
         return self._position.y < -3 or self._position.y > 3
     
     def __z_bounds(self):
-        return self._position.z < 0 or self._position.z > 20
+        return self._position.z < 0 or self._position.z > 3
     
     def __r_bounds(self):
         return self._orientation.x < -1.2 or self._orientation.x > 1.2
@@ -351,7 +353,7 @@ def main(args=None):
         drone_controller = DroneFeedbackController(controller_type=Controller.PID, trajectory_type=Derivative.SNAP)
         drone_controller.should_store_data(True)
         drone_controller.should_use_min_dist(False)
-        drone_controller.should_use_trajectory(True)
+        drone_controller.should_use_trajectory(True, 0.1)
         while rclpy.ok() and not drone_controller.is_finished():
             rclpy.spin_once(drone_controller, timeout_sec=0.05)
     except Exception as e:

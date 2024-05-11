@@ -1,0 +1,3 @@
+JERK with std 0.1 K xy Max: 0.021018
+JERK with std 0.1 K xy Min: -0.008589
+JERK with std 0.1 K xy Avg: 0.00018022154115586688
