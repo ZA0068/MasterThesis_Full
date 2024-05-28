@@ -230,3 +230,73 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
 
     def get_coefficients(self):
         return self.coefficients
+    
+if __name__ == "__main__":
+    waypoints = np.array([[0, 0, 10], [10, 10, 10], [20, 15, 25], [30, 25, 10], [0, 0, 10]])
+    durations = np.array([5, 10, 15, 20])
+    mintrajgen = MinimalTrajectoryGenerator(waypoints, durations, Derivative.SNAP)
+    mintrajgen.create_poly_matrices()
+    mintrajgen.compute_splines()
+    trajectory = mintrajgen.get_splines()
+    x = trajectory[:, 0]
+    y = trajectory[:, 1]
+    z = trajectory[:, 2]
+    vx = trajectory[:, 0+3]
+    vy = trajectory[:, 1+3]
+    vz = trajectory[:, 2+3]
+    acx = trajectory[:, 0+6]
+    acy = trajectory[:, 1+6]
+    acz = trajectory[:, 2+6]
+
+    # plt.rcParams.update({'font.size': 24})
+    # fig = plt.figure(figsize=(19.2, 10.8))
+    # ax = fig.add_subplot(111, projection='3d')
+    # ax.scatter(waypoints[:, 0], waypoints[:, 1],waypoints[:, 2], label='Waypoint', marker='o', color='crimson')
+    # ax.plot(x, y, z, label='Trajectory', marker='o', color='turquoise', alpha=0.2)
+    # ax.set_xlabel('X', color="red")
+    # ax.set_ylabel('Y', color="green")
+    # ax.set_zlabel('Z', color="blue")
+    # # Color the axes
+    # ax.xaxis.label.set_color('red')
+    # ax.yaxis.label.set_color('green')
+    # ax.zaxis.label.set_color('blue')
+
+    # # Color the tick labels
+    # ax.tick_params(axis='x', colors='red')
+    # ax.tick_params(axis='y', colors='green')
+    # ax.tick_params(axis='z', colors='blue')
+    # ax.set_title('Minimal Snap Trajectory')
+    # ax.legend()
+    # fig.savefig('minimal_snap_trajectory.png', bbox_inches='tight', dpi=100)
+    # plt.show()
+    
+    time = np.linspace(0, np.sum(durations), len(trajectory))
+    plt.rcParams.update({'font.size': 36})
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(19.2, 10.8))
+    # Plot velocities on the top subplot
+    ax1.plot(time, vx, label='Velocity X', color='red', linestyle='--', linewidth=5)
+    ax1.plot(time, vy, label='Velocity Y', color='green', linestyle='--', linewidth=5)
+    ax1.plot(time, vz, label='Velocity Z', color='blue', linestyle='--', linewidth=5)
+    ax1.set_ylabel('Velocity [m/s]', color="black")
+    ax1.tick_params(axis='x', colors='black')
+    ax1.tick_params(axis='y', colors='black')
+    ax1.legend(loc='upper right')
+
+    # Plot accelerations on the bottom subplot
+    ax2.plot(time, acx, label='Acceleration X', color='red', linestyle='-', marker='*', alpha=0.6)
+    ax2.plot(time, acy, label='Acceleration Y', color='green', linestyle='-', marker='*', alpha=0.6)
+    ax2.plot(time, acz, label='Acceleration Z', color='blue', linestyle='-', marker='*', alpha=0.6)
+    ax2.set_xlabel('Time [s]', color="black")
+    ax2.set_ylabel('Acceleration [m/s²]', color="black")
+    ax2.tick_params(axis='x', colors='black')
+    ax2.tick_params(axis='y', colors='black')
+    ax2.legend(loc='upper right')
+
+    # Set the title for the entire figure
+    fig.suptitle('Minimal Snap Trajectory Velocities and Accelerations')
+
+    # Save the figure with cropped white space
+    fig.savefig('minimal_snap_trajectory_vel_acc.png', bbox_inches='tight', dpi=100)
+
+    # Show the plot
+    plt.show()

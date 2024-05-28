@@ -125,7 +125,7 @@ class Plotter:
     def plot_3d_data(self, **kwargs):
         trajectory_label, waypoint_label = self._pop_multiple_keys(kwargs, ['trajectory_label', 'waypoint_label'], ['Trajectory', 'Waypoints'])
         plt.rcParams.update({'font.size': 24})
-        self.plot_3d_trajectory(label=trajectory_label)
+        self.plot_3d_trajectory(self.__trajectory_data, label=trajectory_label)
         self.plot_3d_waypoints(label=waypoint_label)
 
     def display_labels_3d(self, **kwargs):
@@ -249,13 +249,13 @@ class Plotter:
 
         for cnt, letter in enumerate(['K', 'D']):
             fig, axs = plt.subplots(3, 3, figsize=(36, 36))  # 3x3 grid for each standard deviation and data type
-            fig.suptitle(f"{letter} Values Analysis", fontsize=32)
+            fig.suptitle(f"{letter} Values Analysis fast", fontsize=32)
 
             for std_index, std in enumerate(stds):
                 for data_index, (key, cols) in enumerate(data_cols.items()):
                     self.alpha_cycle = itertools.cycle([1, 0.8, 0.6, 0.4, 0.2])
                     ax = axs[std_index, data_index]
-                    ax.set_title(f"{titles[data_index]} - STD {std}")
+                    ax.set_title(f"{titles[data_index]} - STD {std} fast")
 
                     for key, data in kd_data[cnt].items():
                         if key[1] == std and key[0] in ['JERK', 'SNAP']:
@@ -266,7 +266,7 @@ class Plotter:
 
             plt.tight_layout(rect=[0, 0.03, 1, 0.95])
             if save_plot:
-                save_image(f'{letter}_values_analysis')
+                save_image(f'{letter} values analysis fast')
             plt.show()
 
     def normal_error_plot(self, drone_error_data):
@@ -287,7 +287,7 @@ class Plotter:
 
         # Create a figure with 3 subplots arranged vertically
         fig, axes = plt.subplots(len(stds), 1, figsize=(20, 48))  # Adjust height as needed for clarity
-        plt.suptitle("Distance error plot for all drone trajectories", fontsize=50)
+        plt.suptitle("Distance error plot for all drone trajectories fast", fontsize=50)
         for ax, std in zip(axes, stds):
             ax.set_xlim(0, max_length[-1])
             group = df[df['STD'] == std]
@@ -305,7 +305,7 @@ class Plotter:
             append = "No std" if std == 0 else f"With std {std}"
             ax.set_title(f"{append}")
         plt.tight_layout()
-        save_image("Distance error plot for all drone trajectories")
+        save_image("Distance error plot for all drone trajectories fast")
         plt.show()
     
     @staticmethod
@@ -322,6 +322,7 @@ class Plotter:
             })
         return data_list
         
+
     def error_bar_plot(self, drone_error_data: dict):
         data = []
         labels = []
@@ -348,23 +349,54 @@ class Plotter:
         # Plotting
         for idx, (controller, trajectory) in enumerate(group_keys):
             group_df = df[(df['Controller'] == controller) & (df['Trajectory'] == trajectory)]
+            base_offset = 10  # Base offset in points for left and right bars
+            max_offset = 100  # Maximum offset in points for middle bar
+
             for std_idx, std in enumerate(stds):
                 sub_df = group_df[group_df['STD'] == std]
                 if not sub_df.empty:
                     pos = [p + std_idx * barWidth for p in [positions[idx]]]
                     bar = ax.bar(pos, sub_df['mean'], yerr=sub_df['std'], color=std_colors[std],
                                  width=barWidth, capsize=5, label=f'STD {std}' if idx == 0 else "",
-                                 hatch=std_hatches[std], edgecolor='white', linewidth=1)  # Apply hatching here with edgecolor
+                                 hatch=std_hatches[std], edgecolor='white', linewidth=1)
 
                     # Overlay bars to enhance hatch visibility
-                    if std_hatches[std]:  # Check if there is a hatch pattern
+                    if std_hatches[std]:
                         ax.bar(pos, sub_df['mean'], width=barWidth, color='none', 
                                edgecolor='white', linewidth=3, hatch=std_hatches[std])
+
+                    # Adjust text offsets
+                    for rect, (mean, stddev) in zip(bar, sub_df[['mean', 'std']].values):
+                        height = rect.get_height()
+                        offset = base_offset
+
+                        # Determine if this is the middle bar and adjust offset based on neighbors
+                        if std == 0.05:
+                            left_height = group_df[group_df['STD'] == 0]['mean'].values[0] if 0 in stds else 0
+                            right_height = group_df[group_df['STD'] == 0.1]['mean'].values[0] if 0.1 in stds else 0
+
+                            if not (abs(height - left_height) > 0.5 or abs(height - right_height) > 0.5):
+                                offset = max_offset  # Significant offset for middle bar
+
+                        # Create transformations
+                        base_transform = ax.transData
+                        text_transform = mtransforms.offset_copy(base_transform, fig=fig, y=offset, units='points')
+
+                        # Annotations for mean and std
+                        ax.text(rect.get_x() + rect.get_width() / 2, height, f'$\\mu={mean:.2f}$',
+                                ha='center', va='bottom', color='blue', fontsize=30,
+                                transform=text_transform)
+
+                        # Consistent offset between mean and std annotations
+                        text_transform = mtransforms.offset_copy(base_transform, fig=fig, y=offset + 30, units='points')
+                        ax.text(rect.get_x() + rect.get_width() / 2, height, f'$\\sigma={stddev:.2f}$', 
+                                ha='center', va='bottom', color='darkgreen', fontsize=30,
+                                transform=text_transform)
 
         # Add some formatting and labels
         ax.set_xlabel("Controllers")
         ax.set_ylabel("Error [m]")
-        ax.set_title("Distance error bar plot for all drone trajectories")
+        ax.set_title("Distance error bar plot for all drone trajectories fast")
         # Set the x-ticks to be the middle of the groups
         ax.set_xticks([p + barWidth for p in positions])
         ax.set_xticklabels([f'{c} and {t}' for c, t in group_keys])
@@ -373,9 +405,8 @@ class Plotter:
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels, loc='upper right')
         plt.tight_layout()
-        save_image("Distance error bar plot for all drone trajectories")
+        save_image("Distance error bar plot for all drone trajectories fast")
         plt.show()
-
             
     def set_label_for_distance_error(self, ax):
         ax.set_xlabel("Time [s]")

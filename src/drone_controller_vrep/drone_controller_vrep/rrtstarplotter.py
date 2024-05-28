@@ -54,8 +54,9 @@ class RRTPlotter:
     def _init_canvas(self):
         self.__canvas = scene.SceneCanvas(keys='interactive', size=(1920, 1080), show=True, config={'samples': 4})
         self.__view = self.__canvas.central_widget.add_view()
-        self.__view.camera = 'arcball'
+        self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)
         self.__view.camera.set_range(x=(-2, 2), y=(-2, 2), z=(-2, 2))
+        
 
     def set_drone_trajectory(self, real_trajectory):
         self.real_trajectory = real_trajectory
@@ -148,7 +149,6 @@ class RRTPlotter:
             visuals.Line(pos=self.optimal_trajectory[:, :3], color=color, parent=self.__view.scene, method='gl')
 
     def display_and_save_plots(self, save: bool):
-        self.__view.camera = scene.cameras.TurntableCamera(azimuth=45, elevation=35.264, distance=10)
         if save:
             img = self.__canvas.render()
             imageio.imwrite(get_file_location('Optimal trajectory with drone path obstacle map.png', 'resource/img'), img)
@@ -156,8 +156,8 @@ class RRTPlotter:
 
 # Example usage
 if __name__ == '__main__':
-    ceiling = Obstacle([-10, 10, -10, 10, 9, 10], 'ififif')
-    floor = Obstacle([-10, 10, -10, 10, -10, -9], 'ififif')
+    ceiling = Obstacle([-10, -10, 9, 10, 10, 10])
+    floor = Obstacle([-10, -10, -10, 10, 10, -9])
     obstacles = [
         ceiling,
         floor,
@@ -175,5 +175,6 @@ if __name__ == '__main__':
     plotter = RRTPlotter(rrt)
     plotter.plot_rrt_path()
     plotter.plot_obstacles()
+    plotter.plot_tree()
     plotter.plot_start_and_goal()
     app.run()

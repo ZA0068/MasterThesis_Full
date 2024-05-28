@@ -1,5 +1,5 @@
 from runner import Runner
-
+from header_file import *
 def main(): 
     runner = Runner()
     waypoints = [[2.48, -1.08, 1.0], [0.8, -2.0, 1.0], [-2.15, 0.03, 1.0], 

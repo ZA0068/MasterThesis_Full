@@ -30,6 +30,7 @@ class RRTStar:
         self.__max_step = 1
         self.__max_iterations = 1000
         self.__epsilon = 0.15
+        self.__cuboid_dist = 1.3
         self.__neighborhood_radius = 1.5
         self.__space_limits = None
         self.__obstacles = []
@@ -79,7 +80,8 @@ class RRTStar:
 
 
     def set_cuboid_dist(self, cuboid_dist):
-        self.__neighborhood_radius = cuboid_dist * self.__max_step
+        self.__cuboid_dist = cuboid_dist
+        self.__neighborhood_radius = 1.5 * self.__max_step
 
     def set_epsilon(self, ε):
         self.__epsilon = ε
@@ -275,7 +277,7 @@ class RRTStar:
         return self._has_collision_with_obstacles(self._calculate_intermediate_points(current_node, next_node))
 
     def _has_collision_with_obstacles(self, points):
-        return not np.any([obstacle.inflate(1.3).is_inside(points) for obstacle in self.__obstacles])
+        return not np.any([obstacle.inflate(self.__cuboid_dist).is_inside(points) for obstacle in self.__obstacles])
 
     def _calculate_intermediate_points(self, current_node, next_node):
         return np.outer(self.__t, next_node - current_node) + current_node
@@ -318,7 +320,7 @@ class RRTStar:
     @classmethod
     def init_RRTStar(cls, start, goal, max_step, max_iterations, boundary, obstacles):
         instance = cls()
-        instance.initialize(start=start,goal=goal,max_step=max_step,iterations=max_iterations,boundary=boundary,epsilon=0.15,cuboid_distance= 1.5)
+        instance.initialize(start=start,goal=goal,max_step=max_step,iterations=max_iterations,boundary=boundary,epsilon=0.5,cuboid_distance= 1.3)
         instance.add_obstacles(*obstacles)
         return instance
     

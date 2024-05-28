@@ -1,3 +1,3 @@
-SNAP K rpy Max: 0.000128
-SNAP K rpy Min: -7e-06
-SNAP K rpy Avg: 5.3006421482778753e-08
+SNAP K rpy Max: 0.002013
+SNAP K rpy Min: -8.4e-05
+SNAP K rpy Avg: 1.4965083798882682e-06

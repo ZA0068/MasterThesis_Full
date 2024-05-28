@@ -1,3 +1,3 @@
-SNAP D throttle Max: 0.127372
-SNAP D throttle Min: -0.000542
-SNAP D throttle Avg: 0.0001277926444833625
+SNAP D throttle Max: 4.302392
+SNAP D throttle Min: -3.2e-05
+SNAP D throttle Avg: 0.012716962988826816

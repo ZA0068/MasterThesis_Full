@@ -133,7 +133,7 @@ class Runner():
     def plot_all_3D(self):
         plt.rcParams.update({'font.size': 60})
         fig = plt.figure(figsize=(20, 60))
-        fig.suptitle("Optimal and Drone trajectories with RRT-star waypoints 3D plot", fontsize=45)
+        fig.suptitle("Optimal and Drone trajectories with RRT-star waypoints 3D plot fast", fontsize=45)
         gaussian_values = [0, 0.05, 0.1]
         plot_params = {
             "JERK": {"color": "lightblue", "linestyle": "-", "linewidth": 3},
@@ -154,7 +154,7 @@ class Runner():
         plt.legend(fontsize=42)
         plt.tight_layout()
         if self.__save_plots:
-            save_image("Optimal and Drone trajectories with RRT-star waypoints 3D plot")
+            save_image("Optimal and Drone trajectories with RRT-star waypoints 3D plot fast")
         plt.show()
 
     def print_kd_terms(self):
@@ -242,6 +242,8 @@ class Runner():
     
     def plot_trajectory_only(self, derivative: Derivative):
         self.__plotter.initialize(self.__optimal_trajectory, self.__rrt_waypoints, self.__durations, derivative)
+        ax = plt.figure(figsize=(18, 20)).add_subplot(111, projection='3d')
+        self.__plotter.set_3d_figure(ax)
         self.__plotter.set_title("Trajectory plot with RRT-star paths")
         self.__plotter.plot_3d_data(waypoint_label="rrt-star generated waypoints")
         self.__plotter.display_labels_3d(save_plot = False)
@@ -252,12 +254,12 @@ class Runner():
         self.__rrtplotter.plot_rrt_path()
         self.__rrtplotter.plot_obstacles()
         self.__rrtplotter.plot_optimal_trajectory()
-        self.__rrtplotter.display_and_save_plots(False, None)
+        self.__rrtplotter.display_and_save_plots(False)
         self.__rrtplotter.reset()
 
     def generate_trajectory(self, waypoints, durations, order):
         self.__mintrajgen.initialize(waypoints=waypoints, durations=durations, minimal_trajectory_derivative=order)
-        self.__mintrajgen.set_maximum_velocity(0.1)
+        self.__mintrajgen.set_maximum_velocity(100)
         self.__mintrajgen.set_dt(0.05)
         self.__mintrajgen.create_poly_matrices()
         self.__mintrajgen.compute_splines()
@@ -266,7 +268,7 @@ class Runner():
     def plot_all_2D(self):
         plt.rcParams.update({'font.size': 60})
         fig = plt.figure(figsize=(20, 60))
-        fig.suptitle("Optimal and Drone trajectories with RRT-star waypoints 2D plot", fontsize=45)
+        fig.suptitle("Optimal and Drone trajectories with RRT-star waypoints 2D plot fast", fontsize=45)
         gaussian_values = [0, 0.05, 0.1]
         plot_params = {
             "JERK": {"color": "lightblue", "linestyle": "-", "linewidth": 3},
@@ -287,7 +289,7 @@ class Runner():
         plt.tight_layout()
         plt.legend(fontsize=40, loc='lower left')
         if self.__save_plots:
-            save_image("Optimal and Drone trajectories with RRT-star waypoints 2D plot")
+            save_image("Optimal and Drone trajectories with RRT-star waypoints 2D plot fast")
         plt.show()
 
     def plot_drone_force_and_torque_all(self):
@@ -303,7 +305,7 @@ class Runner():
         # Create a separate figure for each combination of trajectory type and control method
         for trajectory, control in combinations:
             fig, axes = plt.subplots(3, 2, figsize=(24, 20))  # Adjust size as needed
-            title = f'Drone Force and Moments for {trajectory}-{control}'
+            title = f'Drone Force and Moments for {trajectory}-{control} fast'
             fig.suptitle(title)
 
             # Loop through each std value
@@ -338,48 +340,47 @@ class Runner():
         axes[row, arg2].legend()
 
     def add_gaussian_noise(self, trajectory, std_dev):
-        noise = np.random.normal(scale=std_dev, size=trajectory.shape)
-        return trajectory + noise
+        return trajectory + np.random.normal(scale=std_dev, size=trajectory.shape)
 
         
     def plot_all_data_at_once(self, save_plots=False):
         self.__save_plots = save_plots
         self.__acquire_data()
-        #self.plot_all_3D()
-        #self.plot_KD_values()
+        self.plot_all_3D()
+        self.plot_KD_values()
         self.plot_all_2D()
-        #self.plot_drone_force_and_torque_all()
-        #self.plot_distance_error_all()
-        #self.plot_rrt()
+        self.plot_drone_force_and_torque_all()
+        self.plot_distance_error_all()
+        self.plot_rrt()
 
 
 def main():
-    pass
-    #runner = Runner()
-    #data_jerk = read_data("rrt_trajectory_JERK.csv")
-    #data_snap = read_data("rrt_trajectory_SNAP.csv")
-    #plotter = Plotter()
-    #plotter.set_3d_figure()
-    #data_jerk_gaussian_25 = runner.add_gaussian_noise(data_jerk, 0.05)
-    #data_jerk_gaussian_50 = runner.add_gaussian_noise(data_jerk, 0.1)
-    #plotter.plot_3d_trajectory(data_jerk_gaussian_25, label="Jerk trajectory with std 0.05", color="orange", linewidth=3)
-    #plotter.display_labels_3d()
-    #plotter.set_3d_figure()    
-    #plotter.plot_3d_trajectory(data_jerk_gaussian_50, label="Jerk trajectory with std 0.1", color="red", linewidth=3)
-    #plotter.display_labels_3d()
-    #data_snap_gaussian_25 = runner.add_gaussian_noise(data_snap, 0.05)
-    #data_snap_gaussian_50 = runner.add_gaussian_noise(data_snap, 0.1)
-    #plotter.set_3d_figure()
-    #plotter.plot_3d_trajectory(data_snap_gaussian_25, label="Snap trajectory with std 0.05", color="orange", linewidth=3)
-    #plotter.display_labels_3d()
-    #plotter.set_3d_figure()
-    #plotter.plot_3d_trajectory(data_snap_gaussian_50, label="Snap trajectory with std 0.1", color="red", linewidth=3)
-    #plotter.display_labels_3d()
-    #
-    #save_data("rrt_trajectory_JERK_0.05_gaussian.csv", data_jerk_gaussian_25)
-    #save_data("rrt_trajectory_JERK_0.1_gaussian.csv", data_jerk_gaussian_50)
-    #save_data("rrt_trajectory_SNAP_0.05_gaussian.csv", data_snap_gaussian_25)
-    #save_data("rrt_trajectory_SNAP_0.1_gaussian.csv", data_snap_gaussian_50)
+    runner = Runner()
+    data_jerk = read_data("rrt_trajectory_JERK.csv")
+    data_snap = read_data("rrt_trajectory_SNAP.csv")
+    plotter = Plotter()
+    ax = plt.figure(figsize=(18, 20)).add_subplot(111, projection='3d')
+    plotter.set_3d_figure(ax)
+    data_jerk_gaussian_25 = runner.add_gaussian_noise(data_jerk, 0.05)
+    data_jerk_gaussian_50 = runner.add_gaussian_noise(data_jerk, 0.1)
+    plotter.plot_3d_trajectory(data_jerk_gaussian_25, label="Jerk trajectory with std 0.05", color="orange", linewidth=3)
+    plotter.display_labels_3d()
+    plotter.set_3d_figure(ax)    
+    plotter.plot_3d_trajectory(data_jerk_gaussian_50, label="Jerk trajectory with std 0.1", color="red", linewidth=3)
+    plotter.display_labels_3d()
+    data_snap_gaussian_25 = runner.add_gaussian_noise(data_snap, 0.05)
+    data_snap_gaussian_50 = runner.add_gaussian_noise(data_snap, 0.1)
+    plotter.set_3d_figure(ax)
+    plotter.plot_3d_trajectory(data_snap_gaussian_25, label="Snap trajectory with std 0.05", color="orange", linewidth=3)
+    plotter.display_labels_3d()
+    plotter.set_3d_figure(ax)
+    plotter.plot_3d_trajectory(data_snap_gaussian_50, label="Snap trajectory with std 0.1", color="red", linewidth=3)
+    plotter.display_labels_3d()
+    
+    save_data("rrt_trajectory_JERK_0.05_gaussian.csv", data_jerk_gaussian_25)
+    save_data("rrt_trajectory_JERK_0.1_gaussian.csv", data_jerk_gaussian_50)
+    save_data("rrt_trajectory_SNAP_0.05_gaussian.csv", data_snap_gaussian_25)
+    save_data("rrt_trajectory_SNAP_0.1_gaussian.csv", data_snap_gaussian_50)
 
 if __name__ == "__main__":
     main()

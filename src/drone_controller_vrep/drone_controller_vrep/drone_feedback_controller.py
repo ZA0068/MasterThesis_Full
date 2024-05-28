@@ -350,10 +350,10 @@ class DroneFeedbackController(Node):
 def main(args=None):
     rclpy.init(args=args)
     try:
-        drone_controller = DroneFeedbackController(controller_type=Controller.PID, trajectory_type=Derivative.SNAP)
+        drone_controller = DroneFeedbackController(controller_type=Controller.OIAC, trajectory_type=Derivative.JERK)
         drone_controller.should_store_data(True)
         drone_controller.should_use_min_dist(False)
-        drone_controller.should_use_trajectory(True, 0.1)
+        drone_controller.should_use_trajectory(True, 0.0)
         while rclpy.ok() and not drone_controller.is_finished():
             rclpy.spin_once(drone_controller, timeout_sec=0.05)
     except Exception as e:

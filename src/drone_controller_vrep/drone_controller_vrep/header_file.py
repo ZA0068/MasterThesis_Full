@@ -2,6 +2,8 @@ import numpy as np
 from numpy.testing import *
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.transforms import offset_copy
+import matplotlib.transforms as mtransforms
 import csv
 import os
 from enum import Enum
@@ -157,7 +159,7 @@ def minmaxmean(name, data, derivative='POSITION', gaussian=0.0):
     min_data = np.min(data)
     max_data = np.max(data)
     avg_data = np.mean(data)
-    with open(get_file_location(f'Drone {name} values {derivative}{append}.txt', 'resource/data'), 'w') as file:
+    with open(get_file_location(f'Drone {name} values {derivative}{append} fast.txt', 'resource/data'), 'w') as file:
         file.write(f"{derivative}{append} {name} Max: {max_data}\n")
         file.write(f"{derivative}{append} {name} Min: {min_data}\n")
         file.write(f"{derivative}{append} {name} Avg: {avg_data}\n")
