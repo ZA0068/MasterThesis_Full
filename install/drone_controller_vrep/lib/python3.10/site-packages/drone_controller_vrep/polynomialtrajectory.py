@@ -63,6 +63,8 @@ class MinimalTrajectoryGenerator(PolynomialGenerator):
     def _instantiate_durations(self):
         if self.__durations is None:
             self.__durations = np.linalg.norm(np.diff(self.__waypoints, axis=0), axis=1) / self.__maximum_velocity
+        else:
+            self.set_time_based_on_velocity()
         self.__number_of_splines = self.__durations.shape[0]
         self.__time_matrix = np.hstack((0, np.cumsum(self.__durations)))
         self.__dur_mat = np.zeros(self.__durations.size * 2 + 1, dtype=self.__durations.dtype)

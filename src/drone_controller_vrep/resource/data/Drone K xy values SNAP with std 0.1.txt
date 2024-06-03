@@ -1,3 +1,3 @@
-SNAP with std 0.1 K xy Max: 0.058107
-SNAP with std 0.1 K xy Min: -0.031563
-SNAP with std 0.1 K xy Avg: 0.0008487370810055866
+SNAP with std 0.1 K xy Max: 0.014852
+SNAP with std 0.1 K xy Min: -0.029418
+SNAP with std 0.1 K xy Avg: 0.0003439486865148862

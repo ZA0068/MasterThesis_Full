@@ -1,3 +1,3 @@
-SNAP with std 0.05 K rpy Max: 0.002043
-SNAP with std 0.05 K rpy Min: -6.6e-05
-SNAP with std 0.05 K rpy Avg: 1.886405959031657e-06
+SNAP with std 0.05 K rpy Max: 0.001899
+SNAP with std 0.05 K rpy Min: -0.000896
+SNAP with std 0.05 K rpy Avg: 7.6117921774664335e-06

@@ -1,3 +1,3 @@
-JERK with std 0.05 K rpy Max: 0.001471
-JERK with std 0.05 K rpy Min: -0.000573
-JERK with std 0.05 K rpy Avg: 1.3507914338919926e-06
+JERK with std 0.05 K rpy Max: 0.001755
+JERK with std 0.05 K rpy Min: -3.1e-05
+JERK with std 0.05 K rpy Avg: 7.965207238762407e-06

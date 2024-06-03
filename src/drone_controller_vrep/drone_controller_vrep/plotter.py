@@ -249,13 +249,13 @@ class Plotter:
 
         for cnt, letter in enumerate(['K', 'D']):
             fig, axs = plt.subplots(3, 3, figsize=(36, 36))  # 3x3 grid for each standard deviation and data type
-            fig.suptitle(f"{letter} Values Analysis fast", fontsize=32)
+            fig.suptitle(f"{letter} Values Analysis", fontsize=32)
 
             for std_index, std in enumerate(stds):
                 for data_index, (key, cols) in enumerate(data_cols.items()):
                     self.alpha_cycle = itertools.cycle([1, 0.8, 0.6, 0.4, 0.2])
                     ax = axs[std_index, data_index]
-                    ax.set_title(f"{titles[data_index]} - STD {std} fast")
+                    ax.set_title(f"{titles[data_index]} - STD {std}")
 
                     for key, data in kd_data[cnt].items():
                         if key[1] == std and key[0] in ['JERK', 'SNAP']:
@@ -266,7 +266,7 @@ class Plotter:
 
             plt.tight_layout(rect=[0, 0.03, 1, 0.95])
             if save_plot:
-                save_image(f'{letter} values analysis fast')
+                save_image(f'{letter} values analysis')
             plt.show()
 
     def normal_error_plot(self, drone_error_data):
@@ -274,8 +274,8 @@ class Plotter:
         plt.rcParams.update({'font.size': 36})
         data_list = Plotter.create_data_list(drone_error_data)  # Assuming this method returns a list of dictionaries
         df = pd.DataFrame(data_list)
-        linewidths = {'OIAC': 8, 'PID': 6}
-        linestyles = {'OIAC': 'dashed', 'PID': 'dotted'}
+        linewidths = {'OIAC': 8, 'MRAC': 6}
+        linestyles = {'OIAC': 'dashed', 'MRAC': 'dotted'}
         colors = [
             "#00eeee", "#7fd60f", "#ffff00", "#ffaa00", "#ff00ff",
             "#ff0000", "#0000ff", "#00ff00", "#aff00f", "#23200f",
@@ -287,7 +287,7 @@ class Plotter:
 
         # Create a figure with 3 subplots arranged vertically
         fig, axes = plt.subplots(len(stds), 1, figsize=(20, 48))  # Adjust height as needed for clarity
-        plt.suptitle("Distance error plot for all drone trajectories fast", fontsize=50)
+        plt.suptitle("Distance error plot for all drone trajectories", fontsize=50)
         for ax, std in zip(axes, stds):
             ax.set_xlim(0, max_length[-1])
             group = df[df['STD'] == std]
@@ -305,7 +305,7 @@ class Plotter:
             append = "No std" if std == 0 else f"With std {std}"
             ax.set_title(f"{append}")
         plt.tight_layout()
-        save_image("Distance error plot for all drone trajectories fast")
+        save_image("Distance error plot for all drone trajectories")
         plt.show()
     
     @staticmethod
@@ -396,7 +396,7 @@ class Plotter:
         # Add some formatting and labels
         ax.set_xlabel("Controllers")
         ax.set_ylabel("Error [m]")
-        ax.set_title("Distance error bar plot for all drone trajectories fast")
+        ax.set_title("Distance error bar plot for all drone trajectories")
         # Set the x-ticks to be the middle of the groups
         ax.set_xticks([p + barWidth for p in positions])
         ax.set_xticklabels([f'{c} and {t}' for c, t in group_keys])
@@ -405,7 +405,7 @@ class Plotter:
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels, loc='upper right')
         plt.tight_layout()
-        save_image("Distance error bar plot for all drone trajectories fast")
+        save_image("Distance error bar plot for all drone trajectories")
         plt.show()
             
     def set_label_for_distance_error(self, ax):

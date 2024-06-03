@@ -1,3 +1,3 @@
-JERK K throttle Max: 0.060896
-JERK K throttle Min: -0.063286
-JERK K throttle Avg: 0.000175231843575419
+JERK K throttle Max: 0.041443
+JERK K throttle Min: -0.014223
+JERK K throttle Avg: 0.00012061821366024519

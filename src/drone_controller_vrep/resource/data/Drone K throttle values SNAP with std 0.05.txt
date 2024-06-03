@@ -1,3 +1,3 @@
-SNAP with std 0.05 K throttle Max: 0.257248
-SNAP with std 0.05 K throttle Min: -0.58415
-SNAP with std 0.05 K throttle Avg: 0.0027607814245810057
+SNAP with std 0.05 K throttle Max: 0.216124
+SNAP with std 0.05 K throttle Min: -0.097022
+SNAP with std 0.05 K throttle Avg: 0.0036022119089316987
