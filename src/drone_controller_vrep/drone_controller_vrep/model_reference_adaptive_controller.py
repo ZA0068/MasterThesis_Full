@@ -14,9 +14,8 @@ class MRAC_PID:
         self.zeta = 0.8
         self.dt = 0.01
         self.integral_error = None
+        self.derivative_error = None
         self.prev_error = None
-        self.prev_derivative_error = None
-        self.cumsum = None
         self.lower = None
         self.upper = None
         self.max_gain = 100.0
@@ -46,12 +45,16 @@ class MRAC_PID:
     
     def calculate_integral(self):
         self.accumulate_sum()
-        return self.Ki * self.cumsum
+        return self.Ki * self.integral_error
     
     def calculate_derivative(self):
+        self.evaluate_derivative_error()
+        return self.Kd * self.derivative_error
+
+    def evaluate_derivative_error(self):
         if self.prev_error is None:
-            self.prev_error = np.zeros_like(self.e)
-        return self.Kd * (self.e - self.prev_error)
+            self.prev_error = np.zeros_like(self.e, dtype=float)
+        self.derivative_error = (self.e - self.prev_error)
     
     def compute_output(self):
         self.out = self.calculate_proportional() + self.calculate_integral() + self.calculate_derivative()
@@ -78,27 +81,17 @@ class MRAC_PID:
         self.upper = upper
 
     def calculate_error(self, q, qd):
-        self.e = np.asarray(qd) - np.asarray(q)
+        self.e = np.asarray(qd, dtype=float) - np.asarray(q, dtype=float)
 
     def accumulate_sum(self):
-        if self.cumsum is None:
-            self.cumsum = np.zeros_like(self.e)
-        self.cumsum = np.clip(self.cumsum + self.e, -self.max_gain, self.max_gain)
-
-    def update_gains(self):
-        first_derivative_error = (self.e - self.prev_error) / self.dt
-        if self.prev_derivative_error is None:
-            self.prev_derivative_error = np.zeros_like(first_derivative_error)
-        second_derivative_error = (first_derivative_error - self.prev_derivative_error) / self.dt
         if self.integral_error is None:
             self.integral_error = np.zeros_like(self.e)
         self.integral_error = np.clip(self.integral_error + self.e * self.dt, -self.max_gain, self.max_gain)
 
-        self.Kp = np.clip(self.Kp + self.gamma * self.e * first_derivative_error, -self.max_gain, self.max_gain)
-        self.Ki = np.clip(self.Ki + self.gamma * self.e * self.cumsum, -self.max_gain, self.max_gain)
-        self.Kd = np.clip(self.Kd + self.gamma * self.e * second_derivative_error, -self.max_gain, self.max_gain)
-
-        self.prev_derivative_error = first_derivative_error
+    def update_gains(self):
+        self.Kp = np.clip(self.Kp + self.gamma * self.e ** 2, -self.max_gain, self.max_gain)
+        self.Ki = np.clip(self.Ki + self.gamma * self.e * self.integral_error, -self.max_gain, self.max_gain)
+        self.Kd = np.clip(self.Kd + self.gamma * self.e * self.derivative_error, -self.max_gain, self.max_gain)
 
 def main():
     mrac_pid = MRAC_PID(Kp=20.0, Ki=0.1, Kd=0.1, gamma=0.001)
